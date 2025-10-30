@@ -25,8 +25,16 @@ app_license = "mit"
 # ------------------
 
 # include js, css files in header of desk.html
-# app_include_css = "/assets/superproject/css/superproject.css"
-# app_include_js = "/assets/superproject/js/superproject.js"
+app_include_css = [
+    "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css",
+    "/assets/superproject/css/main.css",
+    "/assets/superproject/css/menu-bar.css",
+]
+
+app_include_js = [
+    "setup.bundle.js",
+    "superproject.bundle.js",
+]
 
 # include js, css files in header of web template
 # web_include_css = "/assets/superproject/css/superproject.css"
@@ -144,6 +152,13 @@ app_license = "mit"
 # 		"on_trash": "method"
 # 	}
 # }
+
+doc_events = {
+    "DocType": {
+        "after_insert": ["superproject.doc_events.general.after_insert.add_to_display"],
+        "on_trash": ["superproject.doc_events.general.on_trash.remove_from_display"]
+    },
+}
 
 # Scheduled Tasks
 # ---------------

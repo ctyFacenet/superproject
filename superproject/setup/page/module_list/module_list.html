@@ -1,0 +1,45 @@
+<section>
+    <h1 class="text-center">Lựa chọn Module</h1>
+    <div class="module-list d-flex flex-wrap" style="margin-top: 25px">
+        {% for m in modules %}
+            <div class="module-card text-center p-3 m-2 rounded shadow-sm"
+                 data-link_to="{{ m.link_to }}"
+                 data-is_single="{{ m.is_single }}"
+                 data-module="{{ m.module }}"
+                 style="cursor:pointer; min-width:150px; flex:1 1 150px;">
+                <h5 class="mb-2" style="font-size: 1.5rem">{{ m.module }}</h5>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+<style>
+    .module-list {
+        gap: 20px; /* khoảng cách xa hơn giữa các card */
+    }
+
+    .module-card {
+        cursor: pointer;
+        min-width: 150px;
+        flex: 1 1 150px;
+        background-color: #ecececff; /* màu nền đậm hơn */
+        border: none; /* bỏ border */
+        border-radius: 8px;
+        padding: 16px;
+        transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .module-card:hover {
+        transform: translateY(-6px); /* nâng lên rõ hơn */
+        background-color: #c0c0c0; /* đổi màu khi hover */
+        box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+    }
+
+    @media (max-width: 768px) {
+        .module-list { 
+            flex-direction: column; 
+            gap: 16px;
+        }
+        .module-card { width: 100% !important; }
+    }
+</style>

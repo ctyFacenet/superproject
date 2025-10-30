@@ -1,0 +1,20 @@
+{
+ "content": null,
+ "creation": "2025-10-26 23:39:39.320747",
+ "docstatus": 0,
+ "doctype": "Page",
+ "idx": 0,
+ "modified": "2025-10-27 11:37:06.941094",
+ "modified_by": "Administrator",
+ "module": "Setup",
+ "name": "module-list",
+ "owner": "Administrator",
+ "page_name": "module-list",
+ "restrict_to_domain": "module-list",
+ "roles": [],
+ "script": null,
+ "standard": "Yes",
+ "style": null,
+ "system_page": 0,
+ "title": "Module List"
+}
