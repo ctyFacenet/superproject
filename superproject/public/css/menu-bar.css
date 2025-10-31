@@ -1,5 +1,5 @@
 .custom-menu-bar-wrapper {
-    background-color: #ebebeb;
+    background-color: rgb(232, 243, 255);
 }
 
 .custom-menu-bar-wrapper .container {
@@ -35,7 +35,7 @@
 
 .custom-menu-bar-item:hover,
 .custom-menu-bar-item.hover-active {
-    background-color: #f7f7f7;
+    background-color: #b4dbff;
 }
 
 .custom-menu-bar-item.active {

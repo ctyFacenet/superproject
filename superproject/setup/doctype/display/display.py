@@ -81,11 +81,15 @@ def get_modules_display():
         module_name = item.module
         if module_name not in modules and item.link_to:
             modules[module_name] = {
-                "module": module_name,
+                "module": frappe._(module_name),
                 "link_to": item.link_to,
                 "type": item.type,
-                "is_single": frappe.get_meta(item.link_to).issingle if item.link_to else False
+                "is_single": frappe.get_meta(item.link_to).issingle if item.link_to else False,
             }
+            for m in doc.modules:
+                if m.module == module_name:
+                    modules[module_name]["description"] = m.description
+                    modules[module_name]["icon"] = m.icon
 
     return list(modules.values())
 

@@ -10,8 +10,6 @@ frappe.pages['module-list'].on_page_load = async function(wrapper) {
     $(frappe.render_template('module_list', { modules })).appendTo(page.body);
     $(".navbar-module").text('Trang chủ')
 
-    console.log(page)
-
     // gắn click event
     page.body.find('.module-card').each(function() {
         const $card = $(this);

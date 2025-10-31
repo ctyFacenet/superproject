@@ -312,7 +312,11 @@ frappe.router = {
 			this.render_page();
 		} else {
 			// Show home
-			frappe.views.pageview.show("");
+			frappe.set_route(['app', 'module-list']);
+		}
+		
+		if (frappe.get_route_str() === "module-list") {
+			frappe.ui.toolbar.setup_custom_menu_bar(true)
 		}
 	},
 
