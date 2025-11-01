@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev:css": "tailwindcss -i ./superproject/public/css/superproject_tailwind.css -o ./superproject/public/css/build.css --watch",
-    "build:css": "tailwindcss -i ./superproject/public/css/superproject_tailwind.css -o ./superproject/public/css/build.css --minify"
+    "dev:css": "tailwindcss -i ./superproject/public/css/tailwind.css -o ./superproject/public/css/build.css --watch",
+    "build:css": "tailwindcss -i ./superproject/public/css/tailwind.css -o ./superproject/public/css/build.css --minify"
   },
   "keywords": [],
   "author": "",

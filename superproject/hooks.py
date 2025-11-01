@@ -29,6 +29,8 @@ app_include_css = [
     "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css",
     "/assets/superproject/css/main.css",
     "/assets/superproject/css/menu-bar.css",
+    "/assets/superproject/css/build.css",
+    "/assets/superproject/css/tailwind.css"
 ]
 
 app_include_js = [

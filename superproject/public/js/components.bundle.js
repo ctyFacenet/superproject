@@ -1,6 +1,5 @@
 import { mountVue, unmountVue } from "./vue_helper.js";
-import Counter from "./components/Counter.vue";
-import CounterNew from "./components/CounterNew.vue";
+import BaseLayout from "./components/BaseLayout.vue";
 
 frappe.provide("superproject.ui");
 superproject.ui.mountVue = mountVue;
@@ -10,14 +9,20 @@ function createVueWrapper(name, component) {
   class VueWrapper {
     constructor({ wrapper, ...props }) {
       this.wrapper = wrapper;
-      this.mounted = mountVue(component, props, this.wrapper);
+      const mounted = mountVue(component, props, this.wrapper);
+
+      this.app = mounted.app;
+      this.vm = mounted.vm || mounted;
+
+      Object.assign(this, this.vm);
     }
+
     destroy() {
-      unmountVue(this.mounted);
+      unmountVue(this.app || this.vm);
     }
   }
+
   superproject.ui[name + "Component"] = VueWrapper;
 }
 
-createVueWrapper("Counter", Counter);
-createVueWrapper("CounterNew", CounterNew);
+createVueWrapper("BaseLayout", BaseLayout);

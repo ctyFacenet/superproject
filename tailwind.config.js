@@ -1,9 +1,6 @@
 module.exports = {
   content: [
-    './tahp/public/**/*.{html,js,vue}',
-    './tahp/public/hello_vue/**/*.{vue,js}',
-    './tahp/public/js/components/**/*.{vue,js}',
-    './tahp/frontend/**/*.{vue,js}',
+    './superproject/public/js/components/**/*.{vue,js}',
   ],
   prefix: 'tw-',
   important: true,

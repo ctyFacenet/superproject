@@ -32,29 +32,57 @@ frappe.views.FacenetView = class FacenetView extends frappe.views.ListView {
 
 	setup_view() {
 		this.setup_facenet_page();
+		this.setup_settings()
 	}
 
-	setup_facenet_page() {
+	async setup_facenet_page() {
 		const facenet_wrapper_html = `<div class="facenet-view">Anh Lộc chẻ châu</div>`;
 		this.$frappe_list.html(facenet_wrapper_html);
 		this.wrapper = this.$frappe_list.find('.facenet-view');
 		this.page.clear_secondary_action();	
 		this.page.main.removeClass("frappe-card");
 
+		const res = await frappe.xcall("superproject.setup.doctype.display_doctype_setting.display_doctype_setting.open_settings", {doctype: this.doctype})
+		this.hide_tree = res.hide_tree || false
+		this.hide_flex = res.flex || false
+
 		this.render_vue();
 	}
 
 	render_vue() {
-		this.wrapper.empty();
-		let counter = new superproject.ui.CounterNewComponent({
+		this.component = new superproject.ui.BaseLayoutComponent({
 			wrapper: this.wrapper[0],
-			value: 1,
-			onUpdateValue: (newVal) => {
-				console.log("Updated value:", newVal);
-			},
+			hide_tree: this.hide_tree,
+			hide_flex: this.hide_flex,
+			doctype: this.doctype,
 		});
 	}
-	setup_global_search() {
-		
+
+	setup_settings() {
+		this.page.add_inner_button("Hide Sections", async () => {
+			const res = await frappe.xcall("superproject.setup.doctype.display_doctype_setting.display_doctype_setting.open_settings", {doctype: this.doctype})
+			const settings = res;
+
+			const d = new frappe.ui.Dialog({
+				title: "Hide Section Settings",
+				size: "small",
+				fields: [
+				{ fieldname: "hide_tree", label: __("Hide Tree Section?"), fieldtype: "Check", default: settings.hide_tree },
+				{ fieldtype: "Column Break" },
+				{ fieldname: "hide_flex", label: __("Hide Flex Section?"), fieldtype: "Check", default: settings.hide_flex },
+				],
+				primary_action_label: "Lưu",
+				primary_action: async (values) => { 
+					const res = await frappe.xcall("superproject.setup.doctype.display_doctype_setting.display_doctype_setting.open_settings", {doctype: this.doctype, settings: JSON.stringify(values)})
+					d.hide();
+					if (values.hide_tree != this.hide_tree) this.component.updateSetting("hide_tree", values.hide_tree)
+					if (values.hide_flex != this.hide_flex) this.component.updateSetting("hide_flex", values.hide_flex)
+					this.hide_tree = values.hide_tree
+					this.hide_flex = values.hide_flex
+				}
+			})
+
+			d.show();
+		})
 	}
 };

@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
  "creation": "2025-10-27 10:00:36.851713",
  "doctype": "DocType",
@@ -9,20 +10,25 @@
   "module",
   "column_break_vcvp",
   "image",
-  "start_date",
-  "selection"
+  "selection",
+  "data3",
+  "data6",
+  "data7",
+  "data8"
  ],
  "fields": [
   {
    "description": "Display as a sub-label for menu of each module menu",
    "fieldname": "group_name",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Group Name"
   },
   {
    "description": "This sub-label belongs to which module?",
    "fieldname": "module",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Module",
    "options": "Module Def"
   },
@@ -32,19 +38,39 @@
    "label": "Image "
   },
   {
-   "fieldname": "start_date",
-   "fieldtype": "Date",
-   "label": "B\u1eaft \u0111\u1ea7u"
-  },
-  {
    "fieldname": "selection",
    "fieldtype": "Select",
+   "in_list_view": 1,
    "label": "Ki\u1ec3u",
    "options": "Ki\u1ec3u M\u1ed9t\nKi\u1ec3u Hai\nKi\u1ec3u Ba"
   },
   {
    "fieldname": "column_break_vcvp",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "data3",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Hello 3"
+  },
+  {
+   "fieldname": "data6",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Hello 3 Copy Copy"
+  },
+  {
+   "fieldname": "data7",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Hello 3 Copy Copy"
+  },
+  {
+   "fieldname": "data8",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Hello 3 Copy Copy"
   }
  ],
  "grid_page_length": 50,
@@ -52,7 +78,7 @@
  "index_web_pages_for_search": 1,
  "is_calendar_and_gantt": 1,
  "links": [],
- "modified": "2025-10-29 15:56:51.535333",
+ "modified": "2025-11-01 10:05:32.429928",
  "modified_by": "Administrator",
  "module": "Setup",
  "name": "Display Group",
