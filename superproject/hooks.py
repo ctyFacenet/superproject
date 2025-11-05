@@ -155,13 +155,6 @@ app_include_js = [
 # 	}
 # }
 
-doc_events = {
-    "DocType": {
-        "after_insert": ["superproject.doc_events.general.after_insert.add_to_display"],
-        "on_trash": ["superproject.doc_events.general.on_trash.remove_from_display"]
-    },
-}
-
 # Scheduled Tasks
 # ---------------
 

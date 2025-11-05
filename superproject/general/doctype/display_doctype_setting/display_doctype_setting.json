@@ -1,42 +1,46 @@
 {
  "actions": [],
  "allow_rename": 1,
- "creation": "2025-10-27 09:52:12.685438",
+ "autoname": "prompt",
+ "creation": "2025-10-31 13:46:02.622332",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "items",
-  "modules"
+  "hide_tree",
+  "hide_flex"
  ],
  "fields": [
   {
-   "fieldname": "items",
-   "fieldtype": "Table",
-   "options": "Display Item"
+   "default": "0",
+   "fieldname": "hide_tree",
+   "fieldtype": "Check",
+   "label": "Hide Sidebar Section"
   },
   {
-   "fieldname": "modules",
-   "fieldtype": "Table",
-   "label": "Module Decoration",
-   "options": "Display Module Item"
+   "default": "0",
+   "fieldname": "hide_flex",
+   "fieldtype": "Check",
+   "label": "Hide Flex Section"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
- "issingle": 1,
  "links": [],
- "modified": "2025-10-31 09:53:44.001244",
+ "modified": "2025-10-31 14:31:34.134252",
  "modified_by": "Administrator",
- "module": "Setup",
- "name": "Display",
+ "module": "General",
+ "name": "Display Doctype Setting",
+ "naming_rule": "Set by user",
  "owner": "Administrator",
  "permissions": [
   {
    "create": 1,
    "delete": 1,
    "email": 1,
+   "export": 1,
    "print": 1,
    "read": 1,
+   "report": 1,
    "role": "System Manager",
    "share": 1,
    "write": 1

@@ -390,8 +390,8 @@ frappe.ui.toolbar.setup_custom_menu_bar = async function (hide = false) {
 			let link_to
 			if (breadcrumbs.length < 3) link_to = breadcrumbs[breadcrumbs.length - 1]
 			else link_to = breadcrumbs[1]
-			let result = await frappe.xcall('superproject.setup.doctype.display.display.get_module_display', { link_to_name: link_to });
-			let module_name = await frappe.xcall('superproject.setup.doctype.display.display.get_module_name', { link_to_name: link_to });
+			let result = await frappe.xcall('superproject.general.doctype.display.display.get_module_display', { link_to_name: link_to });
+			let module_name = await frappe.xcall('superproject.general.doctype.display.display.get_module_name', { link_to_name: link_to });
 			if (!result) return
 			$('.custom-menu-bar').empty();
 			$('.custom-menu-bar-submenu').remove();

@@ -5,7 +5,7 @@ frappe.pages['module-list'].on_page_load = async function(wrapper) {
         single_column: true
     });
 
-    let modules = await frappe.xcall('superproject.setup.doctype.display.display.get_modules_display');
+    let modules = await frappe.xcall('superproject.general.doctype.display.display.get_modules_display');
 
     $(frappe.render_template('module_list', { modules })).appendTo(page.body);
     $(".navbar-module").text('Trang chủ')

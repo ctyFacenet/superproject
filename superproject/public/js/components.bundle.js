@@ -1,5 +1,6 @@
 import { mountVue, unmountVue } from "./vue_helper.js";
 import BaseLayout from "./components/BaseLayout.vue";
+import Display from "../../general/doctype/display/Display.vue"
 
 frappe.provide("superproject.ui");
 superproject.ui.mountVue = mountVue;
@@ -26,3 +27,4 @@ function createVueWrapper(name, component) {
 }
 
 createVueWrapper("BaseLayout", BaseLayout);
+createVueWrapper("Display", Display)
