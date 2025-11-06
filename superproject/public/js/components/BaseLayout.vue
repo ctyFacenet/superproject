@@ -62,7 +62,7 @@ import { reactive, ref, computed } from "vue";
 import TreeFilter from "./TreeFilter.vue";
 import BaseTable from "./BaseTable.vue";
 import { SearchOutlined } from "@ant-design/icons-vue";
-import { doctypeActions } from "../components/config/doctype-actions";
+import { getDoctypeConfig } from "./config/doctype-configs";
 
 const props = defineProps({
   hide_tree: Boolean,
@@ -84,8 +84,8 @@ const state = reactive({
   hide_records: props.hide_records ?? false,
 });
 
-const currentActions = computed(() => doctypeActions[props.doctype]?.actions || []);
-const currentTitle = computed(() => doctypeActions[props.doctype]?.title || "");
+const currentActions = computed(() => getDoctypeConfig(props.doctype)?.actions || []);
+const currentTitle = computed(() => getDoctypeConfig(props.doctype)?.title || "");
 
 function updateSetting(key, value) {
   if (key in state) state[key] = value;

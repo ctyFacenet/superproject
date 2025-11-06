@@ -15,9 +15,10 @@ import {
   CloseOutlined
 } from "@ant-design/icons-vue";
 
-export const doctypeActions = {
+export const doctypeConfigs = {
   "Sale Order": {
     title: "DANH SÁCH ĐƠN HÀNG TỔNG",
+    groupByField: null,
     actions: [
       {
         label: "Thêm mới",
@@ -61,6 +62,7 @@ export const doctypeActions = {
 
   "Sale Order Detail": {
     title: "CHI TIẾT ĐƠN HÀNG",
+    groupByField: "detailordercode",
     actions: [
       {
         label: "Duyệt",
@@ -335,11 +337,12 @@ export const doctypeActions = {
   },
 };
 
-export const getDoctypeActions = (doctype) => {
-  if (doctypeActions[doctype]) return doctypeActions[doctype];
+export const getDoctypeConfig = (doctype) => {
+  if (doctypeConfigs[doctype]) return doctypeConfigs[doctype];
 
   return {
     title: doctype?.toUpperCase() || "DANH SÁCH",
+    groupByField: null,
     actions: [
       {
         label: "",

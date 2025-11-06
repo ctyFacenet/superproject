@@ -112,9 +112,9 @@
                   </template>
 
                   <template v-else-if="col.key === 'actions'">
-                    <div v-if="doctypeActions && getDoctypeActions(props.doctype)?.rowActions"
+                    <div v-if="doctypeConfigs && getDoctypeConfig(props.doctype)?.rowActions"
                       class="actions-cell tw-flex tw-items-center tw-justify-center tw-gap-3">
-                      <template v-for="(action, index) in getDoctypeActions(props.doctype)?.rowActions" :key="index">
+                      <template v-for="(action, index) in getDoctypeConfig(props.doctype)?.rowActions" :key="index">
                         <a-tooltip :title="action.label">
                           <component :is="action.icon"
                             class="tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out" :style="{
@@ -183,7 +183,7 @@ import dayjs from "dayjs";
 
 import { Spin as ASpin } from "ant-design-vue";
 import { statusColors } from "../utils/status-colors";
-import { doctypeActions, getDoctypeActions } from "../components/config/doctype-actions";
+import { doctypeConfigs, getDoctypeConfig } from "./config/doctype-configs";
 
 const props = defineProps({
   doctype: { type: String, required: true },
@@ -196,6 +196,9 @@ const emit = defineEmits(["rowClick", "view", "edit", "delete", "selection-chang
 const loading = ref(false);
 const columns = ref([]);
 const rows = ref([]);
+
+const config = computed(() => getDoctypeConfig(props.doctype));
+const groupByField = computed(() => config.value.groupByField);
 
 async function fetchData() {
   loading.value = true;
@@ -242,7 +245,7 @@ watch(() => props.doctype, fetchData);
 
 const filteredColumns = computed(() => {
   const cols = [...columns.value];
-  const actionsConfig = getDoctypeActions(props.doctype);
+  const actionsConfig = getDoctypeConfig(props.doctype);
   const hasActions =
     actionsConfig?.rowActions && actionsConfig.rowActions.length > 0;
 
@@ -293,15 +296,16 @@ const getStatusColor = (v) => {
 };
 
 const groupedRows = computed(() => {
-  if (!props.groupBy) return [];
+  if (!groupByField.value) return [];
   const map = new Map();
   (allRows.value || []).forEach((r) => {
-    const k = r[props.groupBy] || "Không xác định";
+    const k = r[groupByField.value] || "Không xác định";
     if (!map.has(k)) map.set(k, []);
     map.get(k).push(r);
   });
   return [...map].map(([key, rows]) => ({ key, rows }));
 });
+
 
 const totalPreviousRows = (idx) =>
   groupedRows.value.slice(0, idx).reduce((a, g) => a + (g.rows?.length || 0), 0);
