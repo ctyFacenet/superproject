@@ -54,10 +54,11 @@
               <th class="tw-sticky tw-left-0 tw-top-[33px] tw-z-30 tw-bg-pink-100 tw-border"></th>
               <th class="tw-sticky tw-left-[50px] tw-top-[33px] tw-z-30 tw-bg-pink-100 tw-border"></th>
 
-              <th v-for="col in filteredColumns || []" :key="col.key" class="tw-px-2 tw-py-1 tw-border tw-bg-white" :class="{
-                'tw-sticky tw-right-0 tw-z-30 tw-bg-pink-100':
-                  col.key === 'actions',
-              }" :style="{ width: colWidths[col.key] + 'px' }">
+              <th v-for="col in filteredColumns || []" :key="col.key" class="tw-px-2 tw-py-1 tw-border tw-bg-white"
+                :class="{
+                  'tw-sticky tw-right-0 tw-z-30 tw-bg-pink-100':
+                    col.key === 'actions',
+                }" :style="{ width: colWidths[col.key] + 'px' }">
                 <template v-if="col.fieldtype === 'Date'">
                   <a-range-picker v-model:value="dateFilters[col.key]" format="DD/MM/YYYY" size="small"
                     :placeholder="['Từ ngày', 'Đến ngày']" class="tw-w-full tw-text-xs" />
@@ -144,7 +145,7 @@
       </div>
 
       <div
-        class="tw-flex tw-flex-col sm:tw-flex-row sm:tw-justify-between sm:tw-items-center tw-py-2 tw-px-3 tw-border-gray-200 tw-bg-gray-50 tw-text-xs">
+        class="tw-flex tw-flex-col sm:tw-flex-row sm:tw-justify-between sm:tw-items-center tw-py-2 tw-px-3 tw-border-gray-200 tw-bg-gray-50 tw-text-[14px] tw-font-medium">
         <a-select v-model:value="pageSize" :options="pageSizeOptions" class="tw-hidden sm:tw-block tw-w-[110px]"
           @change="onPageSizeChange" />
         <div
@@ -473,10 +474,10 @@ const handleScroll = () => {
 
 
 <style scoped>
-
 .actions-cell svg {
   transition: transform 0.2s ease, color 0.2s ease;
 }
+
 .actions-cell svg:hover {
   transform: scale(1.15);
   filter: brightness(1.2);
@@ -629,6 +630,6 @@ const handleScroll = () => {
 :deep(.ant-pagination-item),
 :deep(.ant-select-selector),
 :deep(.ant-input-number-input) {
-  font-size: 12px !important;
+  font-size: 14px !important;
 }
 </style>
