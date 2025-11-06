@@ -31,3 +31,20 @@ Pre-commit is configured to use the following tools for checking and formatting 
 ### License
 
 mit
+
+### Create new site
+
+bench new-site research
+123
+admin
+admin
+
+### Example
+
+bench --site research install-app superproject
+
+### Switch app custom
+
+bench use research / development.localhost
+
+bench start

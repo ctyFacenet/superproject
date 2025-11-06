@@ -30,7 +30,8 @@ app_include_css = [
     "/assets/superproject/css/main.css",
     "/assets/superproject/css/menu-bar.css",
     "/assets/superproject/css/build.css",
-    "/assets/superproject/css/tailwind.css"
+    "/assets/superproject/css/tailwind.css",
+    "/assets/superproject/scss/login.bundle.scss",
 ]
 
 app_include_js = [
@@ -39,7 +40,9 @@ app_include_js = [
 ]
 
 # include js, css files in header of web template
-# web_include_css = "/assets/superproject/css/superproject.css"
+web_include_css = [
+    "/assets/superproject/css/web.css",
+]
 # web_include_js = "/assets/superproject/js/superproject.js"
 
 # include custom scss in every website theme (without file extension ".scss")
@@ -94,6 +97,7 @@ app_include_js = [
 
 # before_install = "superproject.install.before_install"
 # after_install = "superproject.install.after_install"
+after_install = "superproject.setup.setup_website"
 
 # Uninstallation
 # ------------
