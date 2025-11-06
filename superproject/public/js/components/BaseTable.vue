@@ -23,7 +23,7 @@
                 <input type="checkbox" ref="selectAllRef" v-model="selectAll" @change="toggleSelectAll" />
               </th>
 
-              <th v-for="col in columns || []" :key="col.key"
+              <th v-for="col in filteredColumns || []" :key="col.key"
                 class="tw-relative tw-border tw-border-gray-200 tw-font-semibold tw-text-center tw-px-3 tw-py-2 tw-group"
                 :class="[
                   {
@@ -54,7 +54,7 @@
               <th class="tw-sticky tw-left-0 tw-top-[33px] tw-z-30 tw-bg-pink-100 tw-border"></th>
               <th class="tw-sticky tw-left-[50px] tw-top-[33px] tw-z-30 tw-bg-pink-100 tw-border"></th>
 
-              <th v-for="col in columns || []" :key="col.key" class="tw-px-2 tw-py-1 tw-border tw-bg-white" :class="{
+              <th v-for="col in filteredColumns || []" :key="col.key" class="tw-px-2 tw-py-1 tw-border tw-bg-white" :class="{
                 'tw-sticky tw-right-0 tw-z-30 tw-bg-pink-100':
                   col.key === 'actions',
               }" :style="{ width: colWidths[col.key] + 'px' }">
@@ -97,7 +97,7 @@
                   <input type="checkbox" :checked="selectedRows.has(row)" @change="toggleRow(null, row, $event)" />
                 </td>
 
-                <td v-for="col in columns || []" :key="col.key"
+                <td v-for="col in filteredColumns || []" :key="col.key"
                   class="tw-border tw-px-2 tw-py-1 tw-text-center tw-relative" :class="{
                     'tw-sticky sticky-right-fade tw-right-0 tw-z-20 tw-bg-pink-100 tw-text-center':
                       col.key === 'actions',
@@ -181,9 +181,8 @@ import { ref, computed, watch, shallowRef, onMounted } from "vue";
 import dayjs from "dayjs";
 
 import { Spin as ASpin } from "ant-design-vue";
-import { statusColors } from "../utils/status-colors"
+import { statusColors } from "../utils/status-colors";
 import { doctypeActions } from "../components/config/doctype-actions";
-
 
 const props = defineProps({
   doctype: { type: String, required: true },
@@ -202,23 +201,26 @@ async function fetchData() {
   try {
     const meta = await frappe.get_meta(props.doctype);
     let visibleFields = meta.fields
-      .filter(f => f.in_list_view)
-      .map(f => ({ title: f.label || f.fieldname, key: f.fieldname, fieldtype: f.fieldtype }));
+      .filter((f) => f.in_list_view)
+      .map((f) => ({
+        title: f.label || f.fieldname,
+        key: f.fieldname,
+        fieldtype: f.fieldtype,
+      }));
 
-    let firstCol = meta.title_field ? visibleFields.find(f => f.key === meta.title_field) : null;
-    if (firstCol) visibleFields = visibleFields.filter(f => f.key !== firstCol.key);
-    visibleFields.push({ title: 'Thao tác', key: 'actions' });
+    let firstCol = meta.title_field ? visibleFields.find((f) => f.key === meta.title_field) : null;
+    if (firstCol) visibleFields = visibleFields.filter((f) => f.key !== firstCol.key);
+
+    visibleFields.push({ title: "Thao tác", key: "actions" });
     columns.value = visibleFields;
 
-    visibleFields.forEach(f => {
+    visibleFields.forEach((f) => {
       if (!colWidths.value[f.key]) colWidths.value[f.key] = 160;
     });
 
     const fieldNames = [
-      'name',
-      ...visibleFields
-        .filter(f => f.key !== 'actions' && f.key !== 'name')
-        .map(f => f.key),
+      "name",
+      ...visibleFields.filter((f) => f.key !== "actions" && f.key !== "name").map((f) => f.key),
     ];
 
     const data = await frappe.db.get_list(props.doctype, {
@@ -228,15 +230,22 @@ async function fetchData() {
 
     rows.value = data;
   } catch (err) {
-    console.error('fetchData error:', err);
+    console.error("fetchData error:", err);
   } finally {
     loading.value = false;
   }
 }
 
-
 onMounted(fetchData);
 watch(() => props.doctype, fetchData);
+
+const filteredColumns = computed(() => {
+  const cols = [...columns.value];
+  const hasActions =
+    doctypeActions?.[props.doctype]?.rowActions &&
+    doctypeActions[props.doctype].rowActions.length > 0;
+  return hasActions ? cols : cols.filter((col) => col.key !== "actions");
+});
 
 const allRows = shallowRef(rows.value || []);
 watch(rows, (val) => (allRows.value = val || []));
@@ -245,7 +254,6 @@ const openForm = (row) => {
   emit("rowClick", row);
   if (!props.doctype || !row) return;
   const docName = row[props.nameKey] || row.name || row.id || null;
-
   if (docName) frappe.set_route("Form", props.doctype, docName);
 };
 
@@ -258,13 +266,11 @@ const handleRowClick = (event, row) => {
 };
 
 const isProductionCell = (key) => !!key && /(can|kdai|ktrung|ktieu|mahz|malh|mavt)/i.test(key);
-
 const getProgressWidth = (v) => {
   if (!v || typeof v !== "string" || !v.includes("/")) return 0;
   const [done, total] = v.split("/").map(Number);
   return total ? Math.min(100, (done / total) * 100) : 0;
 };
-
 const getStatusColor = (v) => {
   if (!v) return "#9ca3af";
   const s = v.toString().toLowerCase();
@@ -333,8 +339,7 @@ const toggleSelectAll = () => {
   if (selectAll.value) {
     if (props.groupBy) {
       groupedRows.value.forEach((g) => {
-        if (!selectedGroups.value.includes(g.key))
-          selectedGroups.value.push(g.key);
+        if (!selectedGroups.value.includes(g.key)) selectedGroups.value.push(g.key);
         g.rows.forEach((r) => selectedRows.value.add(r));
       });
     } else {
@@ -352,8 +357,7 @@ watch(selectedRows, () => {
     : filteredRows.value.length;
   const count = selectedRows.value.size;
   selectAll.value = count > 0 && count === total;
-  if (selectAllRef.value)
-    selectAllRef.value.indeterminate = count > 0 && count < total;
+  if (selectAllRef.value) selectAllRef.value.indeterminate = count > 0 && count < total;
 });
 
 const filters = ref({});
@@ -374,8 +378,10 @@ const filteredRows = computed(() =>
         const range = dateFilters.value[c.key];
         if (!range || range?.length !== 2) return true;
         const d = dayjs(r[c.key], "DD-MM-YYYY");
-        return d.isAfter(dayjs(range[0]).startOf("day")) &&
-          d.isBefore(dayjs(range[1]).endOf("day"));
+        return (
+          d.isAfter(dayjs(range[0]).startOf("day")) &&
+          d.isBefore(dayjs(range[1]).endOf("day"))
+        );
       }
       const val = (r[c.key] || "").toString().toLowerCase();
       const f = (filters.value[c.key] || "").toString().toLowerCase();
@@ -423,11 +429,15 @@ const pagedGroups = computed(() => {
 });
 
 const colWidths = ref({});
-watch(columns, (cols) => {
-  cols?.forEach((c) => {
-    if (!colWidths.value[c.key]) colWidths.value[c.key] = 160;
-  });
-}, { immediate: true });
+watch(
+  columns,
+  (cols) => {
+    cols?.forEach((c) => {
+      if (!colWidths.value[c.key]) colWidths.value[c.key] = 160;
+    });
+  },
+  { immediate: true }
+);
 
 const resizing = ref({ active: false, k: null, x: 0, w: 0 });
 const startResize = (e, k) => {
