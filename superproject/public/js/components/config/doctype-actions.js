@@ -334,3 +334,44 @@ export const doctypeActions = {
     ],
   },
 };
+
+export const getDoctypeActions = (doctype) => {
+  if (doctypeActions[doctype]) return doctypeActions[doctype];
+
+  return {
+    title: doctype?.toUpperCase() || "DANH SÁCH",
+    actions: [
+      {
+        label: "",
+        icon: CopyOutlined,
+        color: "#6B7280",
+        hoverColor: "#9CA3AF",
+        onClick: () => { },
+      },
+    ],
+    rowActions: [
+      {
+        label: "Xem chi tiết",
+        icon: EyeOutlined,
+        color: "#3B82F6",
+        hoverColor: "#60A5FA",
+        onClick: (row) => frappe.msgprint(`Xem ${row.name}`),
+      },
+      {
+        label: "Chỉnh sửa",
+        icon: EditOutlined,
+        color: "#22C55E",
+        hoverColor: "#4ADE80",
+        onClick: (row) => frappe.msgprint(`Chỉnh sửa ${row.name}`),
+      },
+      {
+        label: "Xóa",
+        icon: DeleteOutlined,
+        color: "#EF4444",
+        hoverColor: "#F87171",
+        onClick: (row) => frappe.msgprint(`Xóa ${row.name}`),
+      },
+    ],
+  };
+};
+

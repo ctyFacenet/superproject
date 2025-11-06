@@ -112,9 +112,9 @@
                   </template>
 
                   <template v-else-if="col.key === 'actions'">
-                    <div v-if="doctypeActions && doctypeActions[props.doctype]?.rowActions"
+                    <div v-if="doctypeActions && getDoctypeActions(props.doctype)?.rowActions"
                       class="actions-cell tw-flex tw-items-center tw-justify-center tw-gap-3">
-                      <template v-for="(action, index) in doctypeActions[props.doctype].rowActions" :key="index">
+                      <template v-for="(action, index) in getDoctypeActions(props.doctype)?.rowActions" :key="index">
                         <a-tooltip :title="action.label">
                           <component :is="action.icon"
                             class="tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out" :style="{
@@ -183,7 +183,7 @@ import dayjs from "dayjs";
 
 import { Spin as ASpin } from "ant-design-vue";
 import { statusColors } from "../utils/status-colors";
-import { doctypeActions } from "../components/config/doctype-actions";
+import { doctypeActions, getDoctypeActions } from "../components/config/doctype-actions";
 
 const props = defineProps({
   doctype: { type: String, required: true },
@@ -242,9 +242,10 @@ watch(() => props.doctype, fetchData);
 
 const filteredColumns = computed(() => {
   const cols = [...columns.value];
+  const actionsConfig = getDoctypeActions(props.doctype);
   const hasActions =
-    doctypeActions?.[props.doctype]?.rowActions &&
-    doctypeActions[props.doctype].rowActions.length > 0;
+    actionsConfig?.rowActions && actionsConfig.rowActions.length > 0;
+
   return hasActions ? cols : cols.filter((col) => col.key !== "actions");
 });
 

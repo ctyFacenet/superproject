@@ -893,8 +893,8 @@ video {
   font-size: 13px !important;
 }
 
-.tw-text-\[15px\] {
-  font-size: 15px !important;
+.tw-text-\[14px\] {
+  font-size: 14px !important;
 }
 
 .tw-text-base {
@@ -910,10 +910,6 @@ video {
 .tw-text-xs {
   font-size: 0.75rem !important;
   line-height: 1rem !important;
-}
-
-.tw-text-\[14px\] {
-  font-size: 14px !important;
 }
 
 .tw-font-\[500\] {
