@@ -647,10 +647,6 @@ video {
   min-height: 0px !important;
 }
 
-.tw-min-h-\[80px\] {
-  min-height: 80px !important;
-}
-
 .tw-w-3 {
   width: 0.75rem !important;
 }
@@ -720,8 +716,8 @@ video {
   align-items: center !important;
 }
 
-.tw-justify-start {
-  justify-content: flex-start !important;
+.tw-justify-end {
+  justify-content: flex-end !important;
 }
 
 .tw-justify-center {
@@ -744,10 +740,6 @@ video {
   gap: 1rem !important;
 }
 
-.tw-overflow-auto {
-  overflow: auto !important;
-}
-
 .tw-overflow-hidden {
   overflow: hidden !important;
 }
@@ -758,10 +750,6 @@ video {
 
 .tw-overflow-y-auto {
   overflow-y: auto !important;
-}
-
-.tw-overflow-y-hidden {
-  overflow-y: hidden !important;
 }
 
 .tw-truncate {
@@ -866,11 +854,6 @@ video {
 .tw-px-3 {
   padding-left: 0.75rem !important;
   padding-right: 0.75rem !important;
-}
-
-.tw-px-4 {
-  padding-left: 1rem !important;
-  padding-right: 1rem !important;
 }
 
 .tw-py-1 {
@@ -1021,12 +1004,6 @@ video {
 .tw-shadow-\[-4px_0_6px_rgba\(0\,0\,0\,0\.15\)\] {
   --tw-shadow: -4px 0 6px rgba(0,0,0,0.15) !important;
   --tw-shadow-colored: -4px 0 6px var(--tw-shadow-color) !important;
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;
-}
-
-.tw-shadow-\[3px_0_6px_rgba\(0\,0\,0\,0\.12\)\] {
-  --tw-shadow: 3px 0 6px rgba(0,0,0,0.12) !important;
-  --tw-shadow-colored: 3px 0 6px var(--tw-shadow-color) !important;
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;
 }
 

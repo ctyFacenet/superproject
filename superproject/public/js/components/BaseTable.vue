@@ -8,19 +8,19 @@
       <div class="fade-right" v-show="scrollRight > 5"></div>
 
       <div ref="scrollWrapper"
-        class="tw-flex-1 tw-overflow-x-auto tw-overflow-y-auto tw-max-h-[70vh] tw-border tw-border-gray-100 tw-relative"
+        class="tw-flex-1 tw-overflow-x-auto tw-overflow-y-auto tw-max-h-[70vh] tw-relative"
         @scroll="handleScroll">
         <table class="tw-min-w-max tw-border-collapse tw-w-full" ref="tableRef">
           <thead class="tw-sticky tw-top-0 tw-z-20">
 
             <tr class="tw-bg-blue-50 tw-border-b tw-border-gray-300 tw-text-gray-700 tw-text-[13px]">
               <th
-                class="tw-sticky tw-left-0 tw-top-0 tw-z-40 tw-bg-pink-100 tw-w-[50px] tw-text-center tw-border tw-shadow-[3px_0_6px_rgba(0,0,0,0.12)]">
+                class="tw-sticky sticky-left-fade tw-left-0 tw-top-0 tw-z-40 tw-bg-pink-100 tw-w-[50px] tw-text-center tw-border">
                 STT
               </th>
 
               <th
-                class="tw-sticky tw-left-[50px] tw-top-0 tw-z-40 tw-bg-pink-100 tw-w-[45px] tw-text-center tw-border tw-shadow-[3px_0_6px_rgba(0,0,0,0.12)]">
+                class="tw-sticky sticky-left-fade tw-left-[50px] tw-top-0 tw-z-40 tw-bg-pink-100 tw-w-[45px] tw-text-center tw-border">
                 <input type="checkbox" ref="selectAllRef" v-model="selectAll" @change="toggleSelectAll" />
               </th>
 
@@ -56,7 +56,7 @@
               <th class="tw-sticky tw-left-[50px] tw-top-[33px] tw-z-30 tw-bg-pink-100 tw-border"></th>
 
               <th v-for="col in columns || []" :key="col.key" class="tw-px-2 tw-py-1 tw-border tw-bg-white" :class="{
-                'tw-sticky tw-right-0 tw-z-30 tw-bg-pink-100 tw-shadow-[-4px_0_6px_rgba(0,0,0,0.15)]':
+                'tw-sticky tw-right-0 tw-z-30 tw-bg-pink-100':
                   col.key === 'actions',
               }" :style="{ width: colWidths[col.key] + 'px' }">
                 <template v-if="col.fieldtype === 'Date'">
@@ -100,7 +100,7 @@
 
                 <td v-for="col in columns || []" :key="col.key"
                   class="tw-border tw-px-2 tw-py-1 tw-text-center tw-relative" :class="{
-                    'tw-sticky tw-right-0 tw-z-20 tw-bg-pink-100 tw-text-center tw-shadow-[-4px_0_6px_rgba(0,0,0,0.15)]':
+                    'tw-sticky sticky-right-fade tw-right-0 tw-z-20 tw-bg-pink-100 tw-text-center':
                       col.key === 'actions',
                   }" :style="{ width: colWidths[col.key] + 'px' }">
                   <template v-if="col.key === 'status'">
@@ -464,6 +464,27 @@ const handleScroll = () => {
 
 
 <style scoped>
+
+.sticky-left-fade::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -2px;
+  width: 2px;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.sticky-right-fade::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -2px;
+  width: 2px;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.05);
+}
+
 :deep(.ant-pagination) {
   display: flex;
   align-items: center;

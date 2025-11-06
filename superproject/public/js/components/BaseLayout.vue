@@ -1,66 +1,60 @@
 <template>
   <div class="tw-flex tw-flex-row tw-gap-4 tw-p-4 tw-bg-gray-50 tw-h-screen tw-overflow-hidden">
+
     <Transition name="slide-left">
       <div v-if="!state.hide_tree" class="tw-flex-shrink-0 tw-sticky tw-left-0">
         <slot name="tree">
           <div v-if="showFilter"
-            class="lg:tw-w-[250px] tw-bg-white tw-rounded-xl tw-shadow tw-p-3 tw-h-full tw-overflow-y-auto tw-border tw-border-gray-200">
+            class="lg:tw-w-[250px] tw-bg-white tw-rounded-xl tw-shadow tw-p-3 tw-h-full tw-overflow-y-auto">
             <TreeFilter :showDateFilter="true" @change="onFilterChange" />
           </div>
         </slot>
       </div>
     </Transition>
 
-    <div class="tw-flex-1 tw-overflow-x-auto tw-overflow-y-hidden">
-      <div class="tw-flex tw-flex-col tw-gap-4 tw-min-w-max tw-h-full">
+    <div class="tw-flex-1 tw-flex tw-flex-col tw-overflow-hidden">
 
-        <Transition name="slide-up">
-          <div v-if="!state.hide_flex"
-            class="tw-rounded-lg tw-px-4 tw-py-3 tw-bg-white tw-min-h-[80px] tw-flex-shrink-0 tw-overflow-auto tw-border tw-border-gray-200">
-            <slot name="flex">
-              <div class="tw-flex tw-flex-col tw-gap-2">
+      <Transition name="slide-up">
+        <div v-if="!state.hide_flex" class="tw-py-3 tw-flex-shrink-0">
+          <slot name="flex">
+            <div class="tw-flex tw-flex-col tw-gap-2">
+              <h2 class="tw-text-base md:tw-text-lg tw-text-center tw-font-semibold tw-text-gray-900 tw-uppercase">
+                {{ currentTitle }}
+              </h2>
 
-                <h2 class="tw-text-base md:tw-text-lg tw-text-center tw-font-semibold tw-text-gray-900 tw-uppercase">
-                  {{ currentTitle }}
-                </h2>
-
-                <div class="tw-flex tw-items-center tw-justify-start tw-gap-3 tw-flex-wrap">
-                  <div class="tw-flex tw-items-center tw-gap-2">
-                    <template v-for="btn in currentActions" :key="btn.label">
-                      <a-button type="link"
-                        class="tw-flex tw-items-center tw-gap-1 tw-text-[#0ba5ec] hover:tw-text-[#0987c1] tw-font-medium tw-p-0"
-                        @click="btn.onClick">
-                        <component :is="btn.icon" v-if="btn.icon" />
-                        {{ btn.label }}
-                      </a-button>
-                    </template>
-                  </div>
-
-                  <a-input placeholder="Nhập thông tin để tìm kiếm"
-                    class="tw-w-[300px] sm:tw-w-[220px] md:tw-w-[260px] lg:tw-w-[300px] tw-h-[30px] tw-text-[13px] tw-rounded-sm tw-border-[#0ba5ec] focus:tw-shadow-none"
-                    size="small" allowClear>
-                    <template #prefix>
-                      <SearchOutlined class="tw-text-gray-400" />
-                    </template>
-                  </a-input>
+              <div class="tw-flex tw-items-center tw-justify-end tw-flex-wrap tw-gap-3">
+                <div class="tw-flex tw-items-center tw-gap-2">
+                  <template v-for="btn in currentActions" :key="btn.label">
+                    <a-button type="link"
+                      class="tw-flex tw-items-center tw-gap-1 tw-text-[#0ba5ec] hover:tw-text-[#0987c1] tw-font-medium tw-p-0"
+                      @click="btn.onClick">
+                      <component :is="btn.icon" v-if="btn.icon" />
+                      {{ btn.label }}
+                    </a-button>
+                  </template>
                 </div>
+
+                <a-input placeholder="Nhập thông tin để tìm kiếm"
+                  class="tw-w-[300px] sm:tw-w-[220px] md:tw-w-[260px] lg:tw-w-[300px] tw-h-[30px] tw-text-[13px] tw-rounded-sm tw-border-[#0ba5ec] focus:tw-shadow-none"
+                  size="small" allowClear>
+                  <template #prefix>
+                    <SearchOutlined class="tw-text-gray-400" />
+                  </template>
+                </a-input>
               </div>
-            </slot>
-          </div>
-        </Transition>
-
-
-
-        <div v-if="!state.hide_records"
-          class="tw-rounded-lg tw-p-3 tw-flex-1 tw-min-h-0 tw-border tw-border-gray-200 tw-bg-white"
-          style="background-color: rgb(232, 243, 255)">
-          <slot name="records">
-            <BaseTable :doctype="props.doctype" />
+            </div>
           </slot>
         </div>
+      </Transition>
+
+      <div v-if="!state.hide_records" class="tw-rounded-lg tw-flex-1 tw-min-h-0 tw-bg-white tw-overflow-x-auto">
+        <slot name="records">
+          <BaseTable :doctype="props.doctype" />
+        </slot>
       </div>
     </div>
   </div>
+
 </template>
 
 <script setup>
