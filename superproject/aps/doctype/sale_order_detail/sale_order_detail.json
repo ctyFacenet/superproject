@@ -14,13 +14,13 @@
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Tr\u1ea1ng th\u00e1i",
-   "options": "B\u1ea3n nh\u00e1p"
+   "options": "B\u1ea3n nh\u00e1p\nHo\u00e0n th\u00e0nh\n\u0110\u00e3 th\u1ef1c hi\u1ec7n 1 ph\u1ea7n\n\u0110\u00e3 duy\u1ec7t"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-11-06 09:39:30.477078",
+ "modified": "2025-11-06 14:06:51.073298",
  "modified_by": "Administrator",
  "module": "APS",
  "name": "Sale Order Detail",

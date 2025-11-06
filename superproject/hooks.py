@@ -32,11 +32,13 @@ app_include_css = [
     "/assets/superproject/css/build.css",
     "/assets/superproject/css/tailwind.css",
     "/assets/superproject/scss/login.bundle.scss",
+    "/assets/superproject/css/custom_confirm.css",
 ]
 
 app_include_js = [
     "setup.bundle.js",
     "superproject.bundle.js",
+    "/assets/superproject/js/confirmBox/custom_confirm_modal.js",
 ]
 
 # include js, css files in header of web template

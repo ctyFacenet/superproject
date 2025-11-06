@@ -1,79 +1,103 @@
 <template>
-  <div 
-    class="tw-flex tw-flex-col lg:tw-flex-row tw-gap-4 tw-w-full"
-    style="height: calc(100vh - 200px);"
-  >
-    <!-- Column 1: Tree Section -->
+  <div class="tw-flex tw-flex-row tw-gap-4 tw-p-4 tw-bg-gray-50 tw-h-screen tw-overflow-hidden">
     <Transition name="slide-left">
-      <div
-        v-if="!state.hide_tree"
-        class="tw-rounded-lg tw-p-3 tw-w-full lg:tw-w-[220px] tw-flex-shrink-0 tw-overflow-auto"
-        style="background-color: rgb(232, 243, 255);"
-      >
+      <div v-if="!state.hide_tree" class="tw-flex-shrink-0 tw-sticky tw-left-0">
         <slot name="tree">
-          <div class="tw-text-center">Tree Map Section</div>
+          <div v-if="showFilter"
+            class="lg:tw-w-[250px] tw-bg-white tw-rounded-xl tw-shadow tw-p-3 tw-h-full tw-overflow-y-auto tw-border tw-border-gray-200">
+            <TreeFilter :showDateFilter="true" @change="onFilterChange" />
+          </div>
         </slot>
       </div>
     </Transition>
 
-    <!-- Column 2: Flex + Records -->
-    <div
-      class="tw-flex tw-flex-col tw-gap-4 tw-flex-1 tw-min-h-0"
-      :class="{ 'tw-w-full': state.hide_tree }"
-    >
-      <!-- Flex Section -->
-      <Transition name="slide-up">
-        <div
-          v-if="!state.hide_flex"
-          class="tw-rounded-lg tw-p-3 tw-min-h-[100px] tw-flex-shrink-0 tw-overflow-auto"
-          style="background-color: rgb(232, 243, 255);"
-        >
-          <slot name="flex">
-            <div class="tw-text-center">Flex Section</div>
+    <div class="tw-flex-1 tw-overflow-x-auto tw-overflow-y-hidden">
+      <div class="tw-flex tw-flex-col tw-gap-4 tw-min-w-max tw-h-full">
+
+        <Transition name="slide-up">
+          <div v-if="!state.hide_flex"
+            class="tw-rounded-lg tw-px-4 tw-py-3 tw-bg-white tw-min-h-[80px] tw-flex-shrink-0 tw-overflow-auto tw-border tw-border-gray-200">
+            <slot name="flex">
+              <div class="tw-flex tw-flex-col tw-gap-2">
+
+                <h2 class="tw-text-base md:tw-text-lg tw-text-center tw-font-semibold tw-text-gray-900 tw-uppercase">
+                  {{ currentTitle }}
+                </h2>
+
+                <div class="tw-flex tw-items-center tw-justify-start tw-gap-3 tw-flex-wrap">
+                  <div class="tw-flex tw-items-center tw-gap-2">
+                    <template v-for="btn in currentActions" :key="btn.label">
+                      <a-button type="link"
+                        class="tw-flex tw-items-center tw-gap-1 tw-text-[#0ba5ec] hover:tw-text-[#0987c1] tw-font-medium tw-p-0"
+                        @click="btn.onClick">
+                        <component :is="btn.icon" v-if="btn.icon" />
+                        {{ btn.label }}
+                      </a-button>
+                    </template>
+                  </div>
+
+                  <a-input placeholder="Nhập thông tin để tìm kiếm"
+                    class="tw-w-[300px] sm:tw-w-[220px] md:tw-w-[260px] lg:tw-w-[300px] tw-h-[30px] tw-text-[13px] tw-rounded-sm tw-border-[#0ba5ec] focus:tw-shadow-none"
+                    size="small" allowClear>
+                    <template #prefix>
+                      <SearchOutlined class="tw-text-gray-400" />
+                    </template>
+                  </a-input>
+                </div>
+              </div>
+            </slot>
+          </div>
+        </Transition>
+
+
+
+        <div v-if="!state.hide_records"
+          class="tw-rounded-lg tw-p-3 tw-flex-1 tw-min-h-0 tw-border tw-border-gray-200 tw-bg-white"
+          style="background-color: rgb(232, 243, 255)">
+          <slot name="records">
+            <BaseTable :doctype="props.doctype" />
           </slot>
         </div>
-      </Transition>
-
-      <!-- Record List Section -->
-      <div
-        v-if="!state.hide_records"
-        class="tw-rounded-lg tw-p-3 tw-flex-1 tw-min-h-0 tw-overflow-auto"
-        style="background-color: rgb(232, 243, 255);"
-      >
-        <slot name="records">
-          <BaseTable :doctype="doctype" />
-        </slot>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { reactive } from 'vue'
-import BaseTable from "./BaseTable.vue"
+import { reactive, ref, computed } from "vue";
+import TreeFilter from "./TreeFilter.vue";
+import BaseTable from "./BaseTable.vue";
+import { SearchOutlined } from "@ant-design/icons-vue";
+import { doctypeActions } from "../components/config/doctype-actions";
 
 const props = defineProps({
   hide_tree: Boolean,
   hide_flex: Boolean,
   hide_records: Boolean,
-  doctype: String
-})
+  doctype: String,
+  showDateFilter: Boolean,
+  title: String,
+});
+
+const showFilter = ref(true);
+const onFilterChange = () => {
+  if (window.innerWidth < 1024) showFilter.value = false;
+};
 
 const state = reactive({
   hide_tree: props.hide_tree,
   hide_flex: props.hide_flex,
   hide_records: props.hide_records ?? false,
-})
+});
+
+const currentActions = computed(() => doctypeActions[props.doctype]?.actions || []);
+const currentTitle = computed(() => doctypeActions[props.doctype]?.title || "");
 
 function updateSetting(key, value) {
-  if (key in state) {
-    state[key] = value
-  }
+  if (key in state) state[key] = value;
 }
 
-defineExpose({
-  updateSetting
-})
+defineExpose({ updateSetting });
 </script>
 
 <style scoped>
@@ -81,10 +105,8 @@ defineExpose({
 .slide-left-leave-active {
   transition: all 0.4s ease;
 }
-.slide-left-enter-from {
-  transform: translateX(-20px);
-  opacity: 0;
-}
+
+.slide-left-enter-from,
 .slide-left-leave-to {
   transform: translateX(-20px);
   opacity: 0;
@@ -94,10 +116,8 @@ defineExpose({
 .slide-up-leave-active {
   transition: all 0.4s ease;
 }
-.slide-up-enter-from {
-  transform: translateY(-20px);
-  opacity: 0;
-}
+
+.slide-up-enter-from,
 .slide-up-leave-to {
   transform: translateY(-20px);
   opacity: 0;
