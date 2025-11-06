@@ -5,7 +5,26 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "status"
+  "detailordercode",
+  "status",
+  "detailordercreationdate",
+  "masterordercode",
+  "masterordercreationdate",
+  "column_break_pyrv",
+  "customercode",
+  "customername",
+  "itemcode",
+  "itemname",
+  "column_break_imav",
+  "requestedquantity",
+  "reservedquantity",
+  "requiredproductionquantity",
+  "completedquantity",
+  "column_break_jels",
+  "deliveredquantity",
+  "deliverydate",
+  "uom",
+  "remainingdeliveryquantity"
  ],
  "fields": [
   {
@@ -15,12 +34,123 @@
    "in_list_view": 1,
    "label": "Tr\u1ea1ng th\u00e1i",
    "options": "B\u1ea3n nh\u00e1p\nHo\u00e0n th\u00e0nh\n\u0110\u00e3 th\u1ef1c hi\u1ec7n 1 ph\u1ea7n\n\u0110\u00e3 duy\u1ec7t"
+  },
+  {
+   "fieldname": "detailordercode",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e3 \u0111\u01a1n h\u00e0ng chi ti\u1ebft",
+   "placeholder": "M\u00e3 \u0111\u01a1n h\u00e0ng chi ti\u1ebft"
+  },
+  {
+   "fieldname": "column_break_pyrv",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_imav",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_jels",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "detailordercreationdate",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Ng\u00e0y t\u1ea1o \u0111\u01a1n chi ti\u1ebft"
+  },
+  {
+   "fieldname": "masterordercode",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e3 \u0111\u01a1n h\u00e0ng t\u1ed5ng"
+  },
+  {
+   "fieldname": "masterordercreationdate",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Ng\u00e0y t\u1ea1o \u0111\u01a1n h\u00e0ng t\u1ed5ng"
+  },
+  {
+   "fieldname": "customercode",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e3 kh\u00e1ch h\u00e0ng"
+  },
+  {
+   "fieldname": "customername",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Kh\u00e1ch h\u00e0ng"
+  },
+  {
+   "fieldname": "itemcode",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e3 h\u00e0ng"
+  },
+  {
+   "fieldname": "itemname",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "T\u00ean h\u00e0ng"
+  },
+  {
+   "fieldname": "requestedquantity",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "S\u1ed1 l\u01b0\u1ee3ng y\u00eau c\u1ea7u"
+  },
+  {
+   "fieldname": "reservedquantity",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "S\u1ed1 l\u01b0\u1ee3ng gi\u1eef"
+  },
+  {
+   "fieldname": "requiredproductionquantity",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "S\u1ed1 l\u01b0\u1ee3ng c\u1ea7n s\u1ea3n xu\u1ea5t"
+  },
+  {
+   "fieldname": "deliveredquantity",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "S\u1ed1 l\u01b0\u1ee3ng \u0111\u00e3 giao"
+  },
+  {
+   "fieldname": "remainingdeliveryquantity",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "S\u1ed1 l\u01b0\u1ee3ng c\u00f2n ph\u1ea3i giao"
+  },
+  {
+   "fieldname": "completedquantity",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "S\u1ed1 l\u01b0\u1ee3ng ho\u00e0n th\u00e0nh"
+  },
+  {
+   "default": "Kg",
+   "fieldname": "uom",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "\u0110\u01a1n v\u1ecb t\u00ednh",
+   "placeholder": "Kg"
+  },
+  {
+   "fieldname": "deliverydate",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Ng\u00e0y giao h\u00e0ng"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-11-06 14:06:51.073298",
+ "modified": "2025-11-06 15:16:11.560203",
  "modified_by": "Administrator",
  "module": "APS",
  "name": "Sale Order Detail",

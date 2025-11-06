@@ -7,8 +7,7 @@
       <div class="fade-left" v-show="scrollLeft > 5"></div>
       <div class="fade-right" v-show="scrollRight > 5"></div>
 
-      <div ref="scrollWrapper"
-        class="tw-flex-1 tw-overflow-x-auto tw-overflow-y-auto tw-max-h-[70vh] tw-relative"
+      <div ref="scrollWrapper" class="tw-flex-1 tw-overflow-x-auto tw-overflow-y-auto tw-max-h-[70vh] tw-relative"
         @scroll="handleScroll">
         <table class="tw-min-w-max tw-border-collapse tw-w-full" ref="tableRef">
           <thead class="tw-sticky tw-top-0 tw-z-20">
@@ -112,19 +111,18 @@
                   </template>
 
                   <template v-else-if="col.key === 'actions'">
-                    <div class="actions-cell tw-flex tw-items-center tw-justify-center tw-gap-2">
-                      <a-tooltip title="Xem chi tiết">
-                        <EyeOutlined class="hover:tw-text-gray-600 tw-text-blue-600 tw-cursor-pointer"
-                          @click.stop="$emit('view', row)" />
-                      </a-tooltip>
-                      <a-tooltip title="Chỉnh sửa">
-                        <EditOutlined class="hover:tw-text-gray-600 tw-text-green-600 tw-cursor-pointer"
-                          @click.stop="$emit('edit', row)" />
-                      </a-tooltip>
-                      <a-tooltip title="Xóa">
-                        <DeleteOutlined class="hover:tw-text-gray-600 tw-text-red-600 tw-cursor-pointer"
-                          @click.stop="$emit('delete', row)" />
-                      </a-tooltip>
+                    <div v-if="doctypeActions && doctypeActions[props.doctype]?.rowActions"
+                      class="actions-cell tw-flex tw-items-center tw-justify-center tw-gap-3">
+                      <template v-for="(action, index) in doctypeActions[props.doctype].rowActions" :key="index">
+                        <a-tooltip :title="action.label">
+                          <component :is="action.icon"
+                            class="tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out" :style="{
+                              color: action.color || '#6B7280',
+                              fontSize: '15px'
+                            }" @mouseenter="hoverColor = action.hoverColor" @mouseleave="hoverColor = null"
+                            @click.stop="action.onClick(row)" />
+                        </a-tooltip>
+                      </template>
                     </div>
                   </template>
 
@@ -181,10 +179,11 @@
 <script setup>
 import { ref, computed, watch, shallowRef, onMounted } from "vue";
 import dayjs from "dayjs";
-import { EyeOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons-vue";
 
 import { Spin as ASpin } from "ant-design-vue";
 import { statusColors } from "../utils/status-colors"
+import { doctypeActions } from "../components/config/doctype-actions";
+
 
 const props = defineProps({
   doctype: { type: String, required: true },
@@ -464,6 +463,14 @@ const handleScroll = () => {
 
 
 <style scoped>
+
+.actions-cell svg {
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+.actions-cell svg:hover {
+  transform: scale(1.15);
+  filter: brightness(1.2);
+}
 
 .sticky-left-fade::after {
   content: "";
