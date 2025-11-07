@@ -11,51 +11,51 @@ class Display(Document):
 @frappe.whitelist()
 def get_module_display(link_to_name):
     doc = frappe.get_single("Display")
-    if not doc or not doc.items: return []
+    if not doc or not doc.items:
+        return []
+
+    # Xác định module mục tiêu
     target_module = None
     for r in doc.items:
         if r.link_to == link_to_name:
             target_module = r.module
-            break    
+            break
 
     rows = [r for r in doc.items if r.module == target_module]
-    if not rows: return []
-
-    grouped = {}
-    ungrouped = []
-
-    for r in rows:
-        if r.group:
-            grouped.setdefault(r.group, []).append(r)
-        else:
-            ungrouped.append(r)
+    if not rows:
+        return []
 
     result = []
+    group_cache = {}  # Để gom các bản ghi theo group, nếu group đã được tạo
 
-    # group
-    for group_name, group_rows in grouped.items():
-        group_doc = frappe.get_doc("Display Group", group_name)
-        result.append({
-            "label": group_doc.group_name,
-            "child": [
-                {
-                    "type": x.type,
-                    "link_to": x.link_to,
-                    **({"is_single": frappe.get_meta(x.link_to).issingle} if x.type == "DocType" else {}),
-                    **({"title": frappe.db.get_value("Page", x.link_to, "title")} if x.type == "Page" else {})
+    for r in rows:
+        if r.deactive: continue
+        if not r.link_to:
+            continue
+
+        # Nếu có group
+        if r.group:
+            if r.group not in group_cache:
+                group_entry = {
+                    "label": r.group,
+                    "child": []
                 }
-                for x in group_rows if x.link_to
-            ]
-        })
-
-    # ungrouped
-    for x in ungrouped:
-        if x.link_to:
+                group_cache[r.group] = group_entry
+                result.append(group_entry)
+            # Thêm vào group hiện tại
+            group_cache[r.group]["child"].append({
+                "type": r.type,
+                "link_to": r.link_to,
+                **({"is_single": frappe.get_meta(r.link_to).issingle} if r.type == "DocType" else {}),
+                **({"title": frappe.db.get_value("Page", r.link_to, "title")} if r.type == "Page" else {})
+            })
+        else:
+            # Không có group → thêm trực tiếp vào result
             result.append({
-                "label": frappe.db.get_value("Page", x.link_to, "title") if x.type == "Page" else frappe._(x.link_to),
-                "link_to": x.link_to,
-                "type": x.type,
-                **({"is_single": frappe.get_meta(x.link_to).issingle} if x.type == "DocType" else {})
+                "label": frappe.db.get_value("Page", r.link_to, "title") if r.type == "Page" else frappe._(r.link_to),
+                "link_to": r.link_to,
+                "type": r.type,
+                **({"is_single": frappe.get_meta(r.link_to).issingle} if r.type == "DocType" else {})
             })
 
     return result

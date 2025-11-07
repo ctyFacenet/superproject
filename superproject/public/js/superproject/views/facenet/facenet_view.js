@@ -42,7 +42,7 @@ frappe.views.FacenetView = class FacenetView extends frappe.views.ListView {
 		this.page.clear_secondary_action();	
 		this.page.main.removeClass("frappe-card");
 
-		const res = await frappe.xcall("superproject.setup.doctype.display_doctype_setting.display_doctype_setting.open_settings", {doctype: this.doctype})
+		const res = await frappe.xcall("superproject.general.doctype.display_doctype_setting.display_doctype_setting.open_settings", {doctype: this.doctype})
 		this.hide_tree = res.hide_tree || false
 		this.hide_flex = res.flex || false
 
@@ -60,7 +60,7 @@ frappe.views.FacenetView = class FacenetView extends frappe.views.ListView {
 
 	setup_settings() {
 		this.page.add_inner_button("Hide Sections", async () => {
-			const res = await frappe.xcall("superproject.setup.doctype.display_doctype_setting.display_doctype_setting.open_settings", {doctype: this.doctype})
+			const res = await frappe.xcall("superproject.general.doctype.display_doctype_setting.display_doctype_setting.open_settings", {doctype: this.doctype})
 			const settings = res;
 
 			const d = new frappe.ui.Dialog({
@@ -73,7 +73,7 @@ frappe.views.FacenetView = class FacenetView extends frappe.views.ListView {
 				],
 				primary_action_label: "Lưu",
 				primary_action: async (values) => { 
-					const res = await frappe.xcall("superproject.setup.doctype.display_doctype_setting.display_doctype_setting.open_settings", {doctype: this.doctype, settings: JSON.stringify(values)})
+					const res = await frappe.xcall("superproject.general.doctype.display_doctype_setting.display_doctype_setting.open_settings", {doctype: this.doctype, settings: JSON.stringify(values)})
 					d.hide();
 					if (values.hide_tree != this.hide_tree) this.component.updateSetting("hide_tree", values.hide_tree)
 					if (values.hide_flex != this.hide_flex) this.component.updateSetting("hide_flex", values.hide_flex)

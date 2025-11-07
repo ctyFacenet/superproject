@@ -223,6 +223,7 @@ frappe.ui.toolbar.Toolbar = class {
 			});
 
 			frappe.ui.toolbar.setup_hightlight_menu_bar();
+			
 		});
 	}
 
@@ -400,7 +401,7 @@ frappe.ui.toolbar.setup_custom_menu_bar = async function (hide = false) {
 			$(".navbar-module").text(__(module_name));
 
 			result.forEach(item => {
-				const div = $('<div class="custom-menu-bar-item"></div>').text(item.label || item.link_to).attr('data-link', item.link_to);
+				const div = $('<div class="custom-menu-bar-item"></div>').text(__(item.label || item.link_to)).attr('data-link', item.link_to);
 				
 				if (item.child && item.child.length > 0) {
 					div.addClass('has-child');
@@ -410,7 +411,7 @@ frappe.ui.toolbar.setup_custom_menu_bar = async function (hide = false) {
 					item.child.forEach(sub => {
 						if (!sub.link_to) return;
 						const subDiv = $('<div class="custom-menu-bar-submenu-item"></div>')
-										.text(sub.title || sub.label || sub.link_to)
+										.text(__(sub.title || sub.label || sub.link_to))
 										.attr('data-link', sub.link_to)
 										.attr('data-group', item.label);
 						subDiv.on('click', function(e) {
@@ -499,32 +500,11 @@ frappe.ui.toolbar.setup_custom_menu_bar = async function (hide = false) {
 };
 
 frappe.ui.toolbar.render_mobile_menu = function(result) {
-	// Tạo overlay nếu chưa có
+	// Nếu wrapper chưa có thì tạo mới
 	if ($('#mobile-custom-menu-wrapper').length === 0) {
 		const wrapper = $(`
-			<div id="mobile-custom-menu-wrapper" class="d-md-none" style="
-				position: fixed;
-				top: 0;
-				left: 0;
-				width: 100%;
-				height: 100%;
-				background-color: rgba(0,0,0,0.5);
-				display: none;
-				transition: opacity 0.3s;
-				z-index: 1050;
-			">
-				<div id="mobile-custom-menu" style="
-					position: absolute;
-					top: 0;
-					left: -40%;
-					width: 40%;
-					height: 100%;
-					background-color: white;
-					padding: 10px;
-					overflow-y: auto;
-					box-shadow: 2px 0 5px rgba(0,0,0,0.3);
-					transition: left 0.3s;
-				"></div>
+			<div id="mobile-custom-menu-wrapper" class="mobile-menu-overlay d-md-none">
+				<div id="mobile-custom-menu" class="mobile-menu-sidebar"></div>
 			</div>
 		`);
 		$('body').append(wrapper);
@@ -533,62 +513,65 @@ frappe.ui.toolbar.render_mobile_menu = function(result) {
 	const wrapper = $('#mobile-custom-menu-wrapper');
 	const mobileSidebar = $('#mobile-custom-menu');
 
-
-	// Hàm render menu items
+	// Hàm render menu
 	const renderMenuItems = () => {
 		mobileSidebar.empty();
-		const menuDiv = $(`
-			<div style="padding:8px 10px; border-radius:5px; margin-bottom:5px; cursor:pointer; display:flex; align-items:center;">
-				<i class="fa fa-home" style="margin-right:8px;"></i>
-				Trang chủ
+
+		// Nút Trang chủ
+		const homeDiv = $(`
+			<div class="mobile-menu-item" data-link="module-list">
+				<div class="mobile-item-header">
+					<div class="mobile-item-label">
+						<i class="fa fa-home" style="margin-right:8px;"></i> Trang chủ
+					</div>
+				</div>
 			</div>
 		`);
-		menuDiv.on("click", e => {
+		homeDiv.on("click", e => {
 			e.stopPropagation();
-			frappe.set_route("module-list")
+			frappe.set_route("module-list");
 			hideMenu();
-		})
-		mobileSidebar.append(menuDiv)
+		});
+		mobileSidebar.append(homeDiv);
+
 		const breadcrumbs = frappe.get_route_str().split('/');
 		const currentLink = breadcrumbs[1] || breadcrumbs[0];
 
-		if (currentLink === "module-list") return
+		if (currentLink === "module-list") return;
 
 		result.forEach(item => {
-			const itemDiv = $('<div style="padding:8px 10px; border-radius:5px; margin-bottom:5px; cursor:pointer; position:relative;"></div>')
-				.text(item.label || item.link_to);
+			const itemDiv = $('<div class="mobile-menu-item"></div>').attr('data-link', item.link_to);
+			const header = $('<div class="mobile-item-header"></div>');
+			const labelSpan = $('<div class="mobile-item-label"></div>')
+				.html(`${__(item.label || item.link_to)}`);
 
+			header.append(labelSpan);
+
+			// Nếu có submenu
 			if (item.child && item.child.length > 0) {
-				const subMenu = $('<div style="display:none;margin-top:10px;"></div>');
+				const toggleIcon = $('<span class="mobile-item-toggle"><i class="fa fa-caret-down"></i></span>');
+				header.append(toggleIcon);
 
-				// Nút toggle tam giác
-				const toggleBtn = $('<span style="position:absolute; right:10px; cursor:pointer;"><i class="fa fa-caret-down"></i></span>');
-				itemDiv.append(toggleBtn);
-
-				// Click vào itemDiv toggle submenu với animation
-				itemDiv.on('click', e => {
-					e.stopPropagation();
-					subMenu.slideToggle(200); // animation 200ms
-					toggleBtn.find('i').toggleClass('fa-caret-down fa-caret-up');
-				});
-
+				const subMenu = $('<div class="mobile-submenu"></div>');
 				let shouldShowSubmenu = false;
 
 				item.child.forEach(sub => {
-					const subDiv = $('<div style="padding:8px 10px; border-radius:5px; cursor:pointer;"></div>')
-						.text(sub.title || sub.label || sub.link_to);
+					const subDiv = $('<div class="mobile-subitem"></div>')
+						.attr('data-sub-link', sub.link_to)
+						.text(__(sub.title || sub.label || sub.link_to));
 
-					// Highlight nếu currentLink trùng subItem
 					if (sub.link_to === currentLink) {
-						subDiv.css('background-color', '#f0f0f0');
+						subDiv.addClass('mobile-item-active');
 						shouldShowSubmenu = true;
 					}
 
 					subDiv.on('click', e => {
 						e.stopPropagation();
 						if (sub.type === "DocType") {
-							if (sub.is_single) frappe.set_route(['Form', sub.link_to, sub.link_to]);
-							else frappe.set_route(['List', sub.link_to, 'List']);
+							if (sub.is_single)
+								frappe.set_route(['Form', sub.link_to, sub.link_to]);
+							else
+								frappe.set_route(['List', sub.link_to, 'List']);
 						} else if (sub.type === "Report") {
 							frappe.set_route(['query-report', sub.link_to]);
 						} else if (sub.type === "Page") {
@@ -600,20 +583,33 @@ frappe.ui.toolbar.render_mobile_menu = function(result) {
 					subMenu.append(subDiv);
 				});
 
-				if (shouldShowSubmenu) {
-					subMenu.show(); // mở sẵn subMenu khi currentLink là subItem
-					toggleBtn.find('i').removeClass('fa-caret-down').addClass('fa-caret-up');
-				}
+				// ✅ Bấm vào label của item cha để mở/đóng submenu
+				header.on('click', e => {
+					e.stopPropagation();
+					subMenu.slideToggle(200);
+					const icon = toggleIcon.find('i');
+					icon.toggleClass('fa-caret-down fa-caret-up');
+				});
 
+				itemDiv.append(header);
 				itemDiv.append(subMenu);
-			} else {
-				if (item.link_to === currentLink) {
-					itemDiv.css('background-color', '#f0f0f0');
+
+				if (shouldShowSubmenu) {
+					subMenu.show();
+					toggleIcon.find('i').removeClass('fa-caret-down').addClass('fa-caret-up');
 				}
-				itemDiv.on('click', function() {
+			} else {
+				// Không có submenu
+				if (item.link_to === currentLink) {
+					itemDiv.addClass('mobile-item-active');
+				}
+				header.on('click', e => {
+					e.stopPropagation();
 					if (item.type === "DocType") {
-						if (item.is_single) frappe.set_route(['Form', item.link_to, item.link_to]);
-						else frappe.set_route(['List', item.link_to, 'List']);
+						if (item.is_single)
+							frappe.set_route(['Form', item.link_to, item.link_to]);
+						else
+							frappe.set_route(['List', item.link_to, 'List']);
 					} else if (item.type === "Report") {
 						frappe.set_route(['query-report', item.link_to]);
 					} else if (item.type === "Page") {
@@ -621,17 +617,16 @@ frappe.ui.toolbar.render_mobile_menu = function(result) {
 					}
 					hideMenu();
 				});
+				itemDiv.append(header);
 			}
 
 			mobileSidebar.append(itemDiv);
 		});
-
-
 	};
 
 	renderMenuItems();
 
-	// Hàm show menu với animation
+	// Animation hiển thị menu
 	const showMenu = () => {
 		wrapper.show();
 		setTimeout(() => {
@@ -640,25 +635,22 @@ frappe.ui.toolbar.render_mobile_menu = function(result) {
 		}, 10);
 	};
 
-	// Hàm hide menu với animation
+	// Animation ẩn menu
 	const hideMenu = () => {
 		wrapper.css('opacity', '0');
 		mobileSidebar.css('left', '-40%');
-		setTimeout(() => {
-			wrapper.hide();
-		}, 300);
+		setTimeout(() => wrapper.hide(), 300);
 	};
 
-	// Gắn click vào menu-btn
-	$(document).off('click.mobile-menu-btn').on('click.mobile-menu-btn', '.mobile-menu-btn', function() {
-		showMenu();
-	});
+	// Gắn sự kiện mở menu
+	$(document).off('click.mobile-menu-btn').on('click.mobile-menu-btn', '.mobile-menu-btn', showMenu);
 
-	// Click vào overlay (không phải menu) để ẩn
+	// Click overlay ngoài menu để ẩn
 	wrapper.off('click').on('click', function(e) {
 		if (e.target === this) hideMenu();
 	});
 };
+
 
 // Chức năng khởi tạo cơ chế hiển thị mũi tên/hỗ trợ scroll ngang khi SL Chức năng lớn
 frappe.ui.toolbar.init_menu_bar_scroll_behavior = function() {
@@ -719,10 +711,15 @@ frappe.ui.toolbar.setup_hightlight_menu_bar = async function () {
 	let breadcrumbs = frappe.router.current_route;
 	const target = breadcrumbs[1] || breadcrumbs[0];
 
-	// Xóa cả active và hover-active để reset
+	// Reset trạng thái cho menu bar (desktop)
 	$('.custom-menu-bar-item').removeClass('active hover-active');
+	$('.custom-menu-bar-submenu-item').removeClass('active');
 
-	// Tìm item hoặc sub-item khớp với route hiện tại
+	// Reset trạng thái cho mobile menu
+	$('.mobile-menu-item').removeClass('mobile-item-active');
+	$('.mobile-subitem').removeClass('mobile-item-active');
+
+	// ====== Xử lý MENU BAR (desktop) ======
 	const mainMatches = $(`.custom-menu-bar-item[data-link="${target}"]`);
 	const subMatches  = $(`.custom-menu-bar-submenu-item[data-link="${target}"]`);
 
@@ -736,4 +733,40 @@ frappe.ui.toolbar.setup_hightlight_menu_bar = async function () {
 		const parent = $(`.custom-menu-bar-item.has-child[data-group="${group}"]`);
 		parent.addClass('active');
 	});
-}
+
+	// ====== Xử lý MOBILE MENU ======
+	const mobileMainMatches = $(`.mobile-menu-item[data-link="${target}"]`);
+	const mobileSubMatches  = $(`.mobile-subitem[data-sub-link="${target}"]`);
+
+	// Active item chính nếu trùng link
+	mobileMainMatches.each(function() {
+		$(this).addClass('mobile-item-active');
+	});
+
+	// Active sub-item và mở submenu nếu trùng
+	if (mobileSubMatches.length > 0) {
+		mobileSubMatches.each(function() {
+			const sub = $(this);
+			sub.addClass('mobile-item-active');
+
+			// Mở submenu chứa nó
+			const submenu = sub.closest('.mobile-submenu');
+			if (submenu.length) {
+				submenu.slideDown(0); // hiển thị ngay
+				const toggle = submenu.siblings('.mobile-item-header').find('i.fa');
+				toggle.removeClass('fa-caret-down').addClass('fa-caret-up');
+			}
+		});
+	} else {
+		// ❗ Nếu không có subitem nào active → đóng tất cả submenu đang mở
+		$('.mobile-submenu').each(function() {
+			const submenu = $(this);
+			if (submenu.is(':visible')) {
+				submenu.slideUp(0);
+				const toggle = submenu.siblings('.mobile-item-header').find('i.fa');
+				toggle.removeClass('fa-caret-up').addClass('fa-caret-down');
+			}
+		});
+	}
+};
+

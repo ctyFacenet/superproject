@@ -7,7 +7,8 @@
  "field_order": [
   "wrapper",
   "items",
-  "modules"
+  "modules",
+  "directions"
  ],
  "fields": [
   {
@@ -24,13 +25,19 @@
   {
    "fieldname": "wrapper",
    "fieldtype": "HTML"
+  },
+  {
+   "fieldname": "directions",
+   "fieldtype": "Table",
+   "label": "Module Direction",
+   "options": "Display Direction"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2025-11-04 17:10:41.445872",
+ "modified": "2025-11-07 11:13:01.858074",
  "modified_by": "Administrator",
  "module": "General",
  "name": "Display",

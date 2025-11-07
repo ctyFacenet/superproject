@@ -30,7 +30,7 @@ app_include_css = [
     "/assets/superproject/css/main.css",
     "/assets/superproject/css/menu-bar.css",
     "/assets/superproject/css/build.css",
-    "/assets/superproject/css/tailwind.css"
+    "/assets/superproject/css/tailwind.css",
 ]
 
 app_include_js = [
