@@ -302,7 +302,7 @@ watch(rows, (val) => (allRows.value = val || []));
 const groupedRows = computed(() => {
   if (!groupByField.value) return [];
   const map = new Map();
-  (allRows.value || []).forEach((r) => {
+  (filteredRows.value || []).forEach((r) => {
     const key = r[groupByField.value] || "Không xác định";
     if (!map.has(key)) map.set(key, []);
     map.get(key).push(r);
