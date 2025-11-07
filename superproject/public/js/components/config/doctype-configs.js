@@ -12,7 +12,8 @@ import {
   EyeOutlined,
   EditOutlined,
   PictureOutlined,
-  CloseOutlined
+  CloseOutlined,
+  HistoryOutlined
 } from "@ant-design/icons-vue";
 
 export const doctypeConfigs = {
@@ -88,25 +89,25 @@ export const doctypeConfigs = {
     ],
     rowActions: [
       {
-        label: "Xem chi tiết",
-        icon: EyeOutlined,
+        label: "Duyệt",
+        icon: PictureOutlined,
         color: "#3B82F6",
         hoverColor: "#60A5FA",
-        onClick: (row) => frappe.msgprint(`Xem ${row.name}`),
+        onClick: (row) => frappe.msgprint(`Duyệt ${row.name}`),
       },
       {
-        label: "Chỉnh sửa",
-        icon: EditOutlined,
+        label: "Huỷ duyệt",
+        icon: LockOutlined,
         color: "#22C55E",
         hoverColor: "#4ADE80",
-        onClick: (row) => frappe.msgprint(`Chỉnh sửa ${row.name}`),
+        onClick: (row) => frappe.msgprint(`Huỷ duyệt ${row.name}`),
       },
       {
-        label: "Xóa",
-        icon: DeleteOutlined,
+        label: "Xem lịch sử",
+        icon: HistoryOutlined,
         color: "#EF4444",
         hoverColor: "#F87171",
-        onClick: (row) => frappe.msgprint(`Xóa ${row.name}`),
+        onClick: (row) => frappe.msgprint(`Xem lịch sử ${row.name}`),
       },
     ],
   },
