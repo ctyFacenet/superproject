@@ -8,6 +8,8 @@ const colorMap = {
   green: "background-color: #22c55e; color: #ffffff;",  // green-500
   gray: "background-color: #d1d5db; color: #1f2937;",   // gray-300 / gray-800
   red: "background-color: #ef4444; color: #ffffff;",    // red-500
+  neutral: "background-color: #6b7280; color: #ffffff;", // gray-500 
+  pink: "background-color: #ec4899; color: #ffffff;",   // pink-500
 };
 
 export const statusColors = {
@@ -25,4 +27,7 @@ export const statusColors = {
   "Đang hoàn thành": colorMap.green,
   "Bản nháp": colorMap.gray,
   "Đã huỷ": colorMap.red,
+  "Bình thường": colorMap.neutral,
+  "Chờ hủy": colorMap.pink,
+  "Hủy do QC": colorMap.red,
 };

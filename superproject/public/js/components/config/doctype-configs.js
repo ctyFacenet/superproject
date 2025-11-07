@@ -266,6 +266,7 @@ export const doctypeConfigs = {
 
   "In Process Inventory": {
     title: "TỒN KHO ĐANG SẢN XUẤT",
+    groupByField: "materialgroup",
     actions: [
       {
         label: "Thống kê NVL thừa",
