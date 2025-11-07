@@ -5,21 +5,185 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "status"
+  "workordercode",
+  "status",
+  "itemcode",
+  "itemname",
+  "can",
+  "column_break_qclv",
+  "kdai",
+  "ktrung",
+  "ktieu",
+  "mahz",
+  "malh",
+  "column_break_pnda",
+  "mavt",
+  "actualstarttime",
+  "actualendtime",
+  "estimatedokquantity",
+  "actualokquantity",
+  "uom",
+  "column_break_ocil",
+  "actualoutputquantity",
+  "estimatedngquantity",
+  "estimatedoutputquantity",
+  "productionquantity",
+  "actualngquantity",
+  "createdby"
  ],
  "fields": [
   {
-   "default": "B\u1ea3n nh\u00e1p",
+   "fieldname": "column_break_qclv",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_pnda",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_ocil",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "workordercode",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e3 l\u1ec7nh s\u1ea3n xu\u1ea5t"
+  },
+  {
+   "fieldname": "itemcode",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e3 h\u00e0ng"
+  },
+  {
+   "fieldname": "itemname",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "T\u00ean h\u00e0ng"
+  },
+  {
+   "fieldname": "can",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "CAN"
+  },
+  {
+   "fieldname": "kdai",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "KDAI"
+  },
+  {
+   "fieldname": "ktrung",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "KTRUNG"
+  },
+  {
+   "fieldname": "ktieu",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "KTIEU"
+  },
+  {
+   "fieldname": "mahz",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "MAHZ"
+  },
+  {
+   "fieldname": "malh",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "MALH"
+  },
+  {
+   "fieldname": "mavt",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "MAVT"
+  },
+  {
+   "fieldname": "actualstarttime",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Th\u1eddi gian b\u1eaft \u0111\u1ea7u s\u1ea3n xu\u1ea5t th\u1ef1c t\u1ebf"
+  },
+  {
+   "fieldname": "actualendtime",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Th\u1eddi gian k\u1ebft th\u00fac s\u1ea3n xu\u1ea5t th\u1ef1c t\u1ebf"
+  },
+  {
+   "fieldname": "productionquantity",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "S\u1ed1 l\u01b0\u1ee3ng s\u1ea3n xu\u1ea5t"
+  },
+  {
+   "fieldname": "estimatedoutputquantity",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "S\u1ed1 l\u01b0\u1ee3ng \u0111\u1ea7u ra \u01b0\u1edbc t\u00ednh"
+  },
+  {
+   "fieldname": "estimatedokquantity",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "S\u1ed1 l\u01b0\u1ee3ng OK \u01b0\u1edbc t\u00ednh"
+  },
+  {
+   "fieldname": "estimatedngquantity",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "S\u1ed1 l\u01b0\u1ee3ng NG \u01b0\u1edbc t\u00ednh"
+  },
+  {
+   "fieldname": "actualoutputquantity",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "S\u1ed1 l\u01b0\u1ee3ng \u0111\u1ea7u ra th\u1ef1c t\u1ebf"
+  },
+  {
+   "fieldname": "actualokquantity",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "S\u1ed1 l\u01b0\u1ee3ng OK th\u1ef1c t\u1ebf"
+  },
+  {
+   "fieldname": "actualngquantity",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "S\u1ed1 l\u01b0\u1ee3ng NG th\u1ef1c t\u1ebf"
+  },
+  {
+   "default": "Kg",
+   "fieldname": "uom",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "\u0110\u01a1n v\u1ecb t\u00ednh"
+  },
+  {
+   "fieldname": "createdby",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Ng\u01b0\u1eddi t\u1ea1o l\u1ec7nh"
+  },
+  {
+   "default": "\u0110ang s\u1ea3n xu\u1ea5t",
    "fieldname": "status",
    "fieldtype": "Select",
+   "in_list_view": 1,
    "label": "Tr\u1ea1ng th\u00e1i",
-   "options": "B\u1ea3n nh\u00e1p"
+   "options": "\u0110\u00e3 duy\u1ec7t\n\u0110ang s\u1ea3n xu\u1ea5t\nD\u1eebng s\u1ea3n xu\u1ea5t\n\u0110\u00e3 ho\u00e0n th\u00e0nh\n\u0110\u00e3 h\u1ee7y"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-11-06 09:46:36.264776",
+ "modified": "2025-11-07 11:06:47.209575",
  "modified_by": "Administrator",
  "module": "APS",
  "name": "Work Order Approved",

@@ -232,6 +232,13 @@ export const doctypeConfigs = {
     groupByField: null,
     actions: [
       {
+        label: "Thêm mới",
+        icon: PlusOutlined,
+        color: "#0EA5E9",
+        hoverColor: "#38BDF8",
+        onClick: () => frappe.new_doc("Work Order Approved"),
+      },
+      {
         label: "",
         icon: CopyOutlined,
         color: "#6B7280",
