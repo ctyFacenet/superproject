@@ -7,16 +7,14 @@
       <div class="fade-left" v-show="scrollLeft > 5"></div>
       <div class="fade-right" v-show="scrollRight > 5"></div>
 
-      <div ref="scrollWrapper"
-        class="tw-flex-1 tw-overflow-x-auto tw-overflow-y-auto tw-max-h-[70vh] tw-relative"
+      <div ref="scrollWrapper" class="tw-flex-1 tw-overflow-x-auto tw-overflow-y-auto tw-max-h-[70vh] tw-relative"
         @scroll="handleScroll">
         <table class="tw-min-w-max tw-border-collapse tw-w-full" ref="tableRef">
           <thead class="tw-sticky tw-top-0 tw-z-20">
             <tr class="tw-bg-blue-50 tw-border-b tw-border-gray-300 tw-text-gray-700 tw-text-[13px]">
-              <th
-                class="tw-sticky tw-left-0 tw-top-0 tw-z-40 tw-bg-pink-100 tw-w-[50px] tw-text-center tw-border">STT</th>
-              <th
-                class="tw-sticky tw-left-[50px] tw-top-0 tw-z-40 tw-bg-pink-100 tw-w-[45px] tw-text-center tw-border">
+              <th class="tw-sticky tw-left-0 tw-top-0 tw-z-40 tw-bg-pink-100 tw-w-[50px] tw-text-center tw-border">STT
+              </th>
+              <th class="tw-sticky tw-left-[50px] tw-top-0 tw-z-40 tw-bg-pink-100 tw-w-[45px] tw-text-center tw-border">
                 <input type="checkbox" ref="selectAllRef" v-model="selectAll" @change="toggleSelectAll" />
               </th>
 
@@ -29,8 +27,7 @@
                     'tw-bg-pink-100 tw-text-pink-800':
                       /(can|kdai|ktrung|ktieu|mahz|malh|mavt)/i.test(col.key)
                   }
-                ]"
-                :style="{
+                ]" :style="{
                   width: colWidths[col.key] + 'px',
                   minWidth: col.key === 'actions' ? '130px' : '150px',
                 }">
@@ -38,9 +35,7 @@
                   <a-tooltip :title="col.title">
                     <span class="tw-truncate tw-font-semibold">{{ col.title }}</span>
                   </a-tooltip>
-                  <img v-if="col.key !== 'actions'"
-                    src="/assets/tahp/hello_vue/assets/icons/filter.svg"
-                    alt="filter"
+                  <img v-if="col.key !== 'actions'" src="/assets/tahp/hello_vue/assets/icons/filter.svg" alt="filter"
                     class="tw-w-3 tw-h-3 tw-opacity-70 tw-cursor-pointer hover:tw-opacity-100" />
                 </div>
 
@@ -54,8 +49,7 @@
               <th class="tw-sticky tw-left-0 tw-top-[33px] tw-z-30 tw-bg-pink-100 tw-border"></th>
               <th class="tw-sticky tw-left-[50px] tw-top-[33px] tw-z-30 tw-bg-pink-100 tw-border"></th>
 
-              <th v-for="col in filteredColumns" :key="col.key"
-                class="tw-px-2 tw-py-1 tw-border tw-bg-white"
+              <th v-for="col in filteredColumns" :key="col.key" class="tw-px-2 tw-py-1 tw-border tw-bg-white"
                 :class="{ 'tw-sticky tw-right-0 tw-z-30 tw-bg-pink-100': col.key === 'actions' }"
                 :style="{ width: colWidths[col.key] + 'px' }">
                 <template v-if="col.fieldtype === 'Date'">
@@ -87,8 +81,7 @@
                   <td class="tw-sticky tw-left-0 tw-bg-pink-100 tw-z-10 tw-border"></td>
 
                   <td class="tw-sticky tw-left-[50px] tw-bg-pink-100 tw-z-10 tw-text-center tw-border">
-                    <input type="checkbox"
-                      :checked="selectedGroups.includes(group.key)"
+                    <input type="checkbox" :checked="selectedGroups.includes(group.key)"
                       @change="toggleGroup(group.key, $event)" />
                   </td>
 
@@ -97,12 +90,10 @@
                   </td>
                 </tr>
 
-                <tr v-for="(row, i) in group.rows" :key="row.name"
-                  :class="[
-                    'tw-text-[13px] tw-cursor-pointer tw-transition-colors tw-duration-150',
-                    selectedRows.has(row) ? 'tw-bg-blue-50' : 'hover:tw-bg-gray-50'
-                  ]"
-                  @click="handleRowClick($event, row)">
+                <tr v-for="(row, i) in group.rows" :key="row.name" :class="[
+                  'tw-text-[13px] tw-cursor-pointer tw-transition-colors tw-duration-150',
+                  selectedRows.has(row) ? 'tw-bg-blue-50' : 'hover:tw-bg-gray-50'
+                ]" @click="handleRowClick($event, row)">
                   <td class="tw-sticky tw-left-0 tw-bg-pink-100 tw-z-20 tw-text-center tw-border tw-py-1">
                     {{ totalPreviousRows(gIndex) + i + 1 }}
                   </td>
@@ -117,8 +108,7 @@
                     :class="{ 'tw-sticky tw-right-0 tw-bg-pink-100 tw-z-20': col.key === 'actions' }">
 
                     <template v-if="col.key === 'status'">
-                      <span
-                        :style="statusColors[row.status] || 'background-color:#e5e7eb; color:#374151;'"
+                      <span :style="statusColors[row.status] || 'background-color:#e5e7eb; color:#374151;'"
                         class="tw-inline-block tw-rounded-lg tw-px-2 tw-py-[2px] tw-text-[12px] tw-font-medium">
                         {{ row.status }}
                       </span>
@@ -132,8 +122,7 @@
                             <component :is="action.icon"
                               class="tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out"
                               :style="{ color: action.color, fontSize: '15px' }"
-                              @mouseenter="hoverColor = action.hoverColor"
-                              @mouseleave="hoverColor = null"
+                              @mouseenter="hoverColor = action.hoverColor" @mouseleave="hoverColor = null"
                               @click.stop="action.onClick(row)" />
                           </a-tooltip>
                         </template>
@@ -153,10 +142,8 @@
                 :class="[
                   'tw-text-[13px] tw-cursor-pointer',
                   selectedRows.has(row) ? 'tw-bg-blue-50' : 'hover:tw-bg-gray-50'
-                ]"
-                @click="handleRowClick($event, row)">
-                <td
-                  class="index-cell tw-sticky tw-left-0 tw-bg-pink-100 tw-z-20 tw-text-center tw-border tw-py-1">
+                ]" @click="handleRowClick($event, row)">
+                <td class="index-cell tw-sticky tw-left-0 tw-bg-pink-100 tw-z-20 tw-text-center tw-border tw-py-1">
                   {{ i + 1 + (currentPage - 1) * pageSize }}
                 </td>
                 <td
@@ -166,7 +153,15 @@
                 <td v-for="col in filteredColumns" :key="col.key"
                   class="tw-border tw-px-2 tw-py-1 tw-text-center tw-relative"
                   :class="{ 'tw-sticky tw-right-0 tw-bg-pink-100 tw-z-20': col.key === 'actions' }">
-                  <template v-if="col.key === 'actions'">
+
+                  <template v-if="col.key === 'status'">
+                    <span :style="statusColors[row.status] || 'background-color:#e5e7eb; color:#374151;'"
+                      class="tw-inline-block tw-rounded-lg tw-px-2 tw-py-[2px] tw-text-[12px] tw-font-medium">
+                      {{ row.status }}
+                    </span>
+                  </template>
+
+                  <template v-else-if="col.key === 'actions'">
                     <div v-if="getDoctypeConfig(props.doctype)?.rowActions"
                       class="actions-cell tw-flex tw-items-center tw-justify-center tw-gap-3">
                       <template v-for="(action, index) in getDoctypeConfig(props.doctype).rowActions" :key="index">
@@ -174,17 +169,18 @@
                           <component :is="action.icon"
                             class="tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out"
                             :style="{ color: action.color, fontSize: '15px' }"
-                            @mouseenter="hoverColor = action.hoverColor"
-                            @mouseleave="hoverColor = null"
+                            @mouseenter="hoverColor = action.hoverColor" @mouseleave="hoverColor = null"
                             @click.stop="action.onClick(row)" />
                         </a-tooltip>
                       </template>
                     </div>
                   </template>
+
                   <template v-else>
                     {{ row[col.key] || '' }}
                   </template>
                 </td>
+
               </tr>
             </template>
 
@@ -218,7 +214,7 @@
       </div>
 
       <div
-        class="tw-text-center tw-py-3 tw-border-t tw-border-gray-200 tw-bg-white tw-text-[13px] sm:tw-text-[14px] tw-font-[500] tw-tracking-wide tw-text-gray-600">
+        class="tw-text-center tw-border-t tw-border-gray-200 tw-bg-white tw-text-[13px] sm:tw-text-[14px] tw-font-[500] tw-tracking-wide tw-text-gray-600">
         © Copyright
         <a href="https://facenet.vn" target="_blank" rel="noopener noreferrer"
           class="tw-text-[#0066cc] tw-font-semibold tw-cursor-pointer hover:tw-underline">FaceNet</a>.
@@ -489,13 +485,14 @@ const handleRowClick = (event, row) => {
 
 
 <style scoped>
-
 tr.tw-bg-pink-50 {
   background-color: #fff1f2 !important;
 }
+
 tr.tw-bg-pink-50 td {
   border-top: 2px solid #fb7185 !important;
 }
+
 .actions-cell svg {
   transition: transform 0.2s ease, color 0.2s ease;
 }

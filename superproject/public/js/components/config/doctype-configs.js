@@ -113,6 +113,7 @@ export const doctypeConfigs = {
 
   "Product Order": {
     title: "ĐƠN SẢN XUẤT NỘI BỘ",
+    groupByField: "itemcode",
     actions: [
       {
         label: "Tạo đơn sản xuất nội bộ",
@@ -184,7 +185,15 @@ export const doctypeConfigs = {
 
   "Work Order": {
     title: "LỆNH SẢN XUẤT",
+    groupByField: null,
     actions: [
+      {
+        label: "Thêm mới",
+        icon: PlusOutlined,
+        color: "#0EA5E9",
+        hoverColor: "#38BDF8",
+        onClick: () => frappe.new_doc("Work Order"),
+      },
       {
         label: "",
         icon: CopyOutlined,
@@ -220,6 +229,7 @@ export const doctypeConfigs = {
 
   "Work Order Approved": {
     title: "LỆNH SẢN XUẤT ĐÃ DUYỆT",
+    groupByField: null,
     actions: [
       {
         label: "",
@@ -281,6 +291,7 @@ export const doctypeConfigs = {
 
   "Semi Finished Products": {
     title: "BÁN THÀNH PHẨM",
+    groupByField: "lotnumber",
     actions: [
       {
         label: "Duyệt huỷ tem",
