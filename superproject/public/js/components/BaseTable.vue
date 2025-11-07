@@ -651,4 +651,17 @@ tr.tw-bg-pink-50 td {
 :deep(.ant-input-number-input) {
   font-size: 14px !important;
 }
+
+tbody tr:nth-child(odd) {
+  background-color: #f9fafb;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #ffffff;
+}
+
+tbody tr:hover {
+  background-color: rgb(232, 243, 255) !important; 
+}
+
 </style>
