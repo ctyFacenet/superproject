@@ -22,7 +22,7 @@
                 class="tw-relative tw-border tw-border-gray-200 tw-font-semibold tw-text-center tw-px-3 tw-py-2 tw-group"
                 :class="[
                   {
-                    'tw-sticky tw-right-0 tw-z-40 tw-bg-pink-100 tw-shadow-[-4px_0_6px_rgba(0,0,0,0.15)]':
+                    'tw-sticky tw-right-0 tw-z-40 tw-bg-pink-100':
                       col.key === 'actions',
                     'tw-bg-pink-100 tw-text-pink-800':
                       /(can|kdai|ktrung|ktieu|mahz|malh|mavt)/i.test(col.key)
@@ -609,7 +609,7 @@ tr.tw-bg-pink-50 td {
     right: auto !important;
     z-index: auto !important;
     box-shadow: none !important;
-    background: white !important;
+    background: #b4dbff !important;
   }
 
   .fade-left,
@@ -630,12 +630,12 @@ tr.tw-bg-pink-50 td {
 
 .fade-left {
   left: 0;
-  background: linear-gradient(to right, white, transparent);
+  background: linear-gradient(to right, rgb(246, 231, 243), transparent);
 }
 
 .fade-right {
   right: 0;
-  background: linear-gradient(to left, white, transparent);
+  background: linear-gradient(to left, rgb(246, 231, 243), transparent);
 }
 
 :deep(.ant-pagination) {
