@@ -4,6 +4,22 @@
 
     <a-spin :spinning="loading" size="large" class="tw-w-full tw-h-full">
 
+      <a-popover v-model:open="showColumnPicker" trigger="click" placement="rightTop">
+        <template #content>
+          <div class="tw-p-2 tw-w-[220px] tw-max-h-[300px] tw-overflow-y-auto">
+            <a-checkbox-group v-model:value="checkedColumns" class="tw-flex tw-flex-col tw-gap-2">
+              <a-checkbox v-for="col in columns" :key="col.key" :value="col.key"
+                @change="toggleColumn(col.key, $event)">
+                {{ col.title }}
+              </a-checkbox>
+            </a-checkbox-group>
+            <div class="tw-mt-2 tw-text-right">
+              <a-button type="link" size="small" @click="resetColumns">Khôi phục mặc định</a-button>
+            </div>
+          </div>
+        </template>
+      </a-popover>
+
       <div class="fade-left" v-show="scrollLeft > 5"></div>
       <div class="fade-right" v-show="scrollRight > 5"></div>
 
@@ -12,7 +28,8 @@
         <table class="tw-min-w-max tw-border-collapse tw-w-full" ref="tableRef">
           <thead class="tw-sticky tw-top-0 tw-z-20">
             <tr class="tw-bg-blue-50 tw-border-b tw-border-gray-300 tw-text-gray-700 tw-text-[13px]">
-              <th class="tw-sticky tw-left-0 tw-top-0 tw-z-40 tw-bg-pink-100 tw-w-[50px] tw-text-center tw-border">STT
+              <th class="tw-sticky tw-left-0 tw-top-0 tw-z-40 tw-bg-pink-100 tw-w-[50px] tw-text-center tw-border">
+                STT
               </th>
               <th class="tw-sticky tw-left-[50px] tw-top-0 tw-z-40 tw-bg-pink-100 tw-w-[45px] tw-text-center tw-border">
                 <input type="checkbox" ref="selectAllRef" v-model="selectAll" @change="toggleSelectAll" />
@@ -106,7 +123,6 @@
                   <td v-for="col in filteredColumns" :key="col.key"
                     class="tw-border tw-px-2 tw-py-1 tw-text-center tw-relative"
                     :class="{ 'tw-sticky tw-right-0 tw-bg-pink-100 tw-z-20': col.key === 'actions' }">
-
                     <template v-if="col.key === 'status'">
                       <span :style="statusColors[row.status] || 'background-color:#e5e7eb; color:#374151;'"
                         class="tw-inline-block tw-rounded-lg tw-px-2 tw-py-[2px] tw-text-[12px] tw-font-medium">
@@ -128,7 +144,6 @@
                         </template>
                       </div>
                     </template>
-
                     <template v-else>
                       {{ row[col.key] || '' }}
                     </template>
@@ -153,7 +168,6 @@
                 <td v-for="col in filteredColumns" :key="col.key"
                   class="tw-border tw-px-2 tw-py-1 tw-text-center tw-relative"
                   :class="{ 'tw-sticky tw-right-0 tw-bg-pink-100 tw-z-20': col.key === 'actions' }">
-
                   <template v-if="col.key === 'status'">
                     <span :style="statusColors[row.status] || 'background-color:#e5e7eb; color:#374151;'"
                       class="tw-inline-block tw-rounded-lg tw-px-2 tw-py-[2px] tw-text-[12px] tw-font-medium">
@@ -180,7 +194,6 @@
                     {{ row[col.key] || '' }}
                   </template>
                 </td>
-
               </tr>
             </template>
 
@@ -244,6 +257,32 @@ const loading = ref(false);
 const columns = ref([]);
 const rows = ref([]);
 
+const visibleColumns = ref({});
+const showColumnPicker = ref(false);
+
+const storageKey = computed(() => `visibleColumns_${props.doctype}`);
+onMounted(() => {
+  const saved = localStorage.getItem(storageKey.value);
+  if (saved) visibleColumns.value = JSON.parse(saved);
+
+  window.addEventListener("open-column-picker", () => {
+    showColumnPicker.value = !showColumnPicker.value;
+  });
+});
+watch(visibleColumns, (v) => {
+  localStorage.setItem(storageKey.value, JSON.stringify(v));
+}, { deep: true });
+
+const checkedColumns = computed(() =>
+  Object.keys(visibleColumns.value).filter((k) => visibleColumns.value[k])
+);
+function toggleColumn(key, e) {
+  visibleColumns.value[key] = e.target.checked;
+}
+function resetColumns() {
+  Object.keys(visibleColumns.value).forEach(k => visibleColumns.value[k] = true);
+}
+
 const config = computed(() => getDoctypeConfig(props.doctype));
 const groupByField = computed(() => config.value.groupByField);
 
@@ -290,10 +329,11 @@ onMounted(fetchData);
 watch(() => props.doctype, fetchData);
 
 const filteredColumns = computed(() => {
-  const cols = [...columns.value];
+  let cols = columns.value.filter((c) => visibleColumns.value[c.key] !== false);
   const hasActions =
     config.value?.rowActions && config.value.rowActions.length > 0;
-  return hasActions ? cols : cols.filter((col) => col.key !== "actions");
+  if (!hasActions) cols = cols.filter((col) => col.key !== "actions");
+  return cols;
 });
 
 const allRows = shallowRef(rows.value || []);
@@ -661,7 +701,6 @@ tbody tr:nth-child(even) {
 }
 
 tbody tr:hover {
-  background-color: rgb(232, 243, 255) !important; 
+  background-color: rgb(232, 243, 255) !important;
 }
-
 </style>

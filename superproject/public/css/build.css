@@ -643,6 +643,10 @@ video {
   height: 100% !important;
 }
 
+.tw-max-h-\[300px\] {
+  max-height: 300px !important;
+}
+
 .tw-max-h-\[70vh\] {
   max-height: 70vh !important;
 }
@@ -661,6 +665,10 @@ video {
 
 .tw-w-\[110px\] {
   width: 110px !important;
+}
+
+.tw-w-\[220px\] {
+  width: 220px !important;
 }
 
 .tw-w-\[250px\] {
@@ -917,6 +925,10 @@ video {
 
 .tw-text-center {
   text-align: center !important;
+}
+
+.tw-text-right {
+  text-align: right !important;
 }
 
 .tw-text-\[12px\] {

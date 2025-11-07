@@ -32,7 +32,7 @@ export const doctypeConfigs = {
         icon: CopyOutlined,
         color: "#6B7280",
         hoverColor: "#9CA3AF",
-        onClick: () => { },
+        onClick: () => { window.dispatchEvent(new CustomEvent("open-column-picker")); },
       },
     ],
     rowActions: [
@@ -83,7 +83,7 @@ export const doctypeConfigs = {
         icon: CopyOutlined,
         color: "#6B7280",
         hoverColor: "#9CA3AF",
-        onClick: () => { },
+        onClick: () => { window.dispatchEvent(new CustomEvent("open-column-picker")); },
       },
     ],
     rowActions: [
@@ -155,7 +155,7 @@ export const doctypeConfigs = {
         icon: CopyOutlined,
         color: "#6B7280",
         hoverColor: "#9CA3AF",
-        onClick: () => { },
+        onClick: () => { window.dispatchEvent(new CustomEvent("open-column-picker")); },
       },
     ],
     rowActions: [
@@ -199,7 +199,7 @@ export const doctypeConfigs = {
         icon: CopyOutlined,
         color: "#6B7280",
         hoverColor: "#9CA3AF",
-        onClick: () => { },
+        onClick: () => { window.dispatchEvent(new CustomEvent("open-column-picker")); },
       },
     ],
     rowActions: [
@@ -243,7 +243,7 @@ export const doctypeConfigs = {
         icon: CopyOutlined,
         color: "#6B7280",
         hoverColor: "#9CA3AF",
-        onClick: () => { },
+        onClick: () => { window.dispatchEvent(new CustomEvent("open-column-picker")); },
       },
     ],
     rowActions: [
@@ -292,7 +292,7 @@ export const doctypeConfigs = {
       {
         label: "",
         icon: CopyOutlined,
-        onClick: () => { },
+        onClick: () => { window.dispatchEvent(new CustomEvent("open-column-picker")); },
       },
     ],
   },
@@ -327,7 +327,7 @@ export const doctypeConfigs = {
         icon: CopyOutlined,
         color: "#6B7280",
         hoverColor: "#9CA3AF",
-        onClick: () => { },
+        onClick: () => { window.dispatchEvent(new CustomEvent("open-column-picker")); },
       },
     ],
     rowActions: [
@@ -368,7 +368,7 @@ export const getDoctypeConfig = (doctype) => {
         icon: CopyOutlined,
         color: "#6B7280",
         hoverColor: "#9CA3AF",
-        onClick: () => { },
+        onClick: () => { window.dispatchEvent(new CustomEvent("open-column-picker")); },
       },
     ],
     rowActions: [
