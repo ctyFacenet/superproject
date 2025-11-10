@@ -3,7 +3,9 @@
     class="tw-flex tw-flex-col lg:tw-flex-row tw-gap-4 tw-p-4 tw-bg-gray-50 tw-min-h-screen tw-overflow-auto">
 
     <Transition name="slide-left">
-      <div v-if="!state.hide_tree" class="tw-flex-shrink-0 tw-sticky lg:tw-left-0">
+      <div
+        v-if="!state.hide_tree && !config.hideTree"
+        class="tw-flex-shrink-0 tw-sticky lg:tw-left-0">
         <slot name="tree">
           <div
             v-if="showFilter"
@@ -15,7 +17,6 @@
     </Transition>
 
     <div class="tw-flex-1 tw-flex tw-flex-col tw-overflow-hidden">
-
       <Transition name="slide-up">
         <div v-if="!state.hide_flex" class="tw-py-3 tw-flex-shrink-0">
           <slot name="flex">
@@ -57,7 +58,11 @@
         v-if="!state.hide_records"
         class="tw-rounded-lg tw-flex-1 tw-min-h-[50vh] tw-bg-white tw-overflow-x-auto tw-overflow-y-auto tw-mt-2">
         <slot name="records">
-          <BaseTable :doctype="props.doctype" />
+          <BaseTable
+            :key="props.doctype"
+            :doctype="props.doctype"
+            :hide-select="config.hideSelect"
+          />
         </slot>
       </div>
     </div>
@@ -80,6 +85,8 @@ const props = defineProps({
   title: String,
 });
 
+const config = computed(() => getDoctypeConfig(props.doctype));
+
 const showFilter = ref(true);
 const onFilterChange = () => {
   if (window.innerWidth < 1024) showFilter.value = false;
@@ -91,8 +98,8 @@ const state = reactive({
   hide_records: props.hide_records ?? false,
 });
 
-const currentActions = computed(() => getDoctypeConfig(props.doctype)?.actions || []);
-const currentTitle = computed(() => getDoctypeConfig(props.doctype)?.title || "");
+const currentActions = computed(() => config.value?.actions || []);
+const currentTitle = computed(() => config.value?.title || "");
 
 function updateSetting(key, value) {
   if (key in state) state[key] = value;

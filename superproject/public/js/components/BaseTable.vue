@@ -27,26 +27,25 @@
         @scroll="handleScroll">
         <table class="tw-min-w-max tw-border-collapse tw-w-full" ref="tableRef">
           <thead class="tw-sticky tw-top-0 tw-z-20">
+
             <tr class="tw-bg-blue-50 tw-border-b tw-border-gray-300 tw-text-gray-700 tw-text-[13px]">
               <th class="tw-sticky tw-left-0 tw-top-0 tw-z-40 tw-bg-pink-100 tw-w-[50px] tw-text-center tw-border">
                 STT
               </th>
-              <th class="tw-sticky tw-left-[50px] tw-top-0 tw-z-40 tw-bg-pink-100 tw-w-[45px] tw-text-center tw-border">
+
+              <th v-if="!props.hideSelect"
+                class="tw-sticky tw-left-[50px] tw-top-0 tw-z-40 tw-bg-pink-100 tw-w-[45px] tw-text-center tw-border">
                 <input type="checkbox" ref="selectAllRef" v-model="selectAll" @change="toggleSelectAll" />
               </th>
 
               <th v-for="col in filteredColumns" :key="col.key"
                 class="tw-relative tw-border tw-border-gray-200 tw-font-semibold tw-text-center tw-px-3 tw-py-2 tw-group"
                 :class="[
-                  {
-                    'tw-sticky tw-right-0 tw-z-40 tw-bg-pink-100':
-                      col.key === 'actions',
-                    'tw-bg-pink-100 tw-text-pink-800':
-                      /(can|kdai|ktrung|ktieu|mahz|malh|mavt)/i.test(col.key)
-                  }
+                  { 'tw-sticky tw-right-0 tw-z-40 tw-bg-pink-100': col.key === 'actions' },
+                  { 'tw-bg-pink-100 tw-text-pink-800': /(can|kdai|ktrung|ktieu|mahz|malh|mavt)/i.test(col.key) }
                 ]" :style="{
                   width: colWidths[col.key] + 'px',
-                  minWidth: col.key === 'actions' ? '130px' : '150px',
+                  minWidth: col.key === 'actions' ? '130px' : '150px'
                 }">
                 <div class="tw-flex tw-items-center tw-justify-center tw-gap-1">
                   <a-tooltip :title="col.title">
@@ -64,7 +63,9 @@
 
             <tr class="tw-bg-white tw-border-b tw-border-gray-200">
               <th class="tw-sticky tw-left-0 tw-top-[33px] tw-z-30 tw-bg-pink-100 tw-border"></th>
-              <th class="tw-sticky tw-left-[50px] tw-top-[33px] tw-z-30 tw-bg-pink-100 tw-border"></th>
+              <th v-if="!props.hideSelect"
+                class="tw-sticky tw-left-[50px] tw-top-[33px] tw-z-30 tw-bg-pink-100 tw-border">
+              </th>
 
               <th v-for="col in filteredColumns" :key="col.key" class="tw-px-2 tw-py-1 tw-border tw-bg-white"
                 :class="{ 'tw-sticky tw-right-0 tw-z-30 tw-bg-pink-100': col.key === 'actions' }"
@@ -96,30 +97,28 @@
               <template v-for="(group, gIndex) in groupedRows" :key="group.key">
                 <tr class="tw-bg-pink-50 tw-font-semibold tw-text-red-600 tw-text-[13px]">
                   <td class="tw-sticky tw-left-0 tw-bg-pink-100 tw-z-10 tw-border"></td>
-
-                  <td class="tw-sticky tw-left-[50px] tw-bg-pink-100 tw-z-10 tw-text-center tw-border">
+                  <td v-if="!props.hideSelect"
+                    class="tw-sticky tw-left-[50px] tw-bg-pink-100 tw-z-10 tw-text-center tw-border">
                     <input type="checkbox" :checked="selectedGroups.includes(group.key)"
                       @change="toggleGroup(group.key, $event)" />
                   </td>
-
-                  <td class="tw-border tw-bg-pink-50 tw-text-left tw-pl-3" colspan="(filteredColumns.length)">
+                  <td class="tw-border tw-bg-pink-50 tw-text-left tw-pl-3" :colspan="filteredColumns.length">
                     {{ group.key }}
                   </td>
                 </tr>
 
                 <tr v-for="(row, i) in group.rows" :key="row.name" :class="[
-                  'tw-text-[13px] tw-cursor-pointer tw-transition-colors tw-duration-150',
-                  selectedRows.has(row) ? 'tw-bg-blue-50' : 'hover:tw-bg-gray-50'
-                ]" @click="handleRowClick($event, row)">
+                    'tw-text-[13px] tw-cursor-pointer tw-transition-colors tw-duration-150',
+                    selectedRows.has(row) ? 'tw-bg-blue-50' : 'hover:tw-bg-gray-50'
+                  ]" @click="handleRowClick($event, row)">
                   <td class="tw-sticky tw-left-0 tw-bg-pink-100 tw-z-20 tw-text-center tw-border tw-py-1">
                     {{ totalPreviousRows(gIndex) + i + 1 }}
                   </td>
-
-                  <td class="tw-sticky tw-left-[50px] tw-bg-pink-100 tw-z-20 tw-text-center tw-border tw-py-1">
+                  <td v-if="!props.hideSelect"
+                    class="tw-sticky tw-left-[50px] tw-bg-pink-100 tw-z-20 tw-text-center tw-border tw-py-1">
                     <input type="checkbox" :checked="selectedRows.has(row)"
                       @change="toggleRow(group.key, row, $event)" />
                   </td>
-
                   <td v-for="col in filteredColumns" :key="col.key"
                     class="tw-border tw-px-2 tw-py-1 tw-text-center tw-relative"
                     :class="{ 'tw-sticky tw-right-0 tw-bg-pink-100 tw-z-20': col.key === 'actions' }">
@@ -137,13 +136,12 @@
                           <a-tooltip :title="action.label">
                             <component :is="action.icon"
                               class="tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out"
-                              :style="{ color: action.color, fontSize: '15px' }"
-                              @mouseenter="hoverColor = action.hoverColor" @mouseleave="hoverColor = null"
-                              @click.stop="action.onClick(row)" />
+                              :style="{ color: action.color, fontSize: '15px' }" @click.stop="action.onClick(row)" />
                           </a-tooltip>
                         </template>
                       </div>
                     </template>
+
                     <template v-else>
                       {{ row[col.key] || '' }}
                     </template>
@@ -161,7 +159,7 @@
                 <td class="index-cell tw-sticky tw-left-0 tw-bg-pink-100 tw-z-20 tw-text-center tw-border tw-py-1">
                   {{ i + 1 + (currentPage - 1) * pageSize }}
                 </td>
-                <td
+                <td v-if="!props.hideSelect"
                   class="checkbox-cell tw-sticky tw-left-[50px] tw-bg-pink-100 tw-z-20 tw-text-center tw-border tw-py-1">
                   <input type="checkbox" :checked="selectedRows.has(row)" @change="toggleRow(null, row, $event)" />
                 </td>
@@ -182,9 +180,7 @@
                         <a-tooltip :title="action.label">
                           <component :is="action.icon"
                             class="tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out"
-                            :style="{ color: action.color, fontSize: '15px' }"
-                            @mouseenter="hoverColor = action.hoverColor" @mouseleave="hoverColor = null"
-                            @click.stop="action.onClick(row)" />
+                            :style="{ color: action.color, fontSize: '15px' }" @click.stop="action.onClick(row)" />
                         </a-tooltip>
                       </template>
                     </div>
@@ -198,7 +194,7 @@
             </template>
 
             <tr v-if="!filteredRows.length">
-              <td :colspan="(columns?.length || 0) + 2"
+              <td :colspan="(columns?.length || 0) + (props.hideSelect ? 1 : 2)"
                 class="tw-text-center tw-py-6 tw-text-gray-500 tw-italic tw-border">
                 Không có dữ liệu
               </td>
@@ -241,7 +237,7 @@
 
 
 <script setup>
-import { ref, computed, watch, shallowRef, onMounted } from "vue";
+import { ref, computed, watch, shallowRef, onMounted, onUnmounted } from "vue";
 import dayjs from "dayjs";
 import { statusColors } from "../utils/status-colors";
 import { getDoctypeConfig } from "./config/doctype-configs";
@@ -249,6 +245,7 @@ import { getDoctypeConfig } from "./config/doctype-configs";
 const props = defineProps({
   doctype: { type: String, required: true },
   nameKey: { type: String, default: "name" },
+  hideSelect: { type: Boolean, default: false },
 });
 
 const emit = defineEmits(["rowClick", "selection-change"]);
@@ -261,26 +258,40 @@ const visibleColumns = ref({});
 const showColumnPicker = ref(false);
 
 const storageKey = computed(() => `visibleColumns_${props.doctype}`);
+
+const togglePicker = () => {
+  showColumnPicker.value = !showColumnPicker.value;
+};
+
 onMounted(() => {
   const saved = localStorage.getItem(storageKey.value);
   if (saved) visibleColumns.value = JSON.parse(saved);
 
-  window.addEventListener("open-column-picker", () => {
-    showColumnPicker.value = !showColumnPicker.value;
-  });
+  window.addEventListener("open-column-picker", togglePicker);
 });
-watch(visibleColumns, (v) => {
-  localStorage.setItem(storageKey.value, JSON.stringify(v));
-}, { deep: true });
+
+onUnmounted(() => {
+  window.removeEventListener("open-column-picker", togglePicker);
+});
+
+watch(
+  visibleColumns,
+  (v) => {
+    localStorage.setItem(storageKey.value, JSON.stringify(v));
+  },
+  { deep: true }
+);
 
 const checkedColumns = computed(() =>
   Object.keys(visibleColumns.value).filter((k) => visibleColumns.value[k])
 );
+
 function toggleColumn(key, e) {
   visibleColumns.value[key] = e.target.checked;
 }
+
 function resetColumns() {
-  Object.keys(visibleColumns.value).forEach(k => visibleColumns.value[k] = true);
+  Object.keys(visibleColumns.value).forEach((k) => (visibleColumns.value[k] = true));
 }
 
 const config = computed(() => getDoctypeConfig(props.doctype));
@@ -330,8 +341,7 @@ watch(() => props.doctype, fetchData);
 
 const filteredColumns = computed(() => {
   let cols = columns.value.filter((c) => visibleColumns.value[c.key] !== false);
-  const hasActions =
-    config.value?.rowActions && config.value.rowActions.length > 0;
+  const hasActions = config.value?.rowActions && config.value.rowActions.length > 0;
   if (!hasActions) cols = cols.filter((col) => col.key !== "actions");
   return cols;
 });
@@ -389,8 +399,7 @@ const toggleSelectAll = () => {
   if (selectAll.value) {
     if (groupByField.value) {
       groupedRows.value.forEach((g) => {
-        if (!selectedGroups.value.includes(g.key))
-          selectedGroups.value.push(g.key);
+        if (!selectedGroups.value.includes(g.key)) selectedGroups.value.push(g.key);
         g.rows.forEach((r) => selectedRows.value.add(r));
       });
     } else {
@@ -521,7 +530,6 @@ const handleRowClick = (event, row) => {
   }
 };
 </script>
-
 
 
 <style scoped>
