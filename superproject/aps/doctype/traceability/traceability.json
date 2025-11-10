@@ -1,0 +1,77 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-11-10 08:48:47.277495",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "qrcode",
+  "itemcode",
+  "itemname",
+  "column_break_lnwc",
+  "processname",
+  "productiondate"
+ ],
+ "fields": [
+  {
+   "fieldname": "qrcode",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e3 QR"
+  },
+  {
+   "fieldname": "itemcode",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e3 s\u1ea3n ph\u1ea9m"
+  },
+  {
+   "fieldname": "itemname",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "T\u00ean s\u1ea3n ph\u1ea9m"
+  },
+  {
+   "fieldname": "processname",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "C\u00f4ng \u0111o\u1ea1n"
+  },
+  {
+   "fieldname": "productiondate",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Ng\u00e0y s\u1ea3n xu\u1ea5t"
+  },
+  {
+   "fieldname": "column_break_lnwc",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-11-10 08:57:36.005199",
+ "modified_by": "Administrator",
+ "module": "APS",
+ "name": "Traceability",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

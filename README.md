@@ -48,3 +48,8 @@ bench --site research install-app superproject
 bench use research / development.localhost
 
 bench start
+
+### Fix DB error access denied
+
+cd ERP_Next/.devcontainer/
+docker compose up -d
