@@ -1,5 +1,7 @@
 .custom-menu-bar-wrapper {
   background-color: rgb(232, 243, 255);
+  position: relative !important;
+  z-index: -1 !important;
 }
 
 .custom-menu-bar-wrapper .container {
