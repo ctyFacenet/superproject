@@ -49,6 +49,7 @@ web_include_css = [
 # web_include_js = "/assets/superproject/js/superproject.js"
 
 website_context = {
+  "favicon": "/assets/superproject/images/logo_fn.png",
 	"splash_image": "/assets/superproject/images/logo_fn.png",
 }
 # include custom scss in every website theme (without file extension ".scss")
