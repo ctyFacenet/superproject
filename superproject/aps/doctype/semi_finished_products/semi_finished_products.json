@@ -16,7 +16,7 @@
   "linegroup",
   "column_break_dzle",
   "productionshift",
-  "nh\u00e2n_vi\u00ean_th\u1ef1c_hi\u1ec7n",
+  "operatorname",
   "classification",
   "actualoutputquantity",
   "estimatedoutputquantity",
@@ -97,12 +97,6 @@
    "label": "Ca s\u1ea3n xu\u1ea5t"
   },
   {
-   "fieldname": "nh\u00e2n_vi\u00ean_th\u1ef1c_hi\u1ec7n",
-   "fieldtype": "Small Text",
-   "in_list_view": 1,
-   "label": "Nh\u00e2n vi\u00ean th\u1ef1c hi\u1ec7n"
-  },
-  {
    "fieldname": "classification",
    "fieldtype": "Small Text",
    "in_list_view": 1,
@@ -150,12 +144,18 @@
    "fieldtype": "Date",
    "in_list_view": 1,
    "label": "Ng\u00e0y h\u1ee7y tem"
+  },
+  {
+   "fieldname": "operatorname",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Nh\u00e2n vi\u00ean th\u1ef1c hi\u1ec7n"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-11-07 11:44:46.330644",
+ "modified": "2025-11-10 14:22:31.773784",
  "modified_by": "Administrator",
  "module": "APS",
  "name": "Semi Finished Products",
