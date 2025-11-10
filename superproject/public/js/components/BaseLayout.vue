@@ -31,7 +31,7 @@
                   <template v-for="btn in currentActions" :key="btn.label">
                     <a-button
                       type="link"
-                      class="tw-flex tw-items-center tw-gap-1 tw-text-[#0ba5ec] hover:tw-text-[#0987c1] tw-font-medium tw-px-1 tw-whitespace-nowrap"
+                      class="tw-flex tw-items-center tw-text-[#0ba5ec] hover:tw-text-[#0987c1] tw-font-medium tw-px-1 tw-whitespace-nowrap"
                       @click="btn.onClick">
                       <component :is="btn.icon" v-if="btn.icon" />
                       {{ btn.label }}
