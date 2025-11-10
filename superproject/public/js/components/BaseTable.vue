@@ -318,9 +318,6 @@ async function fetchData() {
     visibleFields.push({ title: "Thao tác", key: "actions" });
     columns.value = visibleFields;
 
-    visibleFields.push({ title: "Thao tác", key: "actions" });
-    columns.value = visibleFields;
-
     //Đặt chiều rộng mặc định cho các cột
     visibleFields.forEach((f) => {
       if (!colWidths.value[f.key]) colWidths.value[f.key] = 160;
