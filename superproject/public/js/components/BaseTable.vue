@@ -108,9 +108,9 @@
                 </tr>
 
                 <tr v-for="(row, i) in group.rows" :key="row.name" :class="[
-                    'tw-text-[13px] tw-cursor-pointer tw-transition-colors tw-duration-150',
-                    selectedRows.has(row) ? 'tw-bg-blue-50' : 'hover:tw-bg-gray-50'
-                  ]" @click="handleRowClick($event, row)">
+                  'tw-text-[13px] tw-cursor-pointer tw-transition-colors tw-duration-150',
+                  selectedRows.has(row) ? 'tw-bg-blue-50' : 'hover:tw-bg-gray-50'
+                ]" @click="handleRowClick($event, row)">
                   <td class="tw-sticky tw-left-0 tw-bg-pink-100 tw-z-20 tw-text-center tw-border tw-py-1">
                     {{ totalPreviousRows(gIndex) + i + 1 }}
                   </td>
@@ -127,6 +127,7 @@
                         class="tw-inline-block tw-rounded-lg tw-px-2 tw-py-[2px] tw-text-[12px] tw-font-medium">
                         {{ row.status }}
                       </span>
+
                     </template>
 
                     <template v-else-if="col.key === 'actions'">
@@ -171,6 +172,7 @@
                       class="tw-inline-block tw-rounded-lg tw-px-2 tw-py-[2px] tw-text-[12px] tw-font-medium">
                       {{ row.status }}
                     </span>
+
                   </template>
 
                   <template v-else-if="col.key === 'actions'">
@@ -239,8 +241,11 @@
 <script setup>
 import { ref, computed, watch, shallowRef, onMounted, onUnmounted } from "vue";
 import dayjs from "dayjs";
-import { statusColors } from "../utils/status-colors";
 import { getDoctypeConfig } from "./config/doctype-configs";
+import { colorMap } from "../utils/status-colors";
+
+
+const statusColors = ref({});
 
 const props = defineProps({
   doctype: { type: String, required: true },
@@ -301,6 +306,7 @@ async function fetchData() {
   loading.value = true;
   try {
     const meta = await frappe.get_meta(props.doctype);
+
     let visibleFields = meta.fields
       .filter((f) => f.in_list_view)
       .map((f) => ({
@@ -312,9 +318,38 @@ async function fetchData() {
     visibleFields.push({ title: "Thao tác", key: "actions" });
     columns.value = visibleFields;
 
+    visibleFields.push({ title: "Thao tác", key: "actions" });
+    columns.value = visibleFields;
+
+    //Đặt chiều rộng mặc định cho các cột
     visibleFields.forEach((f) => {
       if (!colWidths.value[f.key]) colWidths.value[f.key] = 160;
     });
+
+    const statusField = meta.fields.find((f) => f.fieldname === "status");
+    if (statusField && statusField.options) {
+      const options = statusField.options
+        .split("\n")
+        .map((opt) => opt.trim())
+        .filter(Boolean);
+
+      const palette = Object.values(colorMap);
+      const dynamicMap = {};
+
+      options.forEach((opt, i) => {
+        if (/hoàn thành/i.test(opt)) dynamicMap[opt] = colorMap.green;
+        else if (/duyệt/i.test(opt)) dynamicMap[opt] = colorMap.orange;
+        else if (/bản nháp|nhap/i.test(opt)) dynamicMap[opt] = colorMap.gray;
+        else if (/hủy|huỷ/i.test(opt)) dynamicMap[opt] = colorMap.red;
+        else if (/chờ|đang/i.test(opt)) dynamicMap[opt] = colorMap.blue;
+        else dynamicMap[opt] = palette[i % palette.length];
+      });
+
+      statusColors.value = dynamicMap;
+      console.log(`[${props.doctype}] Dynamic status colors:`, dynamicMap);
+    } else {
+      statusColors.value = {};
+    }
 
     const fieldNames = [
       "name",
@@ -424,10 +459,14 @@ watch(selectedRows, () => {
 const filters = ref({});
 const dateFilters = ref({});
 const statusFilter = ref("");
-const statusOptions = Object.keys(statusColors).map((x) => ({
-  label: x,
-  value: x,
-}));
+const statusOptions = computed(() => {
+  const colors = statusColors.value || {};
+  return Object.keys(colors).map((x) => ({
+    label: x,
+    value: x,
+  }));
+});
+
 const filterOption = (input, option) =>
   option.label.toLowerCase().includes(input.toLowerCase());
 
