@@ -13,7 +13,7 @@
 
     <div class="tw-flex-1 tw-flex tw-flex-col tw-overflow-hidden">
       <Transition name="slide-up">
-        <div v-if="!state.hide_flex" class="tw-py-3 tw-flex-shrink-0">
+        <div v-if="!state.hide_flex" class="tw-flex-shrink-0">
           <slot name="flex">
             <div class="tw-flex tw-flex-col tw-gap-2">
               <h2 class="tw-text-base md:tw-text-lg tw-text-center tw-font-semibold tw-text-gray-900 tw-uppercase">
@@ -59,7 +59,7 @@
       </Transition>
 
       <div v-if="!state.hide_records"
-        class="tw-rounded-lg tw-flex-1 tw-min-h-[50vh] tw-bg-white tw-overflow-x-auto tw-overflow-y-auto tw-mt-2">
+        class="tw-rounded-lg tw-flex-1 tw-min-h-[50vh] tw-bg-white tw-overflow-x-auto tw-overflow-y-auto">
         <slot name="records">
           <BaseTable :key="props.doctype" :doctype="props.doctype" :hide-select="config.hideSelect" />
         </slot>

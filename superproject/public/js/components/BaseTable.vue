@@ -573,7 +573,7 @@ tr.tw-bg-pink-50 {
 }
 
 tr.tw-bg-pink-50 td {
-  border-top: 2px solid #fb7185 !important;
+  border-top: 1px solid #fb7185 !important;
 }
 
 .actions-cell svg {
