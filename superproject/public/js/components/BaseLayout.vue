@@ -1,16 +1,11 @@
 <template>
-  <div
-    class="tw-flex tw-flex-col lg:tw-flex-row tw-gap-4 tw-p-4 tw-bg-gray-50 tw-min-h-screen tw-overflow-auto">
-
+  <div class="tw-flex tw-flex-col lg:tw-flex-row tw-gap-4 tw-p-4 tw-bg-gray-50 tw-min-h-screen tw-overflow-auto">
     <Transition name="slide-left">
-      <div
-        v-if="!state.hide_tree && !config.hideTree"
-        class="tw-flex-shrink-0 tw-sticky lg:tw-left-0">
+      <div v-if="!state.hide_tree && !config.hideTree" class="tw-flex-shrink-0 tw-sticky lg:tw-left-0">
         <slot name="tree">
-          <div
-            v-if="showFilter"
+          <div v-if="showFilter"
             class="tree-filter lg:tw-w-[250px] tw-bg-white tw-rounded-xl tw-shadow tw-p-3 tw-h-full tw-overflow-y-auto">
-            <TreeFilter :showDateFilter="true" @change="onFilterChange" />
+            <TreeFilter :doctype="props.doctype" :showDateFilter="false" @change="onFilterChange" />
           </div>
         </slot>
       </div>
@@ -29,8 +24,7 @@
                 class="tw-flex tw-items-center tw-justify-end tw-gap-3 tw-overflow-x-auto tw-max-w-full tw-pb-1 hide-scrollbar">
                 <div class="tw-flex tw-items-center tw-gap-2 tw-flex-nowrap">
                   <template v-for="btn in currentActions" :key="btn.label">
-                    <a-button
-                      type="link"
+                    <a-button type="link"
                       class="tw-flex tw-items-center tw-text-[#0ba5ec] hover:tw-text-[#0987c1] tw-font-medium tw-px-1 tw-whitespace-nowrap"
                       @click="btn.onClick">
                       <component :is="btn.icon" v-if="btn.icon" />
@@ -39,11 +33,9 @@
                   </template>
                 </div>
 
-                <a-input
-                  placeholder="Nhập thông tin để tìm kiếm"
+                <a-input placeholder="Nhập thông tin để tìm kiếm"
                   class="sm:tw-w-[220px] md:tw-w-[260px] lg:tw-w-[300px] tw-h-[30px] tw-text-[13px] tw-rounded-sm tw-border-[#0ba5ec] focus:tw-shadow-none tw-flex-shrink-0"
-                  size="small"
-                  allowClear>
+                  size="small" allowClear>
                   <template #prefix>
                     <SearchOutlined class="tw-text-gray-400" />
                   </template>
@@ -54,15 +46,10 @@
         </div>
       </Transition>
 
-      <div
-        v-if="!state.hide_records"
+      <div v-if="!state.hide_records"
         class="tw-rounded-lg tw-flex-1 tw-min-h-[50vh] tw-bg-white tw-overflow-x-auto tw-overflow-y-auto tw-mt-2">
         <slot name="records">
-          <BaseTable
-            :key="props.doctype"
-            :doctype="props.doctype"
-            :hide-select="config.hideSelect"
-          />
+          <BaseTable :key="props.doctype" :doctype="props.doctype" :hide-select="config.hideSelect" />
         </slot>
       </div>
     </div>
@@ -113,6 +100,7 @@ defineExpose({ updateSetting });
 .slide-left-leave-active {
   transition: all 0.4s ease;
 }
+
 .slide-left-enter-from,
 .slide-left-leave-to {
   transform: translateX(-20px);
@@ -123,6 +111,7 @@ defineExpose({ updateSetting });
 .slide-up-leave-active {
   transition: all 0.4s ease;
 }
+
 .slide-up-enter-from,
 .slide-up-leave-to {
   transform: translateY(-20px);
@@ -137,10 +126,11 @@ defineExpose({ updateSetting });
 }
 
 .hide-scrollbar {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE, Edge */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
+
 .hide-scrollbar::-webkit-scrollbar {
-  display: none; /* Chrome, Safari */
+  display: none;
 }
 </style>

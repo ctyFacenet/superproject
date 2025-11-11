@@ -1,37 +1,26 @@
 <template>
-  <div class="tw-p-4">
-    <div class="tw-mb-4">
-      <a-range-picker
-        v-model:value="dateRange"
-        format="DD/MM/YYYY"
-        class="tw-w-full"
-        :placeholder="['Từ ngày', 'Đến ngày']"
-        :suffix-icon="null"
-      />
-    </div>
-
-    <div class="tw-border tw-rounded-lg tw-p-2 tw-max-h-[70vh] tw-overflow-y-auto">
-      <a-tree
-        checkable
-        :tree-data="treeData"
-        v-model:checkedKeys="checkedKeys"
-        :defaultExpandedKeys="[]"
-      />
-    </div>
+  <div class="tw-border tw-rounded-lg tw-p-2 tw-max-h-[70vh] tw-overflow-y-auto">
+    <a-tree checkable :tree-data="treeData" v-model:checkedKeys="checkedKeys" @check="emitChange" />
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, watchEffect } from "vue";
 
 const props = defineProps({
+  doctype: { type: String, required: true },
   showDateFilter: { type: Boolean, default: false },
 });
 
-const dateRange = ref([]);
+const emit = defineEmits(["change"]);
 const checkedKeys = ref([]);
 
-const years = [2025, 2024];
+const now = new Date();
+const currentYear = now.getFullYear();
+const currentMonth = now.getMonth() + 1;
+
+const years = [currentYear, currentYear - 1];
+
 const months = Array.from({ length: 12 }, (_, i) => i + 1);
 
 const getDaysInMonth = (year, month) => {
@@ -39,20 +28,115 @@ const getDaysInMonth = (year, month) => {
   return [4, 6, 9, 11].includes(month) ? 30 : 31;
 };
 
-const treeData = computed(() =>
-  years.map((year) => ({
-    title: `Năm ${year}`,
-    key: `${year}`,
-    children: months.map((m) => ({
-      title: `Tháng ${m}`,
-      key: `${year}-${m}`,
-      children: props.showDateFilter
-        ? Array.from({ length: getDaysInMonth(year, m) }, (_, d) => ({
-            title: `Ngày ${d + 1}`,
-            key: `${year}-${m}-${d + 1}`,
-          }))
-        : undefined,
-    })),
-  }))
-);
+const recentMonths = computed(() => {
+  return Array.from({ length: 4 }, (_, i) => {
+    let m = currentMonth - i;
+    let y = currentYear;
+    if (m <= 0) {
+      m += 12;
+      y -= 1;
+    }
+    return { year: y, month: m };
+  });
+});
+
+const treeData = computed(() => {
+  switch (props.doctype) {
+    case "Product Order":
+      const groupedByYearPO = recentMonths.value.reduce((acc, { year, month }) => {
+        acc[year] = acc[year] || [];
+        acc[year].push({
+          title: `Tháng ${month}`,
+          key: `month-${year}-${month}`,
+          children: [
+            { title: "ĐSX nội bộ", key: `internal-production-${year}-${month}` },
+            { title: "ĐSX kinh doanh", key: `business-production-${year}-${month}` },
+          ],
+        });
+        return acc;
+      }, {});
+      return Object.entries(groupedByYearPO).map(([year, months]) => ({
+        title: `Năm ${year}`,
+        key: `year-${year}`,
+        children: months,
+      }));
+
+    case "Semi Finished Products":
+      const groupedByYearSF = recentMonths.value.reduce((acc, { year, month }) => {
+        acc[year] = acc[year] || [];
+        acc[year].push({
+          title: `Tháng ${month}`,
+          key: `month-${year}-${month}`,
+          children: [
+            { title: "MALH", key: `malh-${year}-${month}` },
+            { title: "MAHZ", key: `mahz-${year}-${month}` },
+            { title: "Kéo trung", key: `ktrung-${year}-${month}` },
+            { title: "Kéo đại", key: `kdai-${year}-${month}` },
+            { title: "Cán", key: `can-${year}-${month}` },
+          ],
+        });
+        return acc;
+      }, {});
+      return Object.entries(groupedByYearSF).map(([year, months]) => ({
+        title: `Năm ${year}`,
+        key: `year-${year}`,
+        children: months,
+      }));
+
+    case "In Process Inventory":
+      return [
+        { title: "Kho tráng đứng", key: "warehouse-coating-vertical" },
+        { title: "Kho mạ LH", key: "warehouse-plating-lh" },
+        { title: "Kho mạ HZ", key: "warehouse-plating-hz" },
+        { title: "Kho kéo trung", key: "warehouse-drawing-medium" },
+        { title: "Kho kéo tiểu", key: "warehouse-drawing-small" },
+        { title: "Kho kéo đại", key: "warehouse-drawing-large" },
+        { title: "Kho Cán", key: "warehouse-rolling" },
+      ];
+
+    default:
+      return years.map((year) => ({
+        title: `Năm ${year}`,
+        key: `year-${year}`,
+        children: months.map((m) => ({
+          title: `Tháng ${m}`,
+          key: `month-${year}-${m}`,
+          children: props.showDateFilter
+            ? Array.from({ length: getDaysInMonth(year, m) }, (_, d) => ({
+              title: `Ngày ${d + 1}`,
+              key: `day-${year}-${m}-${d + 1}`,
+            }))
+            : undefined,
+        })),
+      }));
+  }
+});
+
+function emitChange() {
+  emit("change", checkedKeys.value);
+}
+
+watchEffect(() => {
+  const newNow = new Date();
+  if (
+    newNow.getFullYear() !== currentYear ||
+    newNow.getMonth() + 1 !== currentMonth
+  ) {
+    recentMonths.value = Array.from({ length: 4 }, (_, i) => {
+      let m = newNow.getMonth() + 1 - i;
+      let y = newNow.getFullYear();
+      if (m <= 0) {
+        m += 12;
+        y -= 1;
+      }
+      return { year: y, month: m };
+    });
+  }
+});
 </script>
+
+<style scoped>
+.tw-border {
+  border-color: #e5e7eb;
+}
+</style>

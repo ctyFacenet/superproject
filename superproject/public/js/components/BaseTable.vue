@@ -343,7 +343,6 @@ async function fetchData() {
       });
 
       statusColors.value = dynamicMap;
-      console.log(`[${props.doctype}] Dynamic status colors:`, dynamicMap);
     } else {
       statusColors.value = {};
     }
