@@ -34,7 +34,7 @@ function customConfirmModal({
             <p>${message}</p>
             ${note ? `
               <div class="alert ${alertClass} d-flex align-items-center">
-                <i class="fa fa-exclamation-triangle mr-2"></i>
+                <i class="fa fa-exclamation-triangle mr-2" style="font-size: 28px"></i>
                 <div>
                   <strong>Lưu ý:</strong><br>
                   ${note}

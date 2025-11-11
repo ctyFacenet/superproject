@@ -6,6 +6,7 @@
 
 <script setup>
 import { ref, computed, watchEffect } from "vue";
+import { DocType } from "../utils/consts.js";
 
 const props = defineProps({
   doctype: { type: String, required: true },
@@ -42,7 +43,7 @@ const recentMonths = computed(() => {
 
 const treeData = computed(() => {
   switch (props.doctype) {
-    case "Product Order":
+    case DocType.PRODUCT_ORDER:
       const groupedByYearPO = recentMonths.value.reduce((acc, { year, month }) => {
         acc[year] = acc[year] || [];
         acc[year].push({
@@ -61,7 +62,7 @@ const treeData = computed(() => {
         children: months,
       }));
 
-    case "Semi Finished Products":
+    case DocType.SEMI_FINISHED_PRODUCTS:
       const groupedByYearSF = recentMonths.value.reduce((acc, { year, month }) => {
         acc[year] = acc[year] || [];
         acc[year].push({
@@ -83,7 +84,7 @@ const treeData = computed(() => {
         children: months,
       }));
 
-    case "In Process Inventory":
+    case DocType.IN_PROCESS_INVENTORY:
       return [
         { title: "Kho tráng đứng", key: "warehouse-coating-vertical" },
         { title: "Kho mạ LH", key: "warehouse-plating-lh" },
