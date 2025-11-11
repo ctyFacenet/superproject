@@ -4,7 +4,7 @@
 
     <a-spin :spinning="loading" size="large" class="tw-w-full tw-h-full">
 
-      <a-popover v-model:open="showColumnPicker" trigger="click" placement="rightTop">
+      <a-popover v-model:open="showColumnPicker" trigger="click" placement="top">
         <template #content>
           <div class="tw-p-2 tw-w-[220px] tw-max-h-[300px] tw-overflow-y-auto">
             <a-checkbox-group v-model:value="checkedColumns" class="tw-flex tw-flex-col tw-gap-2">
@@ -14,7 +14,7 @@
               </a-checkbox>
             </a-checkbox-group>
             <div class="tw-mt-2 tw-text-right">
-              <a-button type="link" size="small" @click="resetColumns">Khôi phục mặc định</a-button>
+              <a-button type="link" size="small" @click="resetColumns">Reset all</a-button>
             </div>
           </div>
         </template>

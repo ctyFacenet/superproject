@@ -82,6 +82,7 @@ import {
   donutChartData2,
   donutChartOptions,
 } from "../utils/chart-data.js"
+import { DocType } from "../utils/consts.js";
 
 const props = defineProps({
   hide_tree: Boolean,
@@ -105,7 +106,7 @@ const state = reactive({
   hide_records: props.hide_records ?? false,
 });
 
-const showCharts = computed(() => props.doctype === "Statistical Report");
+const showCharts = computed(() => props.doctype === DocType.STATISTICAL_REPORT);
 
 const currentActions = computed(() => config.value?.actions || []);
 const currentTitle = computed(() => config.value?.title || "");

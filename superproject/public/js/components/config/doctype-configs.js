@@ -15,7 +15,7 @@ import {
   CloseOutlined,
   HistoryOutlined,
 } from "@ant-design/icons-vue";
-
+import { DocType } from "../../utils/consts.js";
 const baseCopyAction = {
   label: "",
   icon: CopyOutlined,
@@ -50,7 +50,7 @@ const baseRowActions = (view = true) =>
   ].filter(Boolean);
 
 export const doctypeConfigs = {
-  "Sale Order": {
+  [DocType.SALE_ORDER]: {
     title: "DANH SÁCH ĐƠN HÀNG TỔNG",
     actions: [
       {
@@ -58,14 +58,14 @@ export const doctypeConfigs = {
         icon: PlusOutlined,
         color: "#0EA5E9",
         hoverColor: "#38BDF8",
-        onClick: () => frappe.new_doc("Sale Order"),
+        onClick: () => frappe.new_doc(DocType.SALE_ORDER),
       },
       baseCopyAction,
     ],
     rowActions: baseRowActions(),
   },
 
-  "Sale Order Detail": {
+  [DocType.SALE_ORDER_DETAIL]: {
     title: "CHI TIẾT ĐƠN HÀNG",
     groupByField: "detailordercode",
     actions: [
@@ -110,7 +110,7 @@ export const doctypeConfigs = {
     ],
   },
 
-  "Product Order": {
+  [DocType.PRODUCT_ORDER]: {
     title: "ĐƠN SẢN XUẤT NỘI BỘ",
     groupByField: "itemcode",
     actions: [
@@ -176,7 +176,7 @@ export const doctypeConfigs = {
     ],
   },
 
-  "Work Order": {
+  [DocType.WORK_ORDER]: {
     title: "LỆNH SẢN XUẤT",
     actions: [
       {
@@ -184,7 +184,7 @@ export const doctypeConfigs = {
         icon: PlusOutlined,
         color: "#0EA5E9",
         hoverColor: "#38BDF8",
-        onClick: () => frappe.new_doc("Work Order"),
+        onClick: () => frappe.new_doc(DocType.WORK_ORDER),
       },
       baseCopyAction,
     ],
@@ -213,7 +213,7 @@ export const doctypeConfigs = {
     ],
   },
 
-  "Work Order Approved": {
+  [DocType.WORK_ORDER_APPROVED]: {
     title: "LỆNH SẢN XUẤT ĐÃ DUYỆT",
     actions: [
       {
@@ -221,7 +221,7 @@ export const doctypeConfigs = {
         icon: PlusOutlined,
         color: "#0EA5E9",
         hoverColor: "#38BDF8",
-        onClick: () => frappe.new_doc("Work Order Approved"),
+        onClick: () => frappe.new_doc(DocType.WORK_ORDER_APPROVED),
       },
       baseCopyAction,
     ],
@@ -243,7 +243,7 @@ export const doctypeConfigs = {
     ],
   },
 
-  "In Process Inventory": {
+  [DocType.IN_PROCESS_INVENTORY]: {
     title: "TỒN KHO ĐANG SẢN XUẤT",
     groupByField: "materialgroup",
     actions: [
@@ -272,7 +272,7 @@ export const doctypeConfigs = {
     ],
   },
 
-  "Semi Finished Products": {
+  [DocType.SEMI_FINISHED_PRODUCTS]: {
     title: "BÁN THÀNH PHẨM",
     groupByField: "lotnumber",
     actions: [
@@ -301,7 +301,7 @@ export const doctypeConfigs = {
     ],
     rowActions: baseRowActions(),
   },
-  "Traceability": {
+  [DocType.TRACEABILITY]: {
     title: "DANH SÁCH TRUY XUẤT NGUỒN GỐC SẢN PHẨM",
     hideTree: true,
     hideSelect: true,
@@ -311,7 +311,7 @@ export const doctypeConfigs = {
         icon: PlusOutlined,
         color: "#0EA5E9",
         hoverColor: "#38BDF8",
-        onClick: () => frappe.new_doc("Traceability"),
+        onClick: () => frappe.new_doc(DocType.TRACEABILITY),
       },
       baseCopyAction,
     ],
@@ -325,7 +325,7 @@ export const doctypeConfigs = {
       },
     ],
   },
-  "Period End Closing": {
+  [DocType.PERIOD_END_CLOSING]: {
     title: "DANH SÁCH CHỐT SỔ CUỐI KỲ",
     groupByField: "materialgroup",
     hideSelect: true,
@@ -335,12 +335,12 @@ export const doctypeConfigs = {
         icon: PlusOutlined,
         color: "#0EA5E9",
         hoverColor: "#38BDF8",
-        onClick: () => frappe.new_doc("Period End Closing"),
+        onClick: () => frappe.new_doc(DocType.PERIOD_END_CLOSING),
       },
       baseCopyAction,
     ],
   },
-  "Statistical Report": {
+  [DocType.STATISTICAL_REPORT]: {
     title: "BÁO CÁO TỔNG QUAN ĐƠN HÀNG CHI TIẾT",
     groupByField: "detailordercode",
     hideSelect: true,
@@ -350,7 +350,7 @@ export const doctypeConfigs = {
         icon: PlusOutlined,
         color: "#0EA5E9",
         hoverColor: "#38BDF8",
-        onClick: () => frappe.new_doc("Statistical Report"),
+        onClick: () => frappe.new_doc(DocType.STATISTICAL_REPORT),
       },
       baseCopyAction,
     ],
