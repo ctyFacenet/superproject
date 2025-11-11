@@ -5,18 +5,157 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "section_break_kxkn"
+  "detailordercode",
+  "customername",
+  "itemcode",
+  "itemname",
+  "column_break_nvbe",
+  "deliverydate",
+  "ordercreationdate",
+  "plannedcompletiontime",
+  "status",
+  "column_break_wiou",
+  "requestedquantity",
+  "reservedquantity",
+  "requiredproductionquantity",
+  "actualokquantity",
+  "remainingproductionquantity",
+  "column_break_wjuc",
+  "ktieuprocess",
+  "mahzprocess",
+  "malhprocess",
+  "mavtprocess",
+  "uom"
  ],
  "fields": [
   {
-   "fieldname": "section_break_kxkn",
-   "fieldtype": "Section Break"
+   "fieldname": "detailordercode",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e3 \u0111\u01a1n h\u00e0ng chi ti\u1ebft"
+  },
+  {
+   "fieldname": "customername",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Kh\u00e1ch h\u00e0ng"
+  },
+  {
+   "fieldname": "column_break_nvbe",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_wiou",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_wjuc",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "itemcode",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e3 h\u00e0ng"
+  },
+  {
+   "fieldname": "itemname",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "T\u00ean h\u00e0ng"
+  },
+  {
+   "fieldname": "deliverydate",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Ng\u00e0y giao h\u00e0ng"
+  },
+  {
+   "fieldname": "ordercreationdate",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Ng\u00e0y t\u1ea1o \u0111\u01a1n"
+  },
+  {
+   "fieldname": "plannedcompletiontime",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Th\u1eddi gian d\u1ef1 ki\u1ebfn k\u1ebft th\u00fac"
+  },
+  {
+   "default": "B\u1ea3n nh\u00e1p",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Tr\u1ea1ng th\u00e1i",
+   "options": "B\u1ea3n nh\u00e1p\nS\u1eed d\u1ee5ng h\u00e0ng t\u1ed3n kho\n\u0110\u00e3 duy\u1ec7t\nCh\u1edd t\u1ea1o l\u1ec7nh s\u1ea3n xu\u1ea5t\n\u0110\u00e3 t\u1ea1o 1 ph\u1ea7n l\u1ec7nh s\u1ea3n xu\u1ea5t\n\u0110\u00e3 t\u1ea1o l\u1ec7nh s\u1ea3n xu\u1ea5t\n\u0110\u00e3 ho\u00e0n th\u00e0nh\n\u0110\u00e3 h\u1ee7y"
+  },
+  {
+   "fieldname": "requestedquantity",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "SL y\u00eau c\u1ea7u"
+  },
+  {
+   "fieldname": "reservedquantity",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "SL \u0111\u00e3 gi\u1eef"
+  },
+  {
+   "fieldname": "requiredproductionquantity",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "SL c\u1ea7n s\u1ea3n xu\u1ea5t"
+  },
+  {
+   "fieldname": "actualokquantity",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "SL OK th\u1ef1c t\u1ebf"
+  },
+  {
+   "fieldname": "remainingproductionquantity",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "SL c\u1ea7n s\u1ea3n xu\u1ea5t c\u00f2n l\u1ea1i"
+  },
+  {
+   "fieldname": "ktieuprocess",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "K\u00e9o ti\u1ec3u"
+  },
+  {
+   "fieldname": "mahzprocess",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "M\u1ea1 HZ"
+  },
+  {
+   "fieldname": "malhprocess",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "M\u1ea1 LH"
+  },
+  {
+   "fieldname": "mavtprocess",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "M\u1ea1 VT"
+  },
+  {
+   "default": "Kg",
+   "fieldname": "uom",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "\u0110\u01a1n v\u1ecb t\u00ednh"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-11-06 09:49:49.117507",
+ "modified": "2025-11-11 09:33:00.638330",
  "modified_by": "Administrator",
  "module": "APS",
  "name": "Statistical Report",

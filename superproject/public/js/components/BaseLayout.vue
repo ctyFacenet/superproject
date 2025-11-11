@@ -19,6 +19,17 @@
               <h2 class="tw-text-base md:tw-text-lg tw-text-center tw-font-semibold tw-text-gray-900 tw-uppercase">
                 {{ currentTitle }}
               </h2>
+              <div v-if="showCharts"
+                class="lg:tw-col-span-4 tw-grid tw-grid-cols-1 lg:tw-grid-cols-2 tw-gap-4 tw-border-gray-200 tw-rounded-md">
+                <div class="tw-p-2 tw-border tw-rounded tw-bg-white tw-shadow">
+                  <BaseChart type="bar" :data="barChartData" :options="barChartOptions" />
+                </div>
+                <div
+                  class="tw-p-2 tw-border tw-rounded tw-bg-white tw-shadow tw-flex tw-flex-col lg:tw-flex-row tw-justify-around tw-items-center tw-gap-4">
+                  <BaseChart type="doughnut" :data="donutChartData1" :options="donutChartOptions('07/2025')" />
+                  <BaseChart type="doughnut" :data="donutChartData2" :options="donutChartOptions('08/2025')" />
+                </div>
+              </div>
 
               <div
                 class="tw-flex tw-items-center tw-justify-end tw-gap-3 tw-overflow-x-auto tw-max-w-full tw-pb-1 hide-scrollbar">
@@ -41,6 +52,7 @@
                   </template>
                 </a-input>
               </div>
+
             </div>
           </slot>
         </div>
@@ -62,6 +74,14 @@ import TreeFilter from "./TreeFilter.vue";
 import BaseTable from "./BaseTable.vue";
 import { SearchOutlined } from "@ant-design/icons-vue";
 import { getDoctypeConfig } from "./config/doctype-configs";
+import BaseChart from "../components/BaseChart.vue";
+import {
+  barChartData,
+  barChartOptions,
+  donutChartData1,
+  donutChartData2,
+  donutChartOptions,
+} from "../utils/chart-data.js"
 
 const props = defineProps({
   hide_tree: Boolean,
@@ -84,6 +104,8 @@ const state = reactive({
   hide_flex: props.hide_flex,
   hide_records: props.hide_records ?? false,
 });
+
+const showCharts = computed(() => props.doctype === "Statistical Report");
 
 const currentActions = computed(() => config.value?.actions || []);
 const currentTitle = computed(() => config.value?.title || "");

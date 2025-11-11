@@ -340,6 +340,21 @@ export const doctypeConfigs = {
       baseCopyAction,
     ],
   },
+  "Statistical Report": {
+    title: "BÁO CÁO TỔNG QUAN ĐƠN HÀNG CHI TIẾT",
+    groupByField: "detailordercode",
+    hideSelect: true,
+    actions: [
+      {
+        label: "Thêm mới",
+        icon: PlusOutlined,
+        color: "#0EA5E9",
+        hoverColor: "#38BDF8",
+        onClick: () => frappe.new_doc("Statistical Report"),
+      },
+      baseCopyAction,
+    ],
+  },
 };
 
 export const getDoctypeConfig = (doctype) =>
