@@ -46,6 +46,8 @@
   {
    "fieldname": "orderdescription",
    "fieldtype": "Long Text",
+   "in_list_view": 1,
+   "label": "Di\u1ec5n gi\u1ea3i",
    "placeholder": "Nh\u1eadp di\u1ec5n gi\u1ea3i"
   },
   {
@@ -84,7 +86,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-11-06 11:29:22.469480",
+ "modified": "2025-11-12 10:15:05.935795",
  "modified_by": "Administrator",
  "module": "APS",
  "name": "Sale Order",
