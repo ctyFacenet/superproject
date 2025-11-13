@@ -21,7 +21,10 @@ const baseCopyAction = {
   icon: CopyOutlined,
   color: "#6B7280",
   hoverColor: "#9CA3AF",
-  onClick: () => window.dispatchEvent(new CustomEvent("open-column-picker")),
+  onClick: () => window.dispatchEvent(
+    new CustomEvent("open-column-picker", { detail: { doctype: frappe.get_route()[1] } })
+  )
+
 };
 
 const baseRowActions = (view = true) =>

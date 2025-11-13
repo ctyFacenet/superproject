@@ -13,7 +13,8 @@ const props = defineProps({
   showDateFilter: { type: Boolean, default: false },
 });
 
-const emit = defineEmits(["change"]);
+const emit = defineEmits(["change", "update:filters"]);
+
 const checkedKeys = ref([]);
 
 const now = new Date();
@@ -21,11 +22,11 @@ const currentYear = now.getFullYear();
 const currentMonth = now.getMonth() + 1;
 
 const years = [currentYear, currentYear - 1];
-
 const months = Array.from({ length: 12 }, (_, i) => i + 1);
 
 const getDaysInMonth = (year, month) => {
-  if (month === 2) return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0 ? 29 : 28;
+  if (month === 2)
+    return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0 ? 29 : 28;
   return [4, 6, 9, 11].includes(month) ? 30 : 31;
 };
 
@@ -92,7 +93,7 @@ const treeData = computed(() => {
         { title: "Kho kéo trung", key: "warehouse-drawing-medium" },
         { title: "Kho kéo tiểu", key: "warehouse-drawing-small" },
         { title: "Kho kéo đại", key: "warehouse-drawing-large" },
-        { title: "Kho Cán", key: "warehouse-rolling" },
+        { title: "Kho cán", key: "warehouse-rolling" },
       ];
 
     default:
@@ -114,6 +115,8 @@ const treeData = computed(() => {
 });
 
 function emitChange() {
+  const filters = { treeKeys: checkedKeys.value };
+  emit("update:filters", filters);
   emit("change", checkedKeys.value);
 }
 

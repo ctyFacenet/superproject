@@ -4,7 +4,7 @@
 
     <a-spin :spinning="loading" size="large" class="tw-w-full tw-h-full">
 
-      <a-popover v-model:open="showColumnPicker" trigger="click" placement="top">
+      <a-popover :key="storageKey" v-model:open="showColumnPicker" trigger="click" placement="top">
         <template #content>
           <div class="tw-p-2 tw-w-[220px] tw-max-h-[300px] tw-overflow-y-auto">
             <a-checkbox-group v-model:value="checkedColumns" class="tw-flex tw-flex-col tw-gap-2">
@@ -13,12 +13,16 @@
                 {{ col.title }}
               </a-checkbox>
             </a-checkbox-group>
+
             <div class="tw-mt-2 tw-text-right">
-              <a-button type="link" size="small" @click="resetColumns">Reset all</a-button>
+              <a-button type="link" size="small" @click="resetColumns">
+                Reset all
+              </a-button>
             </div>
           </div>
         </template>
       </a-popover>
+
 
       <div class="fade-left" v-show="scrollLeft > 5"></div>
       <div class="fade-right" v-show="scrollRight > 5"></div>
@@ -251,6 +255,7 @@ const props = defineProps({
   doctype: { type: String, required: true },
   nameKey: { type: String, default: "name" },
   hideSelect: { type: Boolean, default: false },
+  filters: { type: Object, default: () => ({}) },
 });
 
 const emit = defineEmits(["rowClick", "selection-change"]);
@@ -264,19 +269,30 @@ const showColumnPicker = ref(false);
 
 const storageKey = computed(() => `visibleColumns_${props.doctype}`);
 
-const togglePicker = () => {
-  showColumnPicker.value = !showColumnPicker.value;
-};
-
 onMounted(() => {
   const saved = localStorage.getItem(storageKey.value);
   if (saved) visibleColumns.value = JSON.parse(saved);
+  else {
+    columns.value.forEach((col) => (visibleColumns.value[col.key] = true));
+  }
 
-  window.addEventListener("open-column-picker", togglePicker);
+  const handler = (e) => {
+    const dt = e.detail?.doctype;
+    if (!dt || dt === props.doctype) {
+      showColumnPicker.value = !showColumnPicker.value;
+    }
+  };
+
+  window[`_columnPickerHandler_${props.doctype}`] = handler;
+  window.addEventListener("open-column-picker", handler);
 });
 
 onUnmounted(() => {
-  window.removeEventListener("open-column-picker", togglePicker);
+  const handler = window[`_columnPickerHandler_${props.doctype}`];
+  if (handler) {
+    window.removeEventListener("open-column-picker", handler);
+    delete window[`_columnPickerHandler_${props.doctype}`];
+  }
 });
 
 watch(
@@ -466,26 +482,100 @@ const statusOptions = computed(() => {
 const filterOption = (input, option) =>
   option.label.toLowerCase().includes(input.toLowerCase());
 
-const filteredRows = computed(() =>
-  (allRows.value || []).filter((r) =>
-    (columns.value || []).every((c) => {
+const filteredRows = computed(() => {
+
+  let result = (allRows.value || []).filter((r, i) => {
+
+    const pass = (columns.value || []).every((c) => {
       if (c.key === "actions") return true;
-      if (c.key === "status" && statusFilter.value)
-        return r[c.key] === statusFilter.value;
+      if (c.key === "status" && statusFilter.value) {
+        const ok = r[c.key] === statusFilter.value;
+        return ok;
+      }
       if (c.fieldtype === "Date") {
         const range = dateFilters.value[c.key];
         if (!range || range?.length !== 2) return true;
         const d = dayjs(r[c.key], "DD-MM-YYYY");
-        return (
+        const ok =
           d.isAfter(dayjs(range[0]).startOf("day")) &&
-          d.isBefore(dayjs(range[1]).endOf("day"))
-        );
+          d.isBefore(dayjs(range[1]).endOf("day"));
+        return ok;
       }
       const val = (r[c.key] || "").toString().toLowerCase();
       const f = (filters.value[c.key] || "").toString().toLowerCase();
-      return val.includes(f);
-    })
-  )
+      const ok = val.includes(f);
+      return ok;
+    });
+
+    console.groupEnd();
+    return pass;
+  });
+
+  const treeKeys = props.filters?.treeKeys || [];
+  if (treeKeys.length) {
+
+    result = result.filter((r, idx) => {
+
+      const dateColumn = (columns.value || []).find((c) => c.fieldtype === "Date");
+      const dateKey = dateColumn?.key;
+
+      if (!dateKey) {
+        console.warn("⚠️ Không tìm thấy cột ngày trong columns!");
+        console.groupEnd();
+        return false;
+      }
+
+      const dateField = r[dateKey];
+      if (!dateField) {
+        console.warn("⚠️ Dòng này không có giá trị cho trường ngày:", dateKey);
+        console.groupEnd();
+        return false;
+      }
+
+      const d = dayjs(dateField, ["YYYY-MM-DD", "DD-MM-YYYY"]);
+      if (!d.isValid()) {
+        console.warn("⚠️ Không parse được ngày:", dateField);
+        console.groupEnd();
+        return false;
+      }
+
+      const month = d.month() + 1;
+      const year = d.year();
+
+      const hasMonth = treeKeys.some((k) => {
+        if (!k.startsWith("month-")) return false;
+        const [, y, m] = k.split("-");
+        const ok = parseInt(y) === year && parseInt(m) === month;
+        return ok;
+      });
+
+      const hasYear = treeKeys.some((k) => {
+        if (!k.startsWith("year-")) return false;
+        const [, y] = k.split("-");
+        const ok = parseInt(y) === year;
+        return ok;
+      });
+
+      const match =
+        (treeKeys.some((k) => k.startsWith("month-")) ? hasMonth : true) &&
+        (treeKeys.some((k) => k.startsWith("year-")) ? hasYear : true);
+      console.groupEnd();
+      return match;
+    });
+
+    console.groupEnd();
+  }
+
+
+  return result;
+});
+
+watch(
+  () => props.filters,
+  () => {
+    console.log("🪄 Filter applied:", props.filters);
+  },
+  { deep: true }
 );
 
 watch(filteredRows, () => (currentPage.value = 1));
