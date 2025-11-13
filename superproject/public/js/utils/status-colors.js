@@ -11,3 +11,12 @@ export const colorMap = {
   neutral: "background-color: #6b7280; color: #ffffff;", // gray-500 
   pink: "background-color: #ec4899; color: #ffffff;",   // pink-500
 };
+
+
+export const statusColor = [
+  { text: "Chờ sản xuất", color: "#a855f7", map: "purple" },
+  { text: "Đang sản xuất", color: "#2563eb", map: "blue" },
+  { text: "Tạm dừng sản xuất", color: "#facc15", map: "yellow" },
+  { text: "Kết thúc sản xuất", color: "#22c55e", map: "green" },
+  { text: "Đã huỷ", color: "#ef4444", map: "red" },
+];

@@ -1,11 +1,11 @@
 <template>
-  <div class="tw-flex tw-flex-col lg:tw-flex-row tw-gap-4 tw-p-4 tw-bg-gray-50 tw-min-h-screen tw-overflow-auto">
+  <div class="tw-flex tw-flex-col lg:tw-flex-row tw-gap-4 tw-p-4 tw-min-h-screen tw-overflow-auto">
     <Transition name="slide-left">
       <div v-if="!state.hide_tree && !config.hideTree" class="tw-flex-shrink-0 tw-sticky lg:tw-left-0">
         <slot name="tree">
           <div v-if="showFilter"
             class="tree-filter lg:tw-w-[250px] tw-bg-white tw-rounded-xl tw-shadow tw-p-3 tw-h-full tw-overflow-y-auto">
-            <TreeFilter :doctype="props.doctype" :showDateFilter="false" @change="onFilterChange" />
+            <TreeFilter :doctype="props.doctype" @change="onFilterChange" v-model:filters="activeFilters" />
           </div>
         </slot>
       </div>
@@ -19,6 +19,30 @@
               <h2 class="tw-text-base md:tw-text-lg tw-text-center tw-font-semibold tw-text-gray-900 tw-uppercase">
                 {{ currentTitle }}
               </h2>
+
+              <div v-if="props.doctype === DocType.WORK_ORDER_APPROVED"
+                class="tw-flex tw-flex-col sm:tw-flex-row tw-items-center tw-justify-end tw-gap-2 tw-w-full">
+
+                <div
+                  class="tw-flex tw-flex-wrap tw-items-center tw-justify-center sm:tw-justify-start tw-gap-x-3 tw-gap-y-2 tw-w-full sm:tw-w-auto">
+                  <div v-for="s in statusColor" :key="s.text" class="tw-flex tw-items-center tw-gap-1">
+                    <span class="tw-inline-block tw-w-3 tw-h-3 tw-rounded-lg"
+                      :style="{ backgroundColor: s.color }"></span>
+                    <span class="tw-text-[12px] sm:tw-text-[13px] tw-text-gray-700">{{ s.text }}</span>
+                  </div>
+                </div>
+
+                <div
+                  class="tw-flex tw-items-center tw-justify-center sm:tw-justify-end tw-gap-1 tw-text-[13px] sm:tw-text-xs tw-text-gray-500">
+                  <span class="tw-font-semibold">Cập nhật: {{ currentTime }}</span>
+                  <a-tooltip title="Làm mới">
+                    <ReloadOutlined class="tw-text-[#2490ef] tw-cursor-pointer hover:tw-text-[#1677c8]"
+                      @click="refreshData" />
+                  </a-tooltip>
+                </div>
+
+              </div>
+
               <div v-if="showCharts"
                 class="lg:tw-col-span-4 tw-grid tw-grid-cols-1 lg:tw-grid-cols-2 tw-gap-4 tw-border-gray-200 tw-rounded-md">
                 <div class="tw-p-2 tw-border tw-rounded tw-bg-white tw-shadow">
@@ -61,7 +85,9 @@
       <div v-if="!state.hide_records"
         class="tw-rounded-lg tw-flex-1 tw-min-h-[50vh] tw-bg-white tw-overflow-x-auto tw-overflow-y-auto">
         <slot name="records">
-          <BaseTable :key="props.doctype" :doctype="props.doctype" :hide-select="config.hideSelect" />
+          <BaseTable :key="props.doctype" :doctype="props.doctype" :hide-select="config.hideSelect"
+            :filters="activeFilters" />
+
         </slot>
       </div>
     </div>
@@ -69,10 +95,10 @@
 </template>
 
 <script setup>
-import { reactive, ref, computed } from "vue";
+import { reactive, ref, computed, onMounted } from "vue";
 import TreeFilter from "./TreeFilter.vue";
 import BaseTable from "./BaseTable.vue";
-import { SearchOutlined } from "@ant-design/icons-vue";
+import { SearchOutlined, ReloadOutlined } from "@ant-design/icons-vue";
 import { getDoctypeConfig } from "./config/doctype-configs";
 import BaseChart from "../components/BaseChart.vue";
 import {
@@ -83,6 +109,18 @@ import {
   donutChartOptions,
 } from "../utils/chart-data.js"
 import { DocType } from "../utils/consts.js";
+import dayjs from "dayjs";
+import { statusColor } from "../utils/status-colors.js";
+
+
+const currentTime = ref("");
+
+const refreshData = () => {
+  if (frappe?.listview?.refresh) frappe.listview.refresh();
+  currentTime.value = dayjs().format("HH:mm:ss DD/MM/YYYY");
+};
+
+onMounted(() => refreshData());
 
 const props = defineProps({
   hide_tree: Boolean,
@@ -92,13 +130,13 @@ const props = defineProps({
   showDateFilter: Boolean,
   title: String,
 });
-
+const activeFilters = ref({});
 const config = computed(() => getDoctypeConfig(props.doctype));
 
 const showFilter = ref(true);
-const onFilterChange = () => {
-  if (window.innerWidth < 1024) showFilter.value = false;
-};
+function onFilterChange(keys) {
+  activeFilters.value = { treeKeys: keys };
+}
 
 const state = reactive({
   hide_tree: props.hide_tree,
