@@ -1,17 +1,17 @@
 @import "./desk/variables";
 
 body {
-  @include media-breakpoint-up(sm) {
-    background-color: var(--bg-light-gray);
-  }
+	@include media-breakpoint-up(sm) {
+		background-color: var(--bg-light-gray);
+	}
 
-  .page-content-wrapper {
-    min-height: calc(100vh - 220px);
-  }
+	.page-content-wrapper {
+		min-height: calc(100vh - 220px);
+	}
 
-  .web-footer {
-    display: none;
-  }
+	.web-footer {
+		display: none;
+	}
 }
 
 /* Ẩn các section phụ mặc định */
@@ -19,7 +19,7 @@ body {
 .for-login-with-email-link,
 .for-signup,
 .for-email-login {
-  display: none;
+	display: none;
 }
 
 .for-login,
@@ -27,276 +27,274 @@ body {
 .for-login-with-email-link,
 .for-signup,
 .for-email-login {
-  .page-card {
-    padding: 25px 14px;
-    background: rgba(255, 255, 255, 0.05);
-    max-width: 600px;
-    width: 100%;
-    margin: 0 auto;
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.5);
+	.page-card {
+		padding: 25px 14px;
+		background: rgba(255, 255, 255, 0.05);
+		max-width: 600px;
+		width: 100%;
+		margin: 0 auto;
+		border-radius: 12px;
+		border: 1px solid rgba(255, 255, 255, 0.4);
+		box-shadow: 0 6px 25px rgba(0, 0, 0, 0.5);
 
-    form {
-      max-width: 100%;
-      margin: 0 auto;
+		form {
+			max-width: 100%;
+			margin: 0 auto;
 
-      .form-group {
-        margin-bottom: 1rem;
+			.form-group {
+				margin-bottom: 1rem;
 
-        input {
-          width: 100%;
-          padding: 12px 15px;
-          border-radius: 6px;
-          border: 1px solid #ccc;
-          background: #fff;
-          font-size: 15px;
+				input {
+					width: 100%;
+					padding: 12px 15px;
+					border-radius: 6px;
+					border: 1px solid #ccc;
+					background: #fff;
+					font-size: 15px;
 
-          &:focus {
-            border: 1px solid #2d6cdf;
-            box-shadow: 0 0 5px rgba(45, 108, 223, 0.5);
-            outline: none;
-          }
-        }
-      }
-    }
+					&:focus {
+						border: 1px solid #2d6cdf;
+						box-shadow: 0 0 5px rgba(45, 108, 223, 0.5);
+						outline: none;
+					}
+				}
+			}
+		}
 
-    .page-card-actions {
-      margin-top: 1.2rem;
+		.page-card-actions {
+			margin-top: 1.2rem;
 
-      .btn-login {
-        width: 100%;
-        background: #2d6cdf;
-        color: #fff;
-        font-weight: 600;
-        font-size: 16px;
-        padding: 12px;
-        border-radius: 6px;
-        border: none;
+			.btn-login {
+				width: 100%;
+				background: #2d6cdf;
+				color: #fff;
+				font-weight: 600;
+				font-size: 16px;
+				padding: 12px;
+				border-radius: 6px;
+				border: none;
 
-        &:hover {
-          background: #1a4fb3;
-        }
-      }
-    }
-  }
+				&:hover {
+					background: #1a4fb3;
+				}
+			}
+		}
+	}
 
-  .forgot-password-message {
-    display: flex;
-    justify-content: flex-end;
-    font-size: 20px;
-    margin-top: -6px;
-    color: #ccc;
+	.forgot-password-message {
+		display: flex;
+		justify-content: flex-end;
+		font-size: 20px;
+		margin-top: -6px;
+		color: #ccc;
 
-    a {
-      color: #4285f4;
-      text-decoration: none;
+		a {
+			color: #4285f4;
+			text-decoration: none;
 
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-  }
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+	}
 
+	.sign-up-message {
+		margin-top: 1rem;
+		font-size: 14px;
+		color: #fff;
 
-  .sign-up-message {
-    margin-top: 1rem;
-    font-size: 14px;
-    color: #fff;
+		a {
+			color: #4285f4;
+			font-weight: 600;
+		}
+	}
 
-    a {
-      color: #4285f4;
-      font-weight: 600;
-    }
-  }
+	.invalid-login {
+		-webkit-animation: wiggle 0.5s linear;
+	}
 
-  .invalid-login {
-    -webkit-animation: wiggle 0.5s linear;
-  }
+	@-webkit-keyframes wiggle {
+		8%,
+		41% {
+			-webkit-transform: translateX(-10px);
+		}
 
-  @-webkit-keyframes wiggle {
+		25%,
+		58% {
+			-webkit-transform: translateX(10px);
+		}
 
-    8%,
-    41% {
-      -webkit-transform: translateX(-10px);
-    }
+		75% {
+			-webkit-transform: translateX(-5px);
+		}
 
-    25%,
-    58% {
-      -webkit-transform: translateX(10px);
-    }
+		92% {
+			-webkit-transform: translateX(5px);
+		}
 
-    75% {
-      -webkit-transform: translateX(-5px);
-    }
-
-    92% {
-      -webkit-transform: translateX(5px);
-    }
-
-    0%,
-    100% {
-      -webkit-transform: translateX(0);
-    }
-  }
+		0%,
+		100% {
+			-webkit-transform: translateX(0);
+		}
+	}
 }
 
-
 .page-card-head {
-  padding: max(5vh, 30px) 0 14px 0px;
-  margin: 0 auto;
-  text-align: center;
-  font-size: var(--text-xl);
-  font-weight: 600;
+	padding: max(5vh, 30px) 0 14px 0px;
+	margin: 0 auto;
+	text-align: center;
+	font-size: var(--text-xl);
+	font-weight: 600;
 
-  img {
-    max-height: 42px;
-  }
+	img {
+		max-height: 42px;
+	}
 
-  h4 {
-    margin-top: 1rem;
-    font-size: var(--text-xl);
-    font-weight: var(--weight-semibold);
-    letter-spacing: 0.01em;
-    color: var(--text-color);
-  }
+	h4 {
+		margin-top: 1rem;
+		font-size: var(--text-xl);
+		font-weight: var(--weight-semibold);
+		letter-spacing: 0.01em;
+		color: var(--text-color);
+	}
 }
 
 /* Khung login */
 .login-content.page-card {
-  background: rgba(0, 0, 0, 0.05) !important;
-  border: 2px solid #fff !important;
-  border-radius: 12px !important;
-  padding: 40px 30px !important;
-  color: #fff !important;
+	background: rgba(0, 0, 0, 0.05) !important;
+	border: 2px solid #fff !important;
+	border-radius: 12px !important;
+	padding: 40px 30px !important;
+	color: #fff !important;
 }
 
 /* Tiêu đề */
 .page-card-head h4 {
-  font-size: 26px !important;
-  font-weight: bold !important;
-  text-transform: uppercase !important;
-  color: #fff !important;
-  margin-bottom: 20px !important;
+	font-size: 26px !important;
+	font-weight: bold !important;
+	text-transform: uppercase !important;
+	color: #fff !important;
+	margin-bottom: 20px !important;
 }
 
 /* Input */
 .login-content .form-control {
-  background: #fff !important;
-  color: #000 !important;
-  border-radius: 6px !important;
-  padding: 25px 14px !important;
-  margin-bottom: 18px !important;
+	background: #fff !important;
+	color: #000 !important;
+	border-radius: 6px !important;
+	padding: 25px 14px !important;
+	margin-bottom: 18px !important;
 }
 
 .login-content .form-control::placeholder {
-  color: #666 !important;
+	color: #666 !important;
 }
 
 /* Forgot password */
 .forgot-password-message a {
-  color: #3b82f6 !important;
-  font-size: 13px !important;
-  text-decoration: none !important;
+	color: #3b82f6 !important;
+	font-size: 13px !important;
+	text-decoration: none !important;
 }
 
 .forgot-password-message a:hover {
-  text-decoration: underline !important;
+	text-decoration: underline !important;
 }
-
 
 /* Đăng ký */
 .sign-up-message {
-  color: #fff !important;
-  font-size: 14px !important;
-  margin-top: 20px !important;
+	color: #fff !important;
+	font-size: 14px !important;
+	margin-top: 20px !important;
 }
 
 .sign-up-message a {
-  color: #3b82f6 !important;
-  text-decoration: none !important;
+	color: #3b82f6 !important;
+	text-decoration: none !important;
 }
 
 .sign-up-message a:hover {
-  text-decoration: underline !important;
+	text-decoration: underline !important;
 }
 
 .login-footer {
-  text-align: center;
-  color: #fff;
-  font-family: "Helvetica", sans-serif;
-  margin-top: 30px;
+	text-align: center;
+	color: #fff;
+	font-family: "Helvetica", sans-serif;
+	margin-top: 30px;
 
-  @include media-breakpoint-up(md) {
-    position: fixed;
-    bottom: 15px;
-    left: 0;
-    right: 0;
-    margin-top: 0; 
-  }
+	@include media-breakpoint-up(md) {
+		position: fixed;
+		bottom: 15px;
+		left: 0;
+		right: 0;
+		margin-top: 0;
+	}
 
-  .facenet-brand {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    .facenet-logo {
-      height: 60px;
-      width: auto;
-      margin-right: 10px;
-    }
+	.facenet-brand {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		.facenet-logo {
+			height: 60px;
+			width: auto;
+			margin-right: 10px;
+		}
 
-    .facenet-name {
-      font-size: 40px;
-      font-weight: 800;
-    }
-  }
+		.facenet-name {
+			font-size: 40px;
+			font-weight: 800;
+		}
+	}
 
-  .facenet-subtitle {
-    font-size: 20px;
-    opacity: 0.9;
-  }
+	.facenet-subtitle {
+		font-size: 20px;
+		opacity: 0.9;
+	}
 }
 
-
-
 .password-field {
-  position: relative;
+	position: relative;
 }
 
 .password-field input {
-  width: 100%;
-  padding-right: 50px;
+	width: 100%;
+	padding-right: 50px;
 }
 
 .password-field .toggle-password {
-  position: absolute;
-  right: 15px;
-  /* căn phải trong ô input */
-  top: 50%;
-  /* căn giữa chiều cao */
-  transform: translateY(-50%);
-  cursor: pointer;
-  font-size: 14px;
-  color: #666;
+	position: absolute;
+	right: 15px;
+	/* căn phải trong ô input */
+	top: 50%;
+	/* căn giữa chiều cao */
+	transform: translateY(-50%);
+	cursor: pointer;
+	font-size: 14px;
+	color: #666;
 }
 
-
 .btn-login-with-email-link {
-  width: 100%;
-  background: #f1f1f1;
-  font-weight: 500;
-  font-size: 16px;
-  padding: 12px !important;
-  border-radius: 6px;
-  border: none;
+	width: 100%;
+	background: #f1f1f1;
+	font-weight: 500;
+	font-size: 16px;
+	padding: 12px !important;
+	border-radius: 6px;
+	border: none;
 
-  &:hover {
-    background: #1a4fb3 !important;
-  }
+	&:hover {
+		background: #1a4fb3 !important;
+	}
 }
 
 @media (max-width: 767px) {
-  .login-footer .facenet-subtitle {
-    display: none;
-  }
+	.login-footer .facenet-subtitle {
+		display: none;
+	}
+}
+
+.navbar-light {
+	border-bottom: none !important;
+	background: none !important;
 }
