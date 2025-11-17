@@ -71,7 +71,7 @@
                 class="tw-sticky tw-left-[50px] tw-top-[33px] tw-z-30 tw-bg-pink-100 tw-border">
               </th>
 
-              <th v-for="col in filteredColumns" :key="col.key" class="tw-px-2 tw-py-1 tw-border tw-bg-white"
+              <th v-for="col in filteredColumns" :key="col.key" class="tw-px-2 tw-py-1 tw-border"
                 :class="{ 'tw-sticky tw-right-0 tw-z-30 tw-bg-pink-100': col.key === 'actions' }"
                 :style="{ width: colWidths[col.key] + 'px' }">
                 <template v-if="col.fieldtype === 'Date'">

@@ -87,7 +87,6 @@
         <slot name="records">
           <BaseTable :key="props.doctype" :doctype="props.doctype" :hide-select="config.hideSelect"
             :filters="activeFilters" />
-
         </slot>
       </div>
     </div>
