@@ -1,20 +1,17 @@
 <div class="machine-row">
+	<div class="machine-block">
+		<h3 class="block-title">Thông số kỹ thuật tức thời</h3>
 
-    <div class="machine-block">
-        <h3 class="block-title">Thông số kỹ thuật tức thời</h3>
+		<div class="machine-row">
+			<div class="machine-card">
+				<div class="label">Nhiệt độ động cơ</div>
+				<div class="value green">{{ data.temperature_motor }}°C</div>
+			</div>
 
-        <div class="machine-row">
-            <div class="machine-card">
-                <div class="label">Nhiệt độ động cơ</div>
-                <div class="value green">{{ data.temperature_motor }}°C</div>
-            </div>
-
-            <div class="machine-card">
-                <div class="label">Tốc độ kéo DV</div>
-                <div class="value green">{{ data.dv_speed }} RPM</div>
-            </div>
-        </div>
-
-    </div>
-
+			<div class="machine-card">
+				<div class="label">Tốc độ kéo DV</div>
+				<div class="value green">{{ data.dv_speed }} RPM</div>
+			</div>
+		</div>
+	</div>
 </div>

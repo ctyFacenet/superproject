@@ -1,12 +1,12 @@
 {% include "superproject/templates/machine_templates/parts/header.html" %}
 
 <div class="machine-dashboard">
-  <h2 class="main-title">{{ data.workstation_name }} - Máy cán</h2>
+	<h2 class="main-title">{{ data.workstation_name }} - Máy cán</h2>
 
-  <div class="machine-row">
-    {% include "superproject/templates/machine_templates/parts/tskt_can.html" %}
-    {% include "superproject/templates/machine_templates/parts/gauge.html" %}
-  </div>
+	<div class="machine-row">
+		{% include "superproject/templates/machine_templates/parts/tskt_can.html" %} {% include
+		"superproject/templates/machine_templates/parts/gauge.html" %}
+	</div>
 
-  {% include "superproject/templates/machine_templates/parts/production_group.html" %}
+	{% include "superproject/templates/machine_templates/parts/production_group.html" %}
 </div>

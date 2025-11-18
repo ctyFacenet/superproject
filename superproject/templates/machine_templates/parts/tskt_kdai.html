@@ -1,25 +1,22 @@
 <div class="machine-row">
+	<div class="machine-block">
+		<h3 class="block-title">Thông số kỹ thuật tức thời</h3>
 
-    <div class="machine-block">
-        <h3 class="block-title">Thông số kỹ thuật tức thời</h3>
+		<div class="machine-row">
+			<div class="machine-card">
+				<div class="label">Tốc độ</div>
+				<div class="value green">{{ data.speed }} M/PH</div>
+			</div>
 
-        <div class="machine-row">
-            <div class="machine-card">
-                <div class="label">Tốc độ</div>
-                <div class="value green">{{ data.speed }} M/PH</div>
-            </div>
+			<div class="machine-card">
+				<div class="label">Nhiệt độ động cơ</div>
+				<div class="value green">{{ data.temperature_motor }}°C</div>
+			</div>
 
-            <div class="machine-card">
-                <div class="label">Nhiệt độ động cơ</div>
-                <div class="value green">{{ data.temperature_motor }}°C</div>
-            </div>
-
-            <div class="machine-card">
-                <div class="label">Nhiệt độ nước</div>
-                <div class="value green">{{ data.temperature_water }}°C</div>
-            </div>
-        </div>
-
-    </div>
-
+			<div class="machine-card">
+				<div class="label">Nhiệt độ nước</div>
+				<div class="value green">{{ data.temperature_water }}°C</div>
+			</div>
+		</div>
+	</div>
 </div>
