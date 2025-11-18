@@ -1,0 +1,55 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-11-18 08:41:17.475874",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "machinecode",
+  "status"
+ ],
+ "fields": [
+  {
+   "fieldname": "machinecode",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "M\u00e3 m\u00e1y",
+   "options": "KTRUNG\nKDAI\nCAN\nKTIEU\nHZ",
+   "placeholder": "Ch\u1ecdn m\u00e3 m\u00e1y"
+  },
+  {
+   "default": "\u0110ang ch\u1ea1y",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Tr\u1ea1ng th\u00e1i",
+   "options": "\u0110ang ch\u1ea1y\nT\u1ea1m d\u1eebng\nH\u00f2ng"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-11-18 13:55:00.197539",
+ "modified_by": "Administrator",
+ "module": "SCADA & TPM",
+ "name": "Machine Monitoring",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

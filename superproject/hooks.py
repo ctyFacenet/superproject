@@ -34,6 +34,7 @@ app_include_css = [
     "/assets/superproject/css/tailwind.css",
     "/assets/superproject/scss/login.bundle.scss",
     "/assets/superproject/css/custom_confirm.css",
+    "/assets/superproject/css/machine_monitoring.css"
 ]
 
 app_include_js = [

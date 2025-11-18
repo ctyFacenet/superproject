@@ -1,0 +1,23 @@
+<div class="machine-block">
+  <h3 class="block-title">Hiệu suất trong ngày</h3>
+
+  <div class="machine-row center">
+    <div class="performance-gauge">
+      <svg viewBox="0 0 120 120">
+        <circle cx="60" cy="60" r="45" stroke="#ddd" stroke-width="10" fill="none"/>
+        <circle id="progress-circle" cx="60" cy="60" r="45"
+          stroke="#7c3aed" stroke-width="10" fill="none"
+          stroke-dasharray="{{ 2 * 3.14 * 45 }}"
+          stroke-dashoffset="{{ 2 * 3.14 * 45 }}"
+          stroke-linecap="round"/>
+      </svg>
+      <div id="progress-text" class="progress-text">{{ data.availability }}%</div>
+    </div>
+
+    <div class="perf-times">
+      <div class="machine-card small">Stop Time: <b>{{ data.stop_time }}</b></div>
+      <div class="machine-card small">Running Time: <b>{{ data.running_time }}</b></div>
+      <div class="machine-card small">Planned Time: <b>{{ data.planned_time }}</b></div>
+    </div>
+  </div>
+</div>

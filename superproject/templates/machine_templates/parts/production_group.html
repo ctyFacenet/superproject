@@ -1,0 +1,34 @@
+<div class="machine-row production-group-wrapper">
+  <div class="machine-info-card">
+    <h3 class="info-title">Thông tin lệnh sản xuất</h3>
+
+    <div class="row-info"><span>Mã lệnh SX:</span><span>{{ data.work_order }}</span></div>
+    <div class="row-info"><span>Công đoạn:</span><span>{{ data.operation }}</span></div>
+    <div class="row-info"><span>BTP đầu ra:</span><span>{{ data.item_code }}</span></div>
+
+    <div class="row-info"><span>Kế hoạch:</span><span>{{ data.qty_plan }}</span></div>
+    <div class="row-info"><span>Thực tế:</span><span>{{ data.qty_actual }}</span></div>
+    <div class="row-info"><span>OK:</span><span>{{ data.qty_ok }}</span></div>
+    <div class="row-info"><span>NG:</span><span>{{ data.qty_ng }}</span></div>
+
+    <div class="row-info"><span>Tỷ lệ phế:</span>
+      <span class="scrap">{{ data.scrap_rate }}%</span>
+    </div>
+  </div>
+
+  <div class="machine-info-card">
+    <h3 class="info-title">Thông số tiêu chuẩn</h3>
+    <div class="row-info">
+      <span>Tốc độ kéo DV:</span>
+      <span>{{ data.standard_dv_min }} - {{ data.standard_dv_max }} RPM</span>
+    </div>
+  </div>
+
+  <div class="machine-info-card">
+    <h3 class="info-title">Nguyên nhân dừng máy</h3>
+
+    <div class="row-info"><span>Thay men:</span><span>{{ data.stop_men }} phút</span></div>
+    <div class="row-info"><span>Hỏng quạt:</span><span>{{ data.stop_fan }} phút</span></div>
+    <div class="row-info"><span>Thay bobbin:</span><span>{{ data.stop_bobbin }} phút</span></div>
+  </div>
+</div>
