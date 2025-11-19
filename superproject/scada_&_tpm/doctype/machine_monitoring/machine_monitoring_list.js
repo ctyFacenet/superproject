@@ -56,7 +56,9 @@ function renderUI(listview, $wrapper) {
   });
 
   const machines = raw.map((m) => ({
+    id: m.name,
     name: m.machinecode || m.name || "Không tên",
+    doctype: listview.doctype,
     dv: m.dv || 0,
     fan: m.fan || 0,
     ex: m.ex || 0,
@@ -137,7 +139,9 @@ function renderUI(listview, $wrapper) {
       ${machines
       .map(
         (m) => `
-          <div class="mm-card">
+          <div class="mm-card"  
+          data-id="${m.id}"
+          data-doctype="${m.doctype}">
               <div class="mm-card-header">${m.name}</div>
               <div class="mm-card-body">
                   <div class="mm-grid">
@@ -166,4 +170,12 @@ function renderUI(listview, $wrapper) {
 
   $wrapper.html(html);
   setInterval(() => $("#mm-clock").text(nowTime()), 1000);
+
+  $(".mm-card").on("click", function () {
+    const doctype = $(this).data("doctype");
+    const id = $(this).data("id");
+    if (doctype && id) {
+      frappe.set_route("Form", doctype, id);
+    }
+  });
 }
