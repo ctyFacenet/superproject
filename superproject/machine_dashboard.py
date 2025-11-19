@@ -3,7 +3,6 @@ import frappe
 @frappe.whitelist()
 def get_layout_by_type(machine_type=None):
     data = get_mock_data(machine_type)
-
     if not machine_type:
         machine_type = "default"
 
@@ -19,7 +18,7 @@ def get_layout_by_type(machine_type=None):
 def get_mock_data(machine_type):
     return {
         "workstation_name": f"MÁY {machine_type}" if machine_type else "MÁY KÉO",
-        "availability": 100,
+        "availability": 91,
 
         "temperature_motor": 47,
         "temperature_oil": 45,

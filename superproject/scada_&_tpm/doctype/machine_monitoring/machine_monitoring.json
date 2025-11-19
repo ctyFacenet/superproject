@@ -23,13 +23,13 @@
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Tr\u1ea1ng th\u00e1i",
-   "options": "\u0110ang ch\u1ea1y\nT\u1ea1m d\u1eebng\nH\u00f2ng"
+   "options": "\u0110ang ch\u1ea1y\nT\u1ea1m d\u1eebng\nH\u1ecfng"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-11-18 13:55:00.197539",
+ "modified": "2025-11-18 17:19:20.329376",
  "modified_by": "Administrator",
  "module": "SCADA & TPM",
  "name": "Machine Monitoring",
