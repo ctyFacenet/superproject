@@ -5,18 +5,31 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "section_break_6jyl"
+  "start_date",
+  "code_name",
+  "supplier"
  ],
  "fields": [
   {
-   "fieldname": "section_break_6jyl",
-   "fieldtype": "Section Break"
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "label": "Ng\u00e0y b\u00e1o gi\u00e1"
+  },
+  {
+   "fieldname": "code_name",
+   "fieldtype": "Data",
+   "label": "M\u00e3 b\u00e1o gi\u00e1"
+  },
+  {
+   "fieldname": "supplier",
+   "fieldtype": "Data",
+   "label": "Th\u00f4ng tin KH"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-11-06 14:02:51.499465",
+ "modified": "2025-11-10 20:04:20.920522",
  "modified_by": "Administrator",
  "module": "MRP",
  "name": "Quotation",

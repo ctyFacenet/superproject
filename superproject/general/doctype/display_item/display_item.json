@@ -11,9 +11,8 @@
   "type",
   "link_to",
   "icon",
-  "direction",
   "deactive",
-  "anchor"
+  "direction"
  ],
  "fields": [
   {
@@ -55,12 +54,6 @@
    "label": "Ch\u1ecdn Icon"
   },
   {
-   "fieldname": "direction",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Direction"
-  },
-  {
    "default": "0",
    "fieldname": "deactive",
    "fieldtype": "Check",
@@ -68,17 +61,17 @@
    "label": "Kh\u00f4ng s\u1eed d\u1ee5ng"
   },
   {
-   "fieldname": "anchor",
+   "fieldname": "direction",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "\u0110i\u1ec3m neo"
+   "label": "Direction"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-11-07 11:05:12.644177",
+ "modified": "2025-11-10 13:46:20.358874",
  "modified_by": "Administrator",
  "module": "General",
  "name": "Display Item",

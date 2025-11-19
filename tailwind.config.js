@@ -1,6 +1,6 @@
 module.exports = {
   content: [
-    './superproject/public/js/components/**/*.{vue,js}',
+    './superproject/**/*.vue',
   ],
   prefix: 'tw-',
   important: true,

@@ -1,797 +1,342 @@
-<template>
-  <a-row :gutter="[16, 16]">
-    <a-col
-      v-for="module in modules"
-      :key="module.id"
-      :xs="24"
-      :sm="24"
-      :md="24"
-      :lg="24"
-    >
-      <a-card 
-        :bordered="true" 
-        :head-style="{ 
-          backgroundColor: '#e6f7ff', 
-          borderBottom: '1px solid #1890ff',
-          padding: '12px 16px'
-        }"
-        :body-style="{ padding: '16px' }"
-        style="border: 2px solid #1890ff; border-radius: 8px;"
-      >
-        <!-- HEADER -->
-        <template #title>
-          <a-row align="middle" :gutter="12">
-            <a-col flex="40px">
-              <a-dropdown>
-                <a-button type="text" size="large" style="padding: 0; height: auto;">
-                  <component 
-                    :is="getIcon(module.icon)" 
-                    style="font-size: 24px; color: #1890ff; cursor: pointer"
-                  />
-                </a-button>
-                <template #overlay>
-                  <a-menu @click="(e) => changeModuleIcon(module.name, e.key)">
-                    <a-menu-item v-for="iconItem in availableIcons" :key="iconItem.key">
-                      <component :is="iconItem.icon" /> {{ iconItem.label }}
-                    </a-menu-item>
-                  </a-menu>
-                </template>
-              </a-dropdown>
-            </a-col>
-            <a-col flex="auto">
-              <div style="font-weight: 600; font-size: 16px; color: #262626">
-                {{ __(module.name) }}
-              </div>
-            </a-col>
-            <a-col flex="auto" style="max-width: 400px">
-              <a-textarea
-                v-model:value="module.description"
-                placeholder="Mô tả module..."
-                :auto-size="{ minRows: 1, maxRows: 3 }"
-                size="small"
-                style="font-size: 13px"
-                @blur="updateModuleDescription(module.name, module.description)"
-              />
-            </a-col>
-          </a-row>
-        </template>
 
-        <!-- BODY - KANBAN GROUPS -->
-        <a-row :gutter="[12, 12]">
-          <!-- Existing Kanban Groups -->
-          <a-col
-            v-for="(group, groupIndex) in module.groups"
-            :key="group.id"
-            :xs="12"
-            :sm="12"
-            :md="8"
-            :lg="6"
-            :xl="4"
-          >
-            <div 
-              class="kanban-group"
-              :class="{ 'drag-over': dragOverGroup === `${module.name}-${group.id}` }"
-              @dragover.prevent="handleDragOver($event, module.name, group.id)"
-              @dragleave="handleDragLeave"
-              @drop="handleDrop($event, module.name, group.id, group.title)"
-              :data-module-id="module.name"
-            >
-              <!-- Group Header -->
-              <div class="group-header" v-if="groupIndex !== 0">
-                <div style="display: flex; align-items: center; gap: 8px;">
-                  <div style="flex: 1;">
-                    <a-input
-                      v-if="group.editing"
-                      v-model:value="group.title"
-                      size="small"
-                      @blur="group.editing = false"
-                      @pressEnter="group.editing = false"
-                      autoFocus
+<template>
+  <div class="tw-mb-8">
+    <p class="tw-text-center tw-text-sm tw-text-gray-500 tw-mb-6 tw-flex tw-items-center tw-justify-center tw-gap-2">
+      <MenuOutlined class="tw-text-gray-400 tw-text-xs" />
+      Kéo thả để sắp xếp lại module
+    </p>
+    
+    <draggable
+      v-model="modules"
+      item-key="name"
+      :animation="200"
+      @end="onDragEnd"
+      class="tw-space-y-3"
+    >
+      <template #item="{ element }">
+        <a-card
+          bordered
+          class="tw-rounded-lg tw-transition-all tw-duration-200 tw-cursor-move tw-bg-white tw-border tw-border-blue-300"
+          :head-style="{ 
+            backgroundColor: '#f0f9ff', 
+            borderBottom: '1px solid #bfdbfe',
+            padding: '12px 20px'
+          }"
+          :body-style="{ 
+            padding: '20px',
+            borderTop: 'none'
+          }"
+        >
+          <template #title>
+            <div class="tw-flex tw-items-center tw-justify-between tw-w-full">
+              <div class="tw-flex tw-items-center tw-gap-3">
+                <!-- Icon Container with Dropdown -->
+                <a-dropdown :trigger="['click']">
+                  <div class="tw-w-10 tw-h-10 tw-rounded-lg tw-bg-blue-100 tw-flex tw-items-center tw-justify-center tw-flex-shrink-0 tw-cursor-pointer hover:tw-bg-blue-200 active:tw-bg-blue-200 tw-transition-colors">
+                    <component 
+                      :is="getIconComponent(element.icon)" 
+                      class="tw-text-blue-600 tw-text-lg tw-leading-none"
+                    />
+                  </div>
+                  <template #overlay>
+                    <a-menu @click="({ key }) => changeIcon(element, key, 'modules')">
+                      <a-menu-item v-for="(icon, key) in getIconComponent()" :key="key">
+                        <div class="tw-flex tw-items-center tw-gap-2">
+                          <component :is="icon" class="tw-text-base" />
+                          <span class="tw-capitalize">{{ key }}</span>
+                        </div>
+                      </a-menu-item>
+                    </a-menu>
+                  </template>
+                </a-dropdown>
+                
+                <!-- Title & Description -->
+                <div class="tw-flex-1">
+                  <div class="tw-text-base tw-font-semibold tw-text-gray-800">
+                    {{ element.title }}
+                  </div>
+                  
+                  <!-- Description - Editable -->
+                  <div class="tw-flex tw-items-center tw-gap-1 tw-mt-0.5">
+                    <input
+                      v-if="element.editingDescription"
+                      v-model="element.description"
+                      :style="{ width: (element.description?.length + 1) + 'ch' }"  
+                      @blur="saveDescription(element)"
+                      @keyup.enter="saveDescription(element)"
+                      class="tw-text-xs tw-text-gray-700 tw-rounded-md tw-px-2 tw-py-1 tw-outline-none tw-border-0 focus:tw-bg-white focus:tw-ring-2 focus:tw-ring-blue-400 tw-transition-all tw-w-full"
+                      placeholder="Nhập mô tả..."
+                      autofocus
                     />
                     <div 
-                      v-else 
-                      class="group-title"
-                      :class="{'unused-group': group.title === 'Không sử dụng', 'normal-group': group.title !== 'Không sử dụng'}"
-                      @click="group.title !== 'Không sử dụng' && (group.editing = true)"
+                      v-else
+                      class="tw-text-xs tw-text-gray-500 tw-flex tw-items-center tw-gap-1.5 tw-cursor-pointer tw-py-1 tw-px-1 tw--mx-1 tw-rounded hover:tw-bg-gray-100 tw-transition-colors"
+                      @click="startEditDescription(element)"
                     >
-                      {{ __(group.title) }}
+                      <span>{{ element.description || 'Thêm mô tả...' }}</span>
+                      <EditOutlined class="tw-text-xs tw-text-gray-400 tw-transition-opacity tw-ml-1" />
                     </div>
                   </div>
-                  <a-button 
-                    v-if="group.title !== 'Không sử dụng'"
-                    type="text" 
-                    danger 
-                    size="small"
-                    @click="deleteGroup(module.name, group.id)"
-                    style="display: flex; align-items: center; justify-content: center;"
-                  >
-                    <DeleteOutlined />
-                  </a-button>
                 </div>
               </div>
-
-              <!-- Group Items -->
-              <div class="group-body">
-                <div
-                  v-for="item in group.items"
-                  :key="item.id"
-                  class="group-item"
-                  draggable="true"
-                  @dragstart="handleDragStart($event, module.name, group.id, item.id, group.title)"
-                  @dragend="handleDragEnd"
-                >
-                  <a-dropdown>
-                    <div class="item-icon">
-                      <component 
-                        :is="getIcon(item.icon)" 
-                        style="font-size: 18px; color: #1890ff"
-                      />
-                    </div>
-                    <template #overlay>
-                      <a-menu @click="(e) => changeItemIcon(module.name, group.id, item.id, e.key)">
-                        <a-menu-item v-for="iconItem in availableIcons" :key="iconItem.key">
-                          <component :is="iconItem.icon" /> {{ __(iconItem.label) }}
-                        </a-menu-item>
-                      </a-menu>
-                    </template>
-                  </a-dropdown>
-                  <div class="item-content">
-                    <div class="item-name">{{ __(item.name) }}</div>
-                    <a-tag 
-                      size="small" 
-                      :color="getTypeColor(item.type)"
-                      class="type-tag"
-                    >
-                      <span class="type-full">{{ __(item.type) }}</span>
-                      <span class="type-short">{{ getTypeShortLabel(item.type) }}</span>
-                    </a-tag>
-                  </div>
-                </div>
-
-                <div v-if="group.items.length === 0" class="empty-state">
-                  Trống
-                </div>
-              </div>
+              
+              <!-- Drag Handle -->
+              <MenuOutlined class="tw-text-gray-400 tw-text-base tw-cursor-grab active:tw-cursor-grabbing" />
             </div>
-          </a-col>
-
-          <!-- Add New Group Button -->
-          <a-col
-            :xs="12"
-            :sm="12"
-            :md="8"
-            :lg="6"
-            :xl="4"
-          >
-            <div class="add-group-btn" @click="addNewGroup(module.name)">
-              <PlusOutlined style="font-size: 24px; color: #1890ff" />
-              <div style="margin-top: 8px; font-size: 13px; color: #595959">
-                Thêm nhóm mới
-              </div>
-            </div>
-          </a-col>
-        </a-row>
-      </a-card>
-    </a-col>
-  </a-row>
+          </template>
+          
+          <!-- Card Body Content -->
+          <div class="tw-h-[50px]">
+            <!-- Nội dung body ở đây -->
+          </div>
+        </a-card>
+      </template>
+    </draggable>
+  </div>
 </template>
 
 <script setup>
-import { ref, onMounted, defineProps } from "vue"
-import {
-  UserOutlined,
-  SmileOutlined,
-  SettingOutlined,
-  ProjectOutlined,
-  FolderOutlined,
-  TeamOutlined,
-  FileOutlined,
-  PlusOutlined,
-  DeleteOutlined,
-  FileTextOutlined,
-  BarChartOutlined,
-  AppstoreOutlined,
-  ShoppingOutlined,
-  BugOutlined,
-} from "@ant-design/icons-vue"
+import { ref, onMounted } from 'vue'
+import draggable from 'vuedraggable'
+import { 
+  MenuOutlined, 
+  UserOutlined, 
+  FolderOutlined, 
+  FileTextOutlined, 
+  SettingOutlined, 
+  AppstoreOutlined, 
+  DatabaseOutlined, 
+  CloudOutlined, 
+  ApiOutlined, 
+  CodeOutlined, 
+  BulbOutlined, 
+  EditOutlined,
+  ShoppingOutlined 
+} from '@ant-design/icons-vue';
 
+//Định nghĩa biến
 const props = defineProps({
-  frm: {
-    type: Object,
-    required: true
-  }
+  frm: Object
+})
+
+//Khởi tạo dữ liệu
+onMounted(() => {
+  initialize_items()
 })
 
 const modules = ref([])
-let dragData = ref(null)
-let dragOverGroup = ref(null)
-let groupIdCounter = ref(1)
-let itemIdCounter = ref(1)
 
-// Danh sách modules cần bỏ qua
-const excludedModules = ['Custom', 'Desk', 'Email', 'Geo', 'Integrations', 'Automation', 'Workflow', 'Core', 'Website', 'Printing', 'Social']
-
-// Danh sách icon có sẵn
-const availableIcons = [
-  { key: 'user', icon: UserOutlined, label: 'User' },
-  { key: 'project', icon: ProjectOutlined, label: 'Project' },
-  { key: 'smile', icon: SmileOutlined, label: 'Smile' },
-  { key: 'setting', icon: SettingOutlined, label: 'Setting' },
-  { key: 'folder', icon: FolderOutlined, label: 'Folder' },
-  { key: 'team', icon: TeamOutlined, label: 'Team' },
-  { key: 'file', icon: FileOutlined, label: 'File' },
-  { key: 'doctype', icon: FileTextOutlined, label: 'DocType' },
-  { key: 'report', icon: BarChartOutlined, label: 'Report' },
-  { key: 'page', icon: AppstoreOutlined, label: 'Page' },
-  { key: 'sale', icon: ShoppingOutlined, label: 'Sale' },
-]
-
-const getIcon = (iconName) => {
-  const iconMap = {
-    user: UserOutlined,
-    smile: SmileOutlined,
-    setting: SettingOutlined,
-    project: ProjectOutlined,
-    folder: FolderOutlined,
-    team: TeamOutlined,
-    file: FileOutlined,
-    doctype: FileTextOutlined,
-    report: BarChartOutlined,
-    page: AppstoreOutlined,
-    sale: ShoppingOutlined
-  }
-  return iconMap[iconName] || FileOutlined
-}
-
-const getTypeColor = (type) => {
-  const colorMap = {
-    'DocType': 'blue',
-    'Report': 'green',
-    'Page': 'orange'
-  }
-  return colorMap[type] || 'default'
-}
-
-const getDefaultIconForType = (type) => {
-  // Không dùng icon mặc định theo type nữa, dùng 'file' cho tất cả
-  return 'cat'
-}
-
-const getTypeShortLabel = (type) => {
-  const map = {
-    'Report': 'R',
-    'DocType': 'D',
-    'Page': 'P'
-  }
-  return map[type] || '?'
-}
-
-// Fetch all modules and their doctypes, reports, pages
-const fetchModulesData = async () => {
-  try {
-    // Fetch danh sách modules từ Module Def
-    const allModules = await frappe.db.get_list('Module Def', {
-      fields: ['name', 'app_name'],
-      filters: [
-        ['name', 'not in', excludedModules]
-      ],
-      order_by: 'name asc'
-    })
-    
-    const modulesData = []
-
-    for (const moduleObj of allModules) {
-      const moduleName = moduleObj.name
-      
-      // Lấy thông tin từ frm.doc.modules nếu có
-      let existingModuleData = props.frm.doc.modules?.find(m => m.module === moduleName)
-      
-      const moduleData = {
-        name: moduleName,
-        icon: existingModuleData?.icon || 'folder',
-        description: existingModuleData?.description || '',
-        groups: [
-          {
-            id: `default-${moduleName}`,
-            title: '',
-            editing: false,
-            items: []
-          },
-          {
-            id: `unused-${moduleName}`,
-            title: 'Không sử dụng',
-            editing: false,
-            items: []
-          }
-        ]
-      }
-
-      // Fetch DocTypes của module (loại bỏ Child Table)
-      const doctypes = await frappe.db.get_list('DocType', {
-        fields: ['name', 'module'],
-        filters: {
-          module: moduleName,
-          istable: 0  // Loại bỏ Child Table
-        },
-        order_by: 'name asc'
+// Định nghĩa dữ liệu
+const initialize_items = async () => {
+  const res_modules = await frappe.db.get_list("Module Def", {filters: {app_name: "superproject"}})
+  const all_modules = []
+  
+  for (const module of res_modules) {
+    let module_name = module.name
+    let existing_module_data = props.frm.doc.modules?.find(m => m.module === module_name)
+    if (!existing_module_data) {
+      const new_module = props.frm.add_child('modules', {
+        module: module_name,
+        icon: 'folder',
+        description: '',
+        direction: 0,
       })
+      props.frm.refresh_field('modules')
 
-      // Thêm DocTypes vào module
-      doctypes.forEach(doctype => {
-        addItemToModule(moduleData, doctype.name, 'DocType', moduleName)
-      })
-
-      // Fetch Reports của module
-      const reports = await frappe.db.get_list('Report', {
-        fields: ['name', 'module', 'ref_doctype'],
-        filters: {
-          module: moduleName,
-          disabled: 0
-        },
-        order_by: 'name asc'
-      })
-
-      reports.forEach(report => {
-        addItemToModule(moduleData, report.name, 'Report', moduleName)
-      })
-
-      // Fetch Pages của module
-      const pages = await frappe.db.get_list('Page', {
-        fields: ['name', 'module'],
-        filters: {
-          module: moduleName
-        },
-        order_by: 'name asc'
-      })
-
-      pages.forEach(page => {
-        addItemToModule(moduleData, page.name, 'Page', moduleName)
-      })
-
-      // Load các group khác từ frm.doc.items (bỏ qua excluded modules)
-      const groupedItems = {}
-      props.frm.doc.items?.forEach(item => {
-        if (item.module === moduleName && item.group && !excludedModules.includes(item.module)) {
-          if (!groupedItems[item.group]) {
-            groupedItems[item.group] = []
-          }
-          
-          // Tìm item trong default group và move sang group mới
-          const defaultGroup = moduleData.groups[0]
-          const itemIndex = defaultGroup.items.findIndex(i => i.link_to === item.link_to)
-          
-          if (itemIndex !== -1) {
-            const [movedItem] = defaultGroup.items.splice(itemIndex, 1)
-            groupedItems[item.group].push(movedItem)
-          }
-        }
-      })
-
-      // Tạo các group từ groupedItems
-      Object.keys(groupedItems).forEach(groupName => {
-        moduleData.groups.push({
-          id: `group-${groupIdCounter.value++}`,
-          title: groupName,
-          editing: false,
-          items: groupedItems[groupName]
-        })
-      })
-
-      const defaultGroup = moduleData.groups[0]
-      const unusedGroup = moduleData.groups.find(g => g.title === 'Không sử dụng')
-
-      defaultGroup.items = defaultGroup.items.filter(i => {
-        const frmItem = props.frm.doc.items?.find(
-          item => item.link_to === i.link_to && item.module === moduleName
-        )
-        if (frmItem?.deactive) {
-          const exists = unusedGroup.items.find(u => u.link_to === i.link_to)
-          if (!exists) {
-            unusedGroup.items.push({
-              id: `item-${itemIdCounter.value++}`,
-              name: i.name,
-              type: i.type,
-              link_to: i.link_to,
-              icon: i.icon
-            })
-          }
-          return false
-        }
-        return true
-      })
-
-      modulesData.push(moduleData)
+      existing_module_data = new_module
     }
 
-    modules.value = modulesData
-    
-    // Cleanup frm.doc - Xóa các items và modules thuộc excluded modules
-    cleanupExcludedModules()
-    
-    // Đánh dấu form dirty để lưu các thay đổi
-    
-  } catch (error) {
-    console.error('Error fetching modules data:', error)
-    frappe.msgprint(__('Failed to fetch modules data'))
-  }
-}
+    const module_data = {
+      name: module_name,
+      title: __(module_name),
+      icon: existing_module_data.icon || 'folder',
+      description: existing_module_data?.description || '',
+      direction: existing_module_data?.direction || 0,
+      groups: [
+        {
+          id: `default-${module_name}`,
+          editing: false,
+          items: []
+        },
+        {
+          id: `deactive-${module_name}`,
+          editing: false,
+          title: 'Không sử dụng',
+          items: [],
+        }
+      ]
+    }
 
-const cleanupExcludedModules = () => {
-  // Xóa items thuộc excluded modules
-  if (props.frm.doc.items) {
-    props.frm.doc.items = props.frm.doc.items.filter(item => !excludedModules.includes(item.module))
+    const doctypes = await frappe.db.get_list('DocType', {filters: {module: module_name, istable: 0}})
+    doctypes.forEach(doctype => add_item_to_module(doctype.name, "DocType", module_name, module_data))
+
+    const reports = await frappe.db.get_list('Report', {filters: {module: module_name}})
+    reports.forEach(report => add_item_to_module(report.name, "Report", module_name, module_data))
+
+    const pages = await frappe.db.get_list('Page', {filters: {module: module_name}})
+    pages.forEach(page => add_item_to_module(page.name, "Page", module_name, module_data))    
+
+    all_modules.push(module_data)
+  }
+
+  modules.value = all_modules.sort((a, b) => a.direction - b.direction)
+  console.log(modules.value)
+
+  const all_modules_name = all_modules.map(m => m.name)
+  const all_items_name = []
+  for (const m of all_modules) {
+    for (const g of m.groups) {
+      for (const i of g.items) {
+        if (i.link_to) all_items_name.push(i.link_to)
+      }
+    }
   }
   
-  // Xóa modules thuộc excluded modules
-  if (props.frm.doc.modules) {
-    props.frm.doc.modules = props.frm.doc.modules.filter(module => !excludedModules.includes(module.module))
+  const modules_grid = props.frm.fields_dict.modules.grid;
+  const items_grid = props.frm.fields_dict.items.grid;
+
+  for (let i = modules_grid.grid_rows.length - 1; i >= 0; i--) {
+    const row = modules_grid.grid_rows[i];
+    if (!all_modules_name.includes(row.doc.module)) {
+      row.remove();
+    }
+  }
+
+  for (let i = items_grid.grid_rows.length - 1; i >= 0; i--) {
+    const row = items_grid.grid_rows[i];
+    if (!all_items_name.includes(row.doc.link_to)) {
+      row.remove();
+    }
+  }
+
+  props.frm.refresh_field('modules');
+  props.frm.refresh_field('items');
+
+}
+
+// Thêm item vào dữ liệu
+const add_item_to_module = (name, type, module_name, module_data) => {
+  let existing_item_data = props.frm.doc.items?.find(i => i.link_to === name && i.module === module_name)
+  if (!existing_item_data) {
+      const new_item = props.frm.add_child('items', {
+        module: module_name,
+        icon: 'folder',
+        link_to: name,
+        type: type,
+        direction: 0
+      })
+      props.frm.refresh_field('items')
+
+      existing_item_data = new_item
+  }
+  const group_name = existing_item_data?.group?.trim() || ''
+  const deactive = existing_item_data?.deactive
+  const direction = existing_item_data?.direction
+
+  if (group_name) {
+    let group = module_data.groups.find(g => g.title === group_name)
+    if (!group) {
+      const new_group = {
+        id: `group-${module_name}-${group_name}`,
+        title: __(group_name),
+        name: group_name,
+        editing: true,
+        items: []
+      }
+      module_data.groups.push(new_group)
+      group = new_group
+    }
+
+    const new_item = {
+      id: `item-${module_name}-${group_name}-${name}`,
+      title: __(name),
+      type,
+      link_to: name,
+      icon: existing_item_data?.icon || 'folder',
+      group: group_name || null,
+      direction: direction
+    }
+    group.items.push(new_item)
+  } else {
+    const new_item = {
+      id: `item-${module_name}-${deactive ? 'deactive' : 'default'}-${name}`,
+      title: __(name),
+      type,
+      link_to: name,
+      icon: existing_item_data?.icon || 'folder',
+      direction: direction
+    }
+
+    if (deactive) module_data.groups[1].items.push(new_item)
+    else module_data.groups[0].items.push(new_item)
   }
 }
 
-const addItemToModule = (moduleData, name, type, moduleName) => {
-  // Kiểm tra xem item đã tồn tại trong frm.doc.items chưa
-  const existingItem = props.frm.doc.items?.find(
-    item => item.link_to === name && item.module === moduleName
-  )
+// Kéo thả Module
+function onDragEnd(evt) {
+  props.frm.doc.modules.forEach((m) => {
+    const newIndex = modules.value.findIndex(mod => mod.name === m.module)
+    if (newIndex !== -1) {
+      m.direction = newIndex
+    }
+  })
 
-  const itemData = {
-    id: `item-${itemIdCounter.value++}`,
-    name: name,
-    type: type,
-    link_to: name,
-    icon: existingItem?.icon || getDefaultIconForType(type)
-  }
-  moduleData.groups[0].items.push(itemData)
-}
-
-const updateModuleDescription = (moduleName, description) => {
-  // Tìm hoặc tạo mới module trong frm.doc.modules
-  let moduleRow = props.frm.doc.modules?.find(m => m.module === moduleName)
-  
-  moduleRow.description = description
+  props.frm.refresh_field('modules')
   props.frm.dirty()
 }
 
-const changeModuleIcon = (moduleName, iconKey) => {
-  const module = modules.value.find((m) => m.name === moduleName)
-  if (module) {
-    module.icon = iconKey
-    
-    // Cập nhật vào frm.doc.modules
-    let moduleRow = props.frm.doc.modules?.find(m => m.module === moduleName)
-    moduleRow.icon = iconKey
-    props.frm.dirty()
+// Mapping Icon
+const getIconComponent = (iconName = null) => {
+  const iconMap = {
+    user: UserOutlined,
+    folder: FolderOutlined,
+    file: FileTextOutlined,
+    setting: SettingOutlined,
+    appstore: AppstoreOutlined,
+    database: DatabaseOutlined,
+    cloud: CloudOutlined,
+    api: ApiOutlined,
+    code: CodeOutlined,
+    bulb: BulbOutlined,
+    shop: ShoppingOutlined
   }
+  return iconName ? (iconMap[iconName] || FolderOutlined) : iconMap;
 }
 
-const changeItemIcon = (moduleName, groupId, itemId, iconKey) => {
-  const module = modules.value.find((m) => m.name === moduleName)
-  const group = module?.groups.find((g) => g.id === groupId)
-  const item = group?.items.find((i) => i.id === itemId)
+const changeIcon = (element, iconKey, fieldname = 'modules') => {
+  const dataSource = fieldname === 'items' ? props.frm.doc.items : props.frm.doc.modules;
+  const nameKey = fieldname === 'modules' ? 'module' : 'link_to';
+  const target = dataSource.find(item => item[nameKey] === element.name);
   
-  if (item) {
-    item.icon = iconKey
-    
-    // Cập nhật vào frm.doc.items
-    const itemRow = props.frm.doc.items?.find(
-      row => row.link_to === item.link_to && row.module === moduleName
-    )
-    if (itemRow) {
-      itemRow.icon = iconKey
-      props.frm.dirty()
+  if (target) {
+    target.icon = iconKey;
+    const index = modules.value.findIndex(mod => mod.name === element.name);
+    if (index !== -1) {
+      modules.value[index].icon = iconKey;
     }
+    props.frm.refresh_field(fieldname);
+    props.frm.dirty();
   }
-}
-
-const addNewGroup = (moduleName) => {
-  const module = modules.value.find((m) => m.name === moduleName)
-  if (module) {
-    const newGroup = {
-      id: `group-${groupIdCounter.value++}`,
-      title: `Nhóm mới ${groupIdCounter.value - 1}`,
-      editing: false,
-      items: [],
-    }
-    module.groups.push(newGroup)
-  }
-}
-
-const deleteGroup = (moduleName, groupId) => {
-  const module = modules.value.find((m) => m.name === moduleName)
-  if (module) {
-    const groupIndex = module.groups.findIndex((g) => g.id === groupId)
-    if (groupIndex > 0 && !module.groups[groupIndex].id.startsWith('unused-')) {
-      const group = module.groups[groupIndex]
-      
-      // Move tất cả items về default group
-      const defaultGroup = module.groups[0]
-      group.items.forEach(item => {
-        defaultGroup.items.push(item)
-        
-        // Xóa group trong frm.doc.items
-        const itemRow = props.frm.doc.items?.find(
-          row => row.link_to === item.link_to && row.module === moduleName
-        )
-        if (itemRow) {
-          itemRow.group = ''
-        }
-      })
-      
-      module.groups.splice(groupIndex, 1)
-      props.frm.dirty()
-    }
-  }
-}
-
-const handleDragStart = (event, moduleName, groupId, itemId, groupTitle) => {
-  dragData.value = { moduleName, groupId, itemId, groupTitle }
-  event.dataTransfer.effectAllowed = "move"
-  event.target.classList.add('dragging');
-}
-
-const handleDragOver = (event, moduleName, groupId) => {
-  event.preventDefault()
-  
-  if (dragData.value && dragData.value.moduleName === moduleName) {
-    dragOverGroup.value = `${moduleName}-${groupId}`
-  }
-}
-
-const handleDragLeave = () => {
-  dragOverGroup.value = null
-}
-
-const handleDragEnd = (event) => {
-  event.target.classList.remove('dragging');
-}
-
-const handleDrop = (event, targetModuleName, targetGroupId, targetGroupTitle) => {
-  event.preventDefault();
-  dragOverGroup.value = null;
-
-  if (!dragData.value) return;
-
-  const { moduleName, groupId, itemId } = dragData.value;
-
-  if (moduleName !== targetModuleName) {
-    dragData.value = null;
-    return;
-  }
-
-  const module = modules.value.find(m => m.name === moduleName);
-  const group = module.groups.find(g => g.id === targetGroupId);
-
-  if (!group) return;
-
-  const itemIndex = group.items.findIndex(i => i.id === itemId);
-  let draggedItem;
-  
-  if (itemIndex !== -1) {
-    // Remove item từ group hiện tại
-    [draggedItem] = group.items.splice(itemIndex, 1);
-  } else {
-    // Lấy từ group khác
-    const sourceGroup = module.groups.find(g => g.id === dragData.value.groupId);
-    const sourceIndex = sourceGroup.items.findIndex(i => i.id === itemId);
-    if (sourceIndex === -1) return;
-    [draggedItem] = sourceGroup.items.splice(sourceIndex, 1);
-  }
-
-  // Xác định vị trí drop dựa trên event.target
-  let targetIndex = Array.from(event.currentTarget.children).indexOf(event.target.closest('.group-item'));
-  if (targetIndex === -1) targetIndex = group.items.length;
-
-  group.items.splice(targetIndex, 0, draggedItem);
-
-  // Update frm.doc.items như trước
-  let itemRow = props.frm.doc.items?.find(row => row.link_to === draggedItem.link_to && row.module === moduleName);
-  if (!itemRow) {
-    itemRow = frappe.model.add_child(props.frm.doc, 'Super Project Items', 'items');
-    itemRow.module = moduleName;
-    itemRow.type = draggedItem.type;
-    itemRow.link_to = draggedItem.link_to;
-    itemRow.icon = draggedItem.icon;
-  }
-
-  // Cập nhật group/deactive
-  if (targetGroupId.startsWith('unused-')) {
-    itemRow.deactive = 1;
-    itemRow.group = '';
-  } else {
-    itemRow.deactive = 0;
-    itemRow.group = targetGroupTitle.startsWith('default-') ? '' : targetGroupTitle;
-  }
-
-  props.frm.dirty();
-  dragData.value = null;
 };
 
+// Thêm vào trong script
+const startEditDescription = (element) => {
+  element.editingDescription = true;
+};
 
-onMounted(() => {
-  fetchModulesData()
-})
+const saveDescription = (element) => {
+  element.editingDescription = false;
+  
+  const module = props.frm.doc.modules.find(m => m.module === element.name);
+  if (module) {
+    module.description = element.description;
+    props.frm.refresh_field('modules');
+    props.frm.dirty();
+  }
+};
+
 </script>
 
-<style scoped>
-.kanban-group {
-  background: #fafafa;
-  border: 2px solid #d9d9d9;
-  border-radius: 6px;
-  overflow: hidden;
-  min-height: 200px;
-  display: flex;
-  flex-direction: column;
-  transition: all 0.3s ease;
-}
+<css scoped>
 
-.kanban-group.drag-over {
-  background: #e6f7ff;
-  border-color: #1890ff;
-  border-style: dashed;
-  box-shadow: 0 0 0 4px rgba(24, 144, 255, 0.1);
-}
-
-.group-header {
-  background: #ffffff;
-  padding: 10px 12px;
-  border-bottom: 2px solid #d9d9d9;
-  min-height: 42px;
-}
-
-.group-title {
-  font-weight: 600;
-  font-size: 14px;
-  color: #262626;
-  cursor: pointer;
-}
-
-.group-title:hover {
-  color: #1890ff;
-}
-
-.group-body {
-  padding: 8px;
-  flex: 1;
-  overflow-y: auto;
-  min-height: 150px;
-}
-
-.group-item {
-  background: white;
-  border: 1px solid #d9d9d9;
-  border-radius: 4px;
-  padding: 10px 12px;
-  margin-bottom: 8px;
-  cursor: move;
-  transition: all 0.2s;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.group-item:hover {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  border-color: #1890ff;
-  transform: translateY(-2px);
-}
-
-.group-item.dragging {
-  opacity: 0.5; /* hoặc 1 nếu không muốn mờ */
-  background: #fafafa; /* tùy chỉnh */
-}
-
-.item-icon {
-  flex-shrink: 0;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #f0f5ff;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.item-icon:hover {
-  background: #d6e4ff;
-  transform: scale(1.1);
-}
-
-.item-content {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-}
-
-.item-name {
-  flex: 1;
-  font-size: 13px;
-  color: #262626;
-  font-weight: 500;
-  line-height: 1.4;
-}
-
-.empty-state {
-  text-align: center;
-  color: #bfbfbf;
-  font-size: 13px;
-  padding: 30px 10px;
-  border: 2px dashed #d9d9d9;
-  border-radius: 4px;
-  background: #fafafa;
-}
-
-.add-group-btn {
-  background: #fafafa;
-  border: 2px dashed #d9d9d9;
-  border-radius: 6px;
-  min-height: 200px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.add-group-btn:hover {
-  background: #e6f7ff;
-  border-color: #1890ff;
-  border-style: solid;
-  box-shadow: 0 2px 8px rgba(24, 144, 255, 0.1);
-}
-
-.type-short {
-  display: none;
-}
-
-.group-title.unused-group {
-  color: #e74a4aff; /* đỏ */
-}
-
-@media (max-width: 768px) {
-  .kanban-group {
-    min-height: 150px;
-  }
-
-  .group-title {
-    font-size: 13px;
-  }
-
-  .group-item {
-    padding: 8px 10px;
-  }
-
-  .item-icon {
-    width: 28px;
-    height: 28px;
-  }
-
-  .item-icon :deep(svg) {
-    font-size: 16px !important;
-  }
-
-  .item-name {
-    font-size: 12px;
-  }
-
-  .add-group-btn {
-    min-height: 150px;
-  }
-
-  .type-full {
-    display: none;
-  }
-  .type-short {
-    display: inline;
-    font-weight: 600;
-  }
-  .group-item .a-tag, .group-item .ant-tag {
-    padding: 0 4px;
-    font-size: 11px;
-  }
-}
-</style>
+</css>

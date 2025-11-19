@@ -74,7 +74,9 @@ def get_module_name(link_to_name):
 @frappe.whitelist()
 def get_modules_display():
     doc = frappe.get_single("Display")
-    if not doc or not doc.items: return []
+    if not doc or not doc.items:
+        return []
+
     modules = {}
     
     for item in doc.items:
@@ -85,11 +87,18 @@ def get_modules_display():
                 "link_to": item.link_to,
                 "type": item.type,
                 "is_single": frappe.get_meta(item.link_to).issingle if item.link_to else False,
+                "description": "",
+                "icon": "folder",
+                "direction": 0,  # default direction
             }
+            # Gán description, icon, direction từ doc.modules
             for m in doc.modules:
                 if m.module == module_name:
                     modules[module_name]["description"] = m.description
                     modules[module_name]["icon"] = m.icon
+                    modules[module_name]["direction"] = m.direction or 0
 
-    return list(modules.values())
+    # Chuyển sang list và sort theo direction
+    return sorted(modules.values(), key=lambda x: x["direction"])
+
 

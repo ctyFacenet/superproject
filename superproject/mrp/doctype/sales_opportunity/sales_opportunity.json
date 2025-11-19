@@ -5,18 +5,19 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "section_break_my6j"
+  "start_date"
  ],
  "fields": [
   {
-   "fieldname": "section_break_my6j",
-   "fieldtype": "Section Break"
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "label": "Date"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-11-06 14:01:48.812863",
+ "modified": "2025-11-11 09:41:53.714863",
  "modified_by": "Administrator",
  "module": "MRP",
  "name": "Sales Opportunity",

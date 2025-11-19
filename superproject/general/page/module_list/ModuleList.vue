@@ -25,18 +25,20 @@
 
 <script setup>
 import { ref, onMounted } from "vue"
-import {
-  UserOutlined,
-  SmileOutlined,
-  SettingOutlined,
-  ProjectOutlined,
-  FolderOutlined,
-  TeamOutlined,
-  FileOutlined,
-  FileTextOutlined,
-  BarChartOutlined,
-  AppstoreOutlined,
-  ShoppingOutlined
+import { 
+  MenuOutlined, 
+  UserOutlined, 
+  FolderOutlined, 
+  FileTextOutlined, 
+  SettingOutlined, 
+  AppstoreOutlined, 
+  DatabaseOutlined, 
+  CloudOutlined, 
+  ApiOutlined, 
+  CodeOutlined, 
+  BulbOutlined, 
+  EditOutlined,
+  ShoppingOutlined 
 } from '@ant-design/icons-vue';
 
 
@@ -46,16 +48,16 @@ const modules = ref([])
 const getIcon = (iconName) => {
   const iconMap = {
     user: UserOutlined,
-    smile: SmileOutlined,
-    setting: SettingOutlined,
-    project: ProjectOutlined,
     folder: FolderOutlined,
-    team: TeamOutlined,
-    file: FileOutlined,
-    doctype: FileTextOutlined,
-    report: BarChartOutlined,
-    page: AppstoreOutlined,
-    sale: ShoppingOutlined
+    file: FileTextOutlined,
+    setting: SettingOutlined,
+    appstore: AppstoreOutlined,
+    database: DatabaseOutlined,
+    cloud: CloudOutlined,
+    api: ApiOutlined,
+    code: CodeOutlined,
+    bulb: BulbOutlined,
+    shop: ShoppingOutlined
   }
   return iconMap[iconName] || FileOutlined
 }

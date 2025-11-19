@@ -1,51 +1,36 @@
 {
  "actions": [],
  "allow_rename": 1,
- "creation": "2025-10-31 09:52:28.986112",
+ "creation": "2025-11-10 17:14:17.980125",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "module",
-  "icon",
-  "description",
-  "direction"
+  "start_field",
+  "end_field"
  ],
  "fields": [
   {
-   "fieldname": "module",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Module",
-   "options": "Module Def"
-  },
-  {
-   "fieldname": "icon",
+   "fieldname": "start_field",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Icon"
+   "label": "Start Field"
   },
   {
-   "fieldname": "description",
+   "fieldname": "end_field",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Description"
-  },
-  {
-   "fieldname": "direction",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Direction"
+   "label": "End Field"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-11-10 13:46:54.079197",
+ "modified": "2025-11-10 17:25:25.060938",
  "modified_by": "Administrator",
  "module": "General",
- "name": "Display Module Item",
+ "name": "Workflow Chain Item",
  "owner": "Administrator",
  "permissions": [],
  "row_format": "Dynamic",
