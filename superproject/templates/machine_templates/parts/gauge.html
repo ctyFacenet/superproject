@@ -18,13 +18,20 @@
 					stroke-linecap="round"
 				/>
 			</svg>
-			<div id="progress-text" class="progress-text">{{ data.availability }}%</div>
+			<div id="progress-text" class="progress-text">{{ data.availability or 0 }}%</div>
+			<div class="progress-text" style="margin-top: 20px; font-size: 15px;">
+				Availability
+			</div>
 		</div>
 
 		<div class="perf-times">
-			<div class="machine-card small">Stop Time: <b>{{ data.stop_time }}</b></div>
-			<div class="machine-card small">Running Time: <b>{{ data.running_time }}</b></div>
-			<div class="machine-card small">Planned Time: <b>{{ data.planned_time }}</b></div>
+			<div class="machine-card small">Stop Time: <b>{{ data.stop_time or "_._ _" }}</b></div>
+			<div class="machine-card small">
+				Running Time: <b>{{ data.running_time or "_._ _" }}</b>
+			</div>
+			<div class="machine-card small">
+				Planned Time: <b>{{ data.planned_time or "_._ _" }}</b>
+			</div>
 		</div>
 	</div>
 </div>

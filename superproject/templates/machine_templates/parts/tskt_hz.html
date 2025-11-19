@@ -1,33 +1,40 @@
+{% from "superproject/templates/machine_templates/parts/status_macro.html" import status_badge %}
+
 <div class="machine-row">
 	<div class="machine-block">
 		<h3 class="block-title">Thông số kỹ thuật tức thời</h3>
 
 		<div class="machine-row">
+    	<div class="machine-card">
+				<div class="label">Trạng thái</div>
+				{{ status_badge(data.status) }}
+			</div>
+
 			<div class="machine-card">
 				<div class="label">Nhiệt độ dầu</div>
-				<div class="value green">{{ data.temperature_oil }}°C</div>
+				<div class="value green">{{ data.temperature_oil or "" }}°C</div>
 			</div>
 
 			<div class="machine-card">
 				<div class="label">Nhiệt độ quạt hút</div>
-				<div class="value green">{{ data.temperature_fan }}°C</div>
+				<div class="value green">{{ data.temperature_fan or "" }}°C</div>
 			</div>
 
 			<div class="machine-card">
 				<div class="label">Tốc độ quạt</div>
-				<div class="value green">{{ data.fan_speed }} RPM</div>
+				<div class="value green">{{ data.fan_speed or "" }} RPM</div>
 			</div>
 		</div>
 
 		<div class="machine-row two-col">
 			<div class="machine-card">
 				<div class="label">Tốc độ DF</div>
-				<div class="value green">{{ data.df_speed }} RPM</div>
+				<div class="value green">{{ data.df_speed or "" }} RPM</div>
 			</div>
 
 			<div class="machine-card">
 				<div class="label">Lượng gió</div>
-				<div class="value green">{{ data.wind_m3 }} M³/H</div>
+				<div class="value green">{{ data.wind_m3 or "" }} M³/H</div>
 			</div>
 		</div>
 	</div>

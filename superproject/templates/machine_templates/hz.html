@@ -1,7 +1,7 @@
 {% include "superproject/templates/machine_templates/parts/header.html" %}
 
 <div class="machine-dashboard">
-	<h2 class="main-title">{{ data.workstation_name }} - Hút gió</h2>
+	<h2 class="main-title">{{ data.machinename or "" }}</h2>
 
 	<div class="machine-row">
 		{% include "superproject/templates/machine_templates/parts/tskt_hz.html" %} {% include

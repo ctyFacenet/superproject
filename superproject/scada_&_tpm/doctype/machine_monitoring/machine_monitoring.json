@@ -6,7 +6,9 @@
  "engine": "InnoDB",
  "field_order": [
   "machinecode",
-  "status"
+  "status",
+  "availability",
+  "machinename"
  ],
  "fields": [
   {
@@ -24,12 +26,24 @@
    "in_list_view": 1,
    "label": "Tr\u1ea1ng th\u00e1i",
    "options": "\u0110ang ch\u1ea1y\nT\u1ea1m d\u1eebng\nH\u1ecfng"
+  },
+  {
+   "fieldname": "availability",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Availability"
+  },
+  {
+   "fieldname": "machinename",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "T\u00ean m\u00e1y"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-11-18 17:19:20.329376",
+ "modified": "2025-11-19 16:39:49.763279",
  "modified_by": "Administrator",
  "module": "SCADA & TPM",
  "name": "Machine Monitoring",

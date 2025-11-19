@@ -3,31 +3,31 @@
 		<h3 class="info-title">Thông tin lệnh sản xuất</h3>
 
 		<div class="row-info">
-			<span>Mã lệnh SX:</span><span class="value-strong">{{ data.work_order }}</span>
+			<span>Mã lệnh SX:</span><span class="value-strong">{{ data.work_order or "" }}</span>
 		</div>
 		<div class="row-info">
-			<span>Công đoạn:</span><span class="value-strong">{{ data.operation }}</span>
+			<span>Công đoạn:</span><span class="value-strong">{{ data.operation or "" }}</span>
 		</div>
 		<div class="row-info">
-			<span>BTP đầu ra:</span><span class="value-strong">{{ data.item_code }}</span>
+			<span>BTP đầu ra:</span><span class="value-strong">{{ data.item_code or "" }}</span>
 		</div>
 
 		<div class="row-info">
-			<span>Kế hoạch:</span><span class="value-strong">{{ data.qty_plan }}</span>
+			<span>Kế hoạch:</span><span class="value-strong">{{ data.qty_plan or "" }}</span>
 		</div>
 		<div class="row-info">
-			<span>Thực tế:</span><span class="value-strong">{{ data.qty_actual }}</span>
+			<span>Thực tế:</span><span class="value-strong">{{ data.qty_actual or "" }}</span>
 		</div>
 		<div class="row-info">
-			<span>OK:</span><span class="value-strong">{{ data.qty_ok }}</span>
+			<span>OK:</span><span class="value-strong">{{ data.qty_ok or "" }}</span>
 		</div>
 		<div class="row-info">
-			<span>NG:</span><span class="value-strong">{{ data.qty_ng }}</span>
+			<span>NG:</span><span class="value-strong">{{ data.qty_ng or "" }}</span>
 		</div>
 
 		<div class="row-info">
 			<span>Tỷ lệ phế:</span>
-			<span class="scrap">{{ data.scrap_rate }}%</span>
+			<span class="scrap">{{ data.scrap_rate or "" }}%</span>
 		</div>
 	</div>
 
@@ -36,7 +36,7 @@
 		<div class="row-info">
 			<span>Tốc độ kéo DV:</span>
 			<span class="value-strong"
-				>{{ data.standard_dv_min }} - {{ data.standard_dv_max }} RPM</span
+				>{{ data.standard_dv_min or "" }} - {{ data.standard_dv_max or "" }} RPM</span
 			>
 		</div>
 	</div>
@@ -45,13 +45,13 @@
 		<h3 class="info-title">Nguyên nhân dừng máy</h3>
 
 		<div class="row-info">
-			<span>Thay men:</span><span class="value-strong">{{ data.stop_men }} phút</span>
+			<span>Thay men:</span><span class="value-strong">{{ data.stop_men or "_._ _" }} phút</span>
 		</div>
 		<div class="row-info">
-			<span>Hỏng quạt:</span><span class="value-strong">{{ data.stop_fan }} phút</span>
+			<span>Hỏng quạt:</span><span class="value-strong">{{ data.stop_fan or "_._ _" }} phút</span>
 		</div>
 		<div class="row-info">
-			<span>Thay bobbin:</span><span class="value-strong">{{ data.stop_bobbin }} phút</span>
+			<span>Thay bobbin:</span><span class="value-strong">{{ data.stop_bobbin or "_._ _" }} phút</span>
 		</div>
 	</div>
 </div>

@@ -1,0 +1,13 @@
+{% macro status_badge(status) %}
+    {% set st = (status or "").lower() %}
+
+    {% if "chạy" in st %}
+        {% set cls = "on" %}
+    {% elif "hỏng" in st %}
+        {% set cls = "off" %}
+    {% else %}
+        {% set cls = "pause" %}
+    {% endif %}
+
+    <div class="status {{ cls }}">{{ status or "Không xác định" }}</div>
+{% endmacro %}
