@@ -1,9 +1,7 @@
 <template>
   <div
     class="tw-relative tw-border tw-border-gray-100 tw-bg-white tw-rounded-lg tw-shadow-sm tw-p-4 sm:tw-p-6 tw-text-sm tw-flex tw-flex-col tw-h-full">
-
     <a-spin :spinning="loading" size="large" class="tw-w-full tw-h-full">
-
       <a-popover :key="storageKey" v-model:open="showColumnPicker" trigger="click" placement="top">
         <template #content>
           <div class="tw-p-2 tw-w-[220px] tw-max-h-[300px] tw-overflow-y-auto">
@@ -23,38 +21,41 @@
         </template>
       </a-popover>
 
-
-      <div class="fade-left" v-show="scrollLeft > 5"></div>
-      <div class="fade-right" v-show="scrollRight > 5"></div>
-
       <div ref="scrollWrapper" class="tw-flex-1 tw-overflow-x-auto tw-overflow-y-auto tw-max-h-[70vh] tw-relative"
         @scroll="handleScroll">
         <table class="tw-min-w-max tw-border-collapse tw-w-full" ref="tableRef">
           <thead class="tw-sticky tw-top-0 tw-z-20">
-
-            <tr class="tw-bg-blue-50 tw-border-b tw-border-gray-300 tw-text-gray-700 tw-text-[13px]">
-              <th class="tw-sticky tw-left-0 tw-top-0 tw-z-40 tw-bg-pink-100 tw-w-[50px] tw-text-center tw-border">
+            <tr class="tw-bg-blue-200 tw-border-b tw-border-gray-300 tw-text-gray-700 tw-text-[13px]">
+              <th class="left-sticky tw-top-0 tw-z-40 tw-bg-blue-200 tw-w-[50px] tw-text-center tw-border">
                 STT
               </th>
 
               <th v-if="!props.hideSelect"
-                class="tw-sticky tw-left-[50px] tw-top-0 tw-z-40 tw-bg-pink-100 tw-w-[45px] tw-text-center tw-border">
+                class="left-sticky-2 tw-top-0 tw-z-40 tw-bg-blue-200 tw-w-[45px] tw-text-center tw-border">
                 <input type="checkbox" ref="selectAllRef" v-model="selectAll" @change="toggleSelectAll" />
               </th>
 
               <th v-for="col in filteredColumns" :key="col.key"
                 class="tw-relative tw-border tw-border-gray-200 tw-font-semibold tw-text-center tw-px-3 tw-py-2 tw-group"
                 :class="[
-                  { 'tw-sticky tw-right-0 tw-z-40 tw-bg-pink-100': col.key === 'actions' },
-                  { 'tw-bg-pink-100 tw-text-pink-800': /(can|kdai|ktrung|ktieu|mahz|malh|mavt)/i.test(col.key) }
+                  col.key === 'actions' ? 'actions-sticky th-sticky' : '',
+                  {
+                    'tw-bg-pink-100 tw-text-pink-800':
+                      /(can|kdai|ktrung|ktieu|mahz|malh|mavt)/i.test(
+                        col.key,
+                      ),
+                  },
                 ]" :style="{
                   width: colWidths[col.key] + 'px',
-                  minWidth: col.key === 'actions' ? '130px' : '150px'
+                  minWidth: col.key === 'actions' ? '130px' : '150px',
                 }">
                 <div class="tw-flex tw-items-center tw-justify-center tw-gap-1">
                   <a-tooltip :title="col.title">
-                    <span class="tw-truncate tw-font-semibold">{{ col.title }}</span>
+                    <span class="tw-truncate tw-font-semibold">{{
+                      col.title
+                      }}</span>
                   </a-tooltip>
+
                   <img v-if="col.key !== 'actions'" src="/assets/superproject/assets/icons/filter.svg" alt="filter"
                     class="tw-w-3 tw-h-3 tw-opacity-70 tw-cursor-pointer hover:tw-opacity-100" />
                 </div>
@@ -66,13 +67,12 @@
             </tr>
 
             <tr class="tw-bg-white tw-border-b tw-border-gray-200">
-              <th class="tw-sticky tw-left-0 tw-top-[33px] tw-z-30 tw-bg-pink-100 tw-border"></th>
-              <th v-if="!props.hideSelect"
-                class="tw-sticky tw-left-[50px] tw-top-[33px] tw-z-30 tw-bg-pink-100 tw-border">
-              </th>
+              <th class="left-sticky tw-top-[33px] tw-z-30 tw-border"></th>
+
+              <th v-if="!props.hideSelect" class="left-sticky-2 tw-top-[33px] tw-z-30 tw-border"></th>
 
               <th v-for="col in filteredColumns" :key="col.key" class="tw-px-2 tw-py-1 tw-border"
-                :class="{ 'tw-sticky tw-right-0 tw-z-30 tw-bg-pink-100': col.key === 'actions' }"
+                :class="col.key === 'actions' ? 'actions-sticky th-sticky' : ''"
                 :style="{ width: colWidths[col.key] + 'px' }">
                 <template v-if="col.fieldtype === 'Date'">
                   <a-range-picker v-model:value="dateFilters[col.key]" format="DD/MM/YYYY" size="small"
@@ -99,56 +99,64 @@
           <tbody>
             <template v-if="groupByField && groupedRows.length">
               <template v-for="(group, gIndex) in groupedRows" :key="group.key">
-                <tr class="tw-bg-pink-50 tw-font-semibold tw-text-red-600 tw-text-[13px]">
-                  <td class="tw-sticky tw-left-0 tw-bg-pink-100 tw-z-10 tw-border"></td>
-                  <td v-if="!props.hideSelect"
-                    class="tw-sticky tw-left-[50px] tw-bg-pink-100 tw-z-10 tw-text-center tw-border">
+                <tr class="tw-font-semibold tw-text-red-600 tw-text-[13px]">
+                  <td class="left-sticky tw-z-10 tw-border"></td>
+
+                  <td v-if="!props.hideSelect" class="left-sticky-2 tw-z-10 tw-text-center tw-border">
                     <input type="checkbox" :checked="selectedGroups.includes(group.key)"
                       @change="toggleGroup(group.key, $event)" />
                   </td>
-                  <td class="tw-border tw-bg-pink-50 tw-text-left tw-pl-3" :colspan="filteredColumns.length">
+
+                  <td class="tw-border tw-text-left tw-pl-3" :colspan="filteredColumns.length">
                     {{ group.key }}
                   </td>
                 </tr>
 
                 <tr v-for="(row, i) in group.rows" :key="row.name" :class="[
                   'tw-text-[13px] tw-cursor-pointer tw-transition-colors tw-duration-150',
-                  selectedRows.has(row) ? 'tw-bg-blue-50' : 'hover:tw-bg-gray-50'
+                  selectedRows.has(row)
+                    ? 'tw-bg-blue-50'
+                    : 'hover:tw-bg-gray-50',
                 ]" @click="handleRowClick($event, row)">
-                  <td class="tw-sticky tw-left-0 tw-bg-pink-100 tw-z-20 tw-text-center tw-border tw-py-1">
+                  <td class="left-sticky tw-text-center tw-border tw-py-1">
                     {{ totalPreviousRows(gIndex) + i + 1 }}
                   </td>
-                  <td v-if="!props.hideSelect"
-                    class="tw-sticky tw-left-[50px] tw-bg-pink-100 tw-z-20 tw-text-center tw-border tw-py-1">
+
+                  <td v-if="!props.hideSelect" class="left-sticky-2 tw-text-center tw-border tw-py-1">
                     <input type="checkbox" :checked="selectedRows.has(row)"
                       @change="toggleRow(group.key, row, $event)" />
                   </td>
+
                   <td v-for="col in filteredColumns" :key="col.key"
-                    class="tw-border tw-px-2 tw-py-1 tw-text-center tw-relative"
-                    :class="{ 'tw-sticky tw-right-0 tw-bg-pink-100 tw-z-20': col.key === 'actions' }">
+                    class="tw-border tw-px-2 tw-py-1 tw-text-center tw-relative" :class="col.key === 'actions' ? 'actions-sticky td-sticky' : ''
+                      ">
                     <template v-if="col.key === 'status'">
-                      <span :style="statusColors[row.status] || 'background-color:#e5e7eb; color:#374151;'"
-                        class="tw-inline-block tw-rounded-lg tw-px-2 tw-py-[2px] tw-text-[12px] tw-font-medium">
+                      <span :style="statusColors[row.status] ||
+                        'background-color:#e5e7eb; color:#374151;'
+                        " class="tw-inline-block tw-rounded-lg tw-px-2 tw-py-[2px] tw-text-[12px] tw-font-medium">
                         {{ row.status }}
                       </span>
-
                     </template>
 
                     <template v-else-if="col.key === 'actions'">
                       <div v-if="getDoctypeConfig(props.doctype)?.rowActions"
                         class="actions-cell tw-flex tw-items-center tw-justify-center tw-gap-3">
-                        <template v-for="(action, index) in getDoctypeConfig(props.doctype).rowActions" :key="index">
+                        <template v-for="(action, index) in getDoctypeConfig(
+                          props.doctype,
+                        ).rowActions" :key="index">
                           <a-tooltip :title="action.label">
                             <component :is="action.icon"
-                              class="tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out"
-                              :style="{ color: action.color, fontSize: '15px' }" @click.stop="action.onClick(row)" />
+                              class="tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out" :style="{
+                                color: action.color,
+                                fontSize: '15px',
+                              }" @click.stop="action.onClick(row)" />
                           </a-tooltip>
                         </template>
                       </div>
                     </template>
 
                     <template v-else>
-                      {{ row[col.key] || '' }}
+                      {{ row[col.key] || "" }}
                     </template>
                   </td>
                 </tr>
@@ -156,44 +164,53 @@
             </template>
 
             <template v-else>
-              <tr v-for="(row, i) in filteredRows.slice((currentPage - 1) * pageSize, currentPage * pageSize)" :key="i"
-                :class="[
+              <tr v-for="(row, i) in filteredRows.slice(
+                (currentPage - 1) * pageSize,
+                currentPage * pageSize,
+              )" :key="i" :class="[
                   'tw-text-[13px] tw-cursor-pointer',
-                  selectedRows.has(row) ? 'tw-bg-blue-50' : 'hover:tw-bg-gray-50'
+                  selectedRows.has(row)
+                    ? 'tw-bg-blue-50'
+                    : 'hover:tw-bg-gray-50',
                 ]" @click="handleRowClick($event, row)">
-                <td class="index-cell tw-sticky tw-left-0 tw-bg-pink-100 tw-z-20 tw-text-center tw-border tw-py-1">
+                <td class="left-sticky tw-text-center tw-border tw-py-1">
                   {{ i + 1 + (currentPage - 1) * pageSize }}
                 </td>
-                <td v-if="!props.hideSelect"
-                  class="checkbox-cell tw-sticky tw-left-[50px] tw-bg-pink-100 tw-z-20 tw-text-center tw-border tw-py-1">
+
+                <td v-if="!props.hideSelect" class="left-sticky-2 tw-text-center tw-border tw-py-1">
                   <input type="checkbox" :checked="selectedRows.has(row)" @change="toggleRow(null, row, $event)" />
                 </td>
+
                 <td v-for="col in filteredColumns" :key="col.key"
-                  class="tw-border tw-px-2 tw-py-1 tw-text-center tw-relative"
-                  :class="{ 'tw-sticky tw-right-0 tw-bg-pink-100 tw-z-20': col.key === 'actions' }">
+                  class="tw-border tw-px-2 tw-py-1 tw-text-center tw-relative" :class="col.key === 'actions' ? 'actions-sticky td-sticky' : ''
+                    ">
                   <template v-if="col.key === 'status'">
-                    <span :style="statusColors[row.status] || 'background-color:#e5e7eb; color:#374151;'"
-                      class="tw-inline-block tw-rounded-lg tw-px-2 tw-py-[2px] tw-text-[12px] tw-font-medium">
+                    <span :style="statusColors[row.status] ||
+                      'background-color:#e5e7eb; color:#374151;'
+                      " class="tw-inline-block tw-rounded-lg tw-px-2 tw-py-[2px] tw-text-[12px] tw-font-medium">
                       {{ row.status }}
                     </span>
-
                   </template>
 
                   <template v-else-if="col.key === 'actions'">
                     <div v-if="getDoctypeConfig(props.doctype)?.rowActions"
                       class="actions-cell tw-flex tw-items-center tw-justify-center tw-gap-3">
-                      <template v-for="(action, index) in getDoctypeConfig(props.doctype).rowActions" :key="index">
+                      <template v-for="(action, index) in getDoctypeConfig(
+                        props.doctype,
+                      ).rowActions" :key="index">
                         <a-tooltip :title="action.label">
                           <component :is="action.icon"
-                            class="tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out"
-                            :style="{ color: action.color, fontSize: '15px' }" @click.stop="action.onClick(row)" />
+                            class="tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out" :style="{
+                              color: action.color,
+                              fontSize: '15px',
+                            }" @click.stop="action.onClick(row)" />
                         </a-tooltip>
                       </template>
                     </div>
                   </template>
 
                   <template v-else>
-                    {{ row[col.key] || '' }}
+                    {{ row[col.key] || "" }}
                   </template>
                 </td>
               </tr>
@@ -213,14 +230,19 @@
         class="tw-flex tw-flex-col sm:tw-flex-row sm:tw-justify-between sm:tw-items-center tw-py-2 tw-px-3 tw-border-gray-200 tw-bg-gray-50 tw-text-[14px] tw-font-medium">
         <a-select v-model:value="pageSize" :options="pageSizeOptions" class="tw-hidden sm:tw-block tw-w-[110px]"
           @change="onPageSizeChange" />
+
         <div
           class="tw-flex tw-flex-col sm:tw-flex-row tw-items-center tw-justify-center tw-gap-2 sm:tw-gap-3 tw-w-full sm:tw-w-auto">
           <span class="tw-hidden sm:tw-inline tw-text-gray-600 tw-font-medium">
-            Trang số {{ currentPage }} của {{ totalPages }} ({{ filteredRows?.length || 0 }} bản ghi)
+            Trang số {{ currentPage }} của {{ totalPages }} ({{
+              filteredRows?.length || 0
+            }}
+            bản ghi)
           </span>
           <a-pagination v-model:current="currentPage" :total="filteredRows?.length || 0" :pageSize="pageSize"
             @change="onPageChange" :showSizeChanger="false" size="small" class="tw-my-1 sm:tw-my-0" />
         </div>
+
         <div class="tw-hidden sm:tw-flex tw-items-center tw-gap-2">
           <span>Đi đến</span>
           <a-input-number v-model:value="goToPage" :min="1" :max="totalPages" @pressEnter="jumpToPage"
@@ -232,8 +254,8 @@
         class="tw-text-center tw-border-t tw-border-gray-200 tw-bg-white tw-text-[13px] sm:tw-text-[14px] tw-font-[500] tw-tracking-wide tw-text-gray-600">
         © Copyright
         <a href="https://facenet.vn" target="_blank" rel="noopener noreferrer"
-          class="tw-text-[#0066cc] tw-font-semibold tw-cursor-pointer hover:tw-underline">FaceNet</a>.
-        All Rights Reserved,&nbsp;Designed by
+          class="tw-text-[#0066cc] tw-font-semibold tw-cursor-pointer hover:tw-underline">FaceNet</a>. All Rights
+        Reserved,&nbsp;Designed by
         <a href="https://facenet.vn" target="_blank" rel="noopener noreferrer"
           class="tw-text-[#0066cc] tw-font-semibold tw-cursor-pointer hover:tw-underline">FaceNet</a>
       </div>
@@ -241,13 +263,11 @@
   </div>
 </template>
 
-
 <script setup>
 import { ref, computed, watch, shallowRef, onMounted, onUnmounted } from "vue";
 import dayjs from "dayjs";
 import { getDoctypeConfig } from "./config/doctype-configs";
 import { colorMap } from "../utils/status-colors";
-
 
 const statusColors = ref({});
 
@@ -300,11 +320,11 @@ watch(
   (v) => {
     localStorage.setItem(storageKey.value, JSON.stringify(v));
   },
-  { deep: true }
+  { deep: true },
 );
 
 const checkedColumns = computed(() =>
-  Object.keys(visibleColumns.value).filter((k) => visibleColumns.value[k])
+  Object.keys(visibleColumns.value).filter((k) => visibleColumns.value[k]),
 );
 
 function toggleColumn(key, e) {
@@ -438,8 +458,7 @@ const toggleRow = (gk, row, e) => {
   if (!g) return;
   const all = g.rows.every((r) => selectedRows.value.has(r));
   if (all && !selectedGroups.value.includes(gk)) selectedGroups.value.push(gk);
-  if (!all)
-    selectedGroups.value = selectedGroups.value.filter((x) => x !== gk);
+  if (!all) selectedGroups.value = selectedGroups.value.filter((x) => x !== gk);
 };
 
 const toggleSelectAll = () => {
@@ -464,8 +483,7 @@ watch(selectedRows, () => {
     : filteredRows.value.length;
   const count = selectedRows.value.size;
   selectAll.value = count > 0 && count === total;
-  if (selectAllRef.value)
-    selectAllRef.value.indeterminate = count > 0 && count < total;
+  if (selectAllRef.value) selectAllRef.value.indeterminate = count > 0 && count < total;
 });
 
 const filters = ref({});
@@ -479,13 +497,10 @@ const statusOptions = computed(() => {
   }));
 });
 
-const filterOption = (input, option) =>
-  option.label.toLowerCase().includes(input.toLowerCase());
+const filterOption = (input, option) => option.label.toLowerCase().includes(input.toLowerCase());
 
 const filteredRows = computed(() => {
-
   let result = (allRows.value || []).filter((r, i) => {
-
     const pass = (columns.value || []).every((c) => {
       if (c.key === "actions") return true;
       if (c.key === "status" && statusFilter.value) {
@@ -513,9 +528,7 @@ const filteredRows = computed(() => {
 
   const treeKeys = props.filters?.treeKeys || [];
   if (treeKeys.length) {
-
     result = result.filter((r, idx) => {
-
       const dateColumn = (columns.value || []).find((c) => c.fieldtype === "Date");
       const dateKey = dateColumn?.key;
 
@@ -566,7 +579,6 @@ const filteredRows = computed(() => {
     console.groupEnd();
   }
 
-
   return result;
 });
 
@@ -575,7 +587,7 @@ watch(
   () => {
     console.log("🪄 Filter applied:", props.filters);
   },
-  { deep: true }
+  { deep: true },
 );
 
 watch(filteredRows, () => (currentPage.value = 1));
@@ -589,7 +601,7 @@ const pageSizeOptions = [
   { label: "100 / Trang", value: 100 },
 ];
 const totalPages = computed(() =>
-  Math.max(1, Math.ceil((filteredRows.value?.length || 0) / pageSize.value))
+  Math.max(1, Math.ceil((filteredRows.value?.length || 0) / pageSize.value)),
 );
 const goToPage = ref(null);
 const onPageChange = (p) => (currentPage.value = p);
@@ -610,7 +622,7 @@ watch(
       if (!colWidths.value[c.key]) colWidths.value[c.key] = 160;
     });
   },
-  { immediate: true }
+  { immediate: true },
 );
 const resizing = ref({ active: false, k: null, x: 0, w: 0 });
 const startResize = (e, k) => {
@@ -656,43 +668,65 @@ const handleRowClick = (event, row) => {
 };
 </script>
 
-
 <style scoped>
-tr.tw-bg-pink-50 {
-  background-color: #fff1f2 !important;
+table {
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
 }
 
-tr.tw-bg-pink-50 td {
-  border-top: 1px solid #fb7185 !important;
+.actions-sticky {
+  position: sticky !important;
+  right: 0 !important;
+  z-index: 10 !important;
+  background: white !important;
+  box-shadow: -4px 0 6px rgba(0, 0, 0, 0.15);
+}
+
+th.actions-sticky {
+  background-color: rgb(191 219 254) !important;
+  box-shadow: -4px 0 8px rgba(0, 0, 0, 0.25);
+}
+
+td.actions-sticky {
+  background: white !important;
+  box-shadow: -4px 0 6px rgba(0, 0, 0, 0.15);
+}
+
+.left-sticky {
+  position: sticky !important;
+  left: 0 !important;
+  z-index: 10 !important;
+  background: white !important;
+  box-shadow: 4px 0 6px rgba(0, 0, 0, 0.1);
+}
+
+th.left-sticky {
+  background-color: rgb(191 219 254) !important;
+  box-shadow: 4px 0 8px rgba(0, 0, 0, 0.2);
+}
+
+.left-sticky-2 {
+  position: sticky !important;
+  left: 50px !important;
+  z-index: 10 !important;
+  background: white !important;
+  box-shadow: 4px 0 6px rgba(0, 0, 0, 0.1);
+}
+
+th.left-sticky-2 {
+  background-color: rgb(191 219 254) !important;
+  box-shadow: 4px 0 8px rgba(0, 0, 0, 0.2);
 }
 
 .actions-cell svg {
-  transition: transform 0.2s ease, color 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    color 0.2s ease;
 }
 
 .actions-cell svg:hover {
   transform: scale(1.15);
   filter: brightness(1.2);
-}
-
-.sticky-left-fade::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: -2px;
-  width: 2px;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.05);
-}
-
-.sticky-right-fade::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -2px;
-  width: 2px;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.05);
 }
 
 :deep(.ant-pagination) {
@@ -773,44 +807,6 @@ tr.tw-bg-pink-50 td {
   color: #9ca3af !important;
 }
 
-@media (max-width: 768px) {
-
-  th.tw-sticky,
-  td.tw-sticky {
-    position: static !important;
-    left: auto !important;
-    right: auto !important;
-    z-index: auto !important;
-    box-shadow: none !important;
-    background: #b4dbff !important;
-  }
-
-  .fade-left,
-  .fade-right {
-    display: none !important;
-  }
-}
-
-.fade-left,
-.fade-right {
-  position: absolute;
-  top: 0;
-  bottom: 50px;
-  width: 30px;
-  z-index: 50;
-  pointer-events: none;
-}
-
-.fade-left {
-  left: 0;
-  background: linear-gradient(to right, rgb(246, 231, 243), transparent);
-}
-
-.fade-right {
-  right: 0;
-  background: linear-gradient(to left, rgb(246, 231, 243), transparent);
-}
-
 :deep(.ant-pagination) {
   display: flex;
   align-items: center;
@@ -835,5 +831,18 @@ tbody tr:nth-child(even) {
 
 tbody tr:hover {
   background-color: rgb(232, 243, 255) !important;
+}
+
+@media (max-width: 768px) {
+
+  .actions-sticky,
+  .th-sticky,
+  .td-sticky {
+    position: static !important;
+    right: auto !important;
+    box-shadow: none !important;
+    background: inherit !important;
+    z-index: auto !important;
+  }
 }
 </style>
