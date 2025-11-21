@@ -10,7 +10,9 @@
   "group",
   "type",
   "link_to",
-  "icon"
+  "icon",
+  "deactive",
+  "direction"
  ],
  "fields": [
   {
@@ -41,23 +43,35 @@
   {
    "bold": 1,
    "fieldname": "group",
-   "fieldtype": "Link",
+   "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Group",
-   "options": "Display Group"
+   "label": "Group"
   },
   {
    "fieldname": "icon",
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Ch\u1ecdn Icon"
+  },
+  {
+   "default": "0",
+   "fieldname": "deactive",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Kh\u00f4ng s\u1eed d\u1ee5ng"
+  },
+  {
+   "fieldname": "direction",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Direction"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-10-29 14:17:41.052101",
+ "modified": "2025-11-10 13:46:20.358874",
  "modified_by": "Administrator",
  "module": "General",
  "name": "Display Item",

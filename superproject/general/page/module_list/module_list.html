@@ -1,185 +1,187 @@
 <section>
-    <div class="module-list" style="margin-top: 25px">
-        {% for m in modules %}
-            <div class="module-card"
-                 data-link_to="{{ m.link_to }}"
-                 data-is_single="{{ m.is_single }}"
-                 data-module="{{ m.module }}">
-                <div class="icon-wrapper">
-                    <div class="icon-container">
-                        <i class="fa fa-{{ m.icon }}"></i>
-                    </div>
-                </div>
-                <div class="content-wrapper">
-                    <h5 class="module-name">{{ m.module }}</h5>
-                    <p class="module-description">{{ m.description }}</p>
-                </div>
-            </div>
-        {% endfor %}
-    </div>
+	<div class="module-list" style="margin-top: 25px">
+		{% for m in modules %}
+		<div
+			class="module-card"
+			data-link_to="{{ m.link_to }}"
+			data-is_single="{{ m.is_single }}"
+			data-module="{{ m.module }}"
+		>
+			<div class="icon-wrapper">
+				<div class="icon-container">
+					<i class="fa fa-{{ m.icon }}"></i>
+				</div>
+			</div>
+			<div class="content-wrapper">
+				<h5 class="module-name">{{ m.module }}</h5>
+				<p class="module-description">{{ m.description }}</p>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
 </section>
 
 <style>
-    .module-list {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 20px;
-        max-width: 1600px;
-        margin: 0 auto;
-        padding: 0 20px;
-    }
+	.module-list {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 20px;
+		max-width: 1600px;
+		margin: 0 auto;
+		padding: 0 20px;
+	}
 
-    .module-card {
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: 20px;
-        background-color: #e5fce2;
-        border-radius: 14px;
-        padding: 28px 24px;
-        transition: all 0.3s ease;
-        min-height: 140px;
-        box-shadow: 10px 10px lightblue;
-    }
+	.module-card {
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		gap: 20px;
+		background-color: #e5fce2;
+		border-radius: 14px;
+		padding: 28px 24px;
+		transition: all 0.3s ease;
+		min-height: 140px;
+		box-shadow: 10px 10px lightblue;
+	}
 
-    .module-card:hover {
-        background-color: #eff7ffff;
-        transform: translateY(-2px);
-    }
+	.module-card:hover {
+		background-color: #eff7ffff;
+		transform: translateY(-2px);
+	}
 
-    .icon-wrapper {
-        flex-shrink: 0;
-    }
+	.icon-wrapper {
+		flex-shrink: 0;
+	}
 
-    .icon-container {
-        width: 80px;
-        height: 80px;
-        background-color: #f1f1f1ff;
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.3s ease;
-    }
+	.icon-container {
+		width: 80px;
+		height: 80px;
+		background-color: #f1f1f1ff;
+		border-radius: 12px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: all 0.3s ease;
+	}
 
-    .module-card:hover .icon-container {
-        transform: scale(1.05);
-        background: white;
-    }
+	.module-card:hover .icon-container {
+		transform: scale(1.05);
+		background: white;
+	}
 
-    .icon-container i {
-        font-size: 36px;
-        color: #5a5a5a;
-        transition: all 0.3s ease;
-    }
+	.icon-container i {
+		font-size: 36px;
+		color: #5a5a5a;
+		transition: all 0.3s ease;
+	}
 
-    .module-card:hover .icon-container i {
-        background: linear-gradient(270deg, #0288d1, #03a9f4, #007fd4);
-        background-size: 400% 400%;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        animation: gradientShift 3s ease infinite;
-    }
+	.module-card:hover .icon-container i {
+		background: linear-gradient(270deg, #0288d1, #03a9f4, #007fd4);
+		background-size: 400% 400%;
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+		animation: gradientShift 3s ease infinite;
+	}
 
-    @keyframes gradientShift {
-        0% {
-            background-position: 0% 50%;
-        }
-        50% {
-            background-position: 100% 50%;
-        }
-        100% {
-            background-position: 0% 50%;
-        }
-    }
+	@keyframes gradientShift {
+		0% {
+			background-position: 0% 50%;
+		}
+		50% {
+			background-position: 100% 50%;
+		}
+		100% {
+			background-position: 0% 50%;
+		}
+	}
 
-    .module-card:hover .module-description {
-        color: #7a8485;
-    }
+	.module-card:hover .module-description {
+		color: #7a8485;
+	}
 
-    .content-wrapper {
-        flex: 1;
-        text-align: left;
-        min-width: 0;
-    }
+	.content-wrapper {
+		flex: 1;
+		text-align: left;
+		min-width: 0;
+	}
 
-    .module-name {
-        margin: 0 0 8px 0;
-        font-size: 1.3rem;
-        font-weight: 600;
-        color: #2c3e50;
-        transition: color 0.3s ease;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
+	.module-name {
+		margin: 0 0 8px 0;
+		font-size: 1.3rem;
+		font-weight: 600;
+		color: #2c3e50;
+		transition: color 0.3s ease;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
 
-    .module-card:hover .module-name {
-        color: #1976d2;
-    }
+	.module-card:hover .module-name {
+		color: #1976d2;
+	}
 
-    .module-description {
-        margin: 0;
-        font-size: 0.95rem;
-        line-height: 1.5;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
+	.module-description {
+		margin: 0;
+		font-size: 0.95rem;
+		line-height: 1.5;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
 
-    /* Tablet: 2 cột */
-    @media (max-width: 1024px) {
-        .module-list {
-            grid-template-columns: repeat(2, 1fr);
-        }
-    }
+	/* Tablet: 2 cột */
+	@media (max-width: 1024px) {
+		.module-list {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
 
-    /* Mobile: 2 cột nhỏ hơn */
-    @media (max-width: 768px) {
-        .module-list {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 14px;
-            padding: 0 15px;
-        }
+	/* Mobile: 2 cột nhỏ hơn */
+	@media (max-width: 768px) {
+		.module-list {
+			grid-template-columns: repeat(2, 1fr);
+			gap: 14px;
+			padding: 0 15px;
+		}
 
-        .module-card {
-            flex-direction: column;
-            text-align: center;
-            padding: 20px 16px;
-            gap: 14px;
-            min-height: 160px;
-        }
+		.module-card {
+			flex-direction: column;
+			text-align: center;
+			padding: 20px 16px;
+			gap: 14px;
+			min-height: 160px;
+		}
 
-        .icon-wrapper {
-            flex-shrink: 0;
-        }
+		.icon-wrapper {
+			flex-shrink: 0;
+		}
 
-        .content-wrapper {
-            text-align: center;
-        }
+		.content-wrapper {
+			text-align: center;
+		}
 
-        .icon-container {
-            width: 80px;
-            height: 80px;
-        }
+		.icon-container {
+			width: 80px;
+			height: 80px;
+		}
 
-        .icon-container i {
-            font-size: 36px;
-        }
+		.icon-container i {
+			font-size: 36px;
+		}
 
-        .module-name {
-            font-size: 1.1rem;
-            white-space: normal;
-        }
+		.module-name {
+			font-size: 1.1rem;
+			white-space: normal;
+		}
 
-        .module-description {
-            font-size: 0.85rem;
-        }
+		.module-description {
+			font-size: 0.85rem;
+		}
 
-        .page-head {
-            display: none;
-        }
-    }
+		.page-head {
+			display: none;
+		}
+	}
 </style>

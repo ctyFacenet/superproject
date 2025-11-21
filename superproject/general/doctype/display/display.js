@@ -17,15 +17,15 @@ frappe.ui.form.on("Display", {
             return { filters: filters };
         };
 
-        // frm.events.setup_ui(frm)
+        frm.events.setup_ui(frm)
 	},
 
-    after_save(frm) {
-        location.reload()
+    after_save: async function(frm) {
+        frappe.show_alert("F5 trang để áp dụng thay đổi Menu Bar")
     },
 
     setup_ui(frm) {
         $wrapper = frm.fields_dict.wrapper.$wrapper
-        let component = new superproject.ui.DisplayComponent({wrapper: $wrapper[0]})
+        let component = new superproject.ui.DisplayLayoutComponent({wrapper: $wrapper[0], frm: frm})
     }
 });

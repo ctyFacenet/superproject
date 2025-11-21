@@ -10,7 +10,7 @@ frappe.ui.toolbar.Toolbar = class {
       frappe.render_template("navbar", {
         avatar: frappe.avatar(frappe.session.user, "avatar-medium"),
         navbar_settings: frappe.boot.navbar_settings,
-      })
+      }),
     );
     $(".dropdown-toggle").dropdown();
     $("#toolbar-user a[href]").click(function () {
@@ -67,7 +67,7 @@ frappe.ui.toolbar.Toolbar = class {
         "click",
         () =>
           localStorage.setItem("dismissed_announcement_widget", true) ||
-          announcement_widget.addClass("hidden")
+          announcement_widget.addClass("hidden"),
       );
     }
   }
@@ -160,7 +160,7 @@ frappe.ui.toolbar.Toolbar = class {
 
       frappe.search.utils.make_function_searchable(
         frappe.utils.generate_tracking_url,
-        __("Generate Tracking URL")
+        __("Generate Tracking URL"),
       );
 
       if (frappe.model.can_read("RQ Job")) {
@@ -179,17 +179,21 @@ frappe.ui.toolbar.Toolbar = class {
 
   async custom_setup() {
     // Gắn sự kiện cho nút Back - Chỉ gắn 1 lần duy nhất khi tải trang
-    $(".custom-btn-back").off("click").on("click", () => {
-      if (location.pathname === "/app/home") return;
-      window.history.back();
-    });
+    $(".custom-btn-back")
+      .off("click")
+      .on("click", () => {
+        if (location.pathname === "/app/home") return;
+        window.history.back();
+      });
 
-    $('.navbar-brand').off('click.custom-navbar').on('click.custom-navbar', function (e) {
-      e.preventDefault();
-      frappe.set_route('module-list');
-    });
+    $(".navbar-brand")
+      .off("click.custom-navbar")
+      .on("click.custom-navbar", function (e) {
+        e.preventDefault();
+        frappe.set_route("module-list");
+      });
 
-    await frappe.ui.toolbar.setup_custom_menu_bar()
+    await frappe.ui.toolbar.setup_custom_menu_bar();
 
     $(document).on("page-change", async function () {
       const breadcrumbs = frappe.router.current_route;
@@ -198,11 +202,19 @@ frappe.ui.toolbar.Toolbar = class {
       if (breadcrumbs.length >= 3) {
         const doctype = breadcrumbs[1];
         const record_name = breadcrumbs[2];
-        if (frappe.views.view_modes.includes(breadcrumbs[2]) || breadcrumbs[2] === breadcrumbs[1]) {
+        if (
+          frappe.views.view_modes.includes(breadcrumbs[2]) ||
+          breadcrumbs[2] === breadcrumbs[1]
+        ) {
           breadcrumb_html = `<span>${__(doctype)}</span>`;
         } else {
-          let response = await frappe.db.get_value(doctype, record_name, frappe.meta.get_docfield(doctype, frappe.get_meta(doctype).title_field)?.fieldname || "name")
-          let title = Object.values(response.message)[0]
+          let response = await frappe.db.get_value(
+            doctype,
+            record_name,
+            frappe.meta.get_docfield(doctype, frappe.get_meta(doctype).title_field)
+              ?.fieldname || "name",
+          );
+          let title = Object.values(response.message)[0];
           breadcrumb_html = `
 						<span class="breadcrumb-link custom-breadcrumb" data-doctype="${doctype}" style="cursor:pointer;">
 							${__(doctype)}
@@ -211,21 +223,26 @@ frappe.ui.toolbar.Toolbar = class {
 						<span>${__(title)}</span>`;
         }
       } else {
-        let title = breadcrumbs[breadcrumbs.length - 1].toLowerCase().split(/[-\s]+/).map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+        let title = breadcrumbs[breadcrumbs.length - 1]
+          .toLowerCase()
+          .split(/[-\s]+/)
+          .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+          .join(" ");
         breadcrumb_html = `<span>${__(title)}</span>`;
       }
 
       $(".navbar-breadcrumb").html(breadcrumb_html);
-      $(".breadcrumb-link").off("click").on("click", function (e) {
-        e.preventDefault();
-        const doctype = $(this).data("doctype");
-        frappe.set_route("List", doctype);
-      });
+      $(".breadcrumb-link")
+        .off("click")
+        .on("click", function (e) {
+          e.preventDefault();
+          const doctype = $(this).data("doctype");
+          frappe.set_route("List", doctype);
+        });
 
       frappe.ui.toolbar.setup_hightlight_menu_bar();
     });
   }
-
 };
 
 $.extend(frappe.ui.toolbar, {
@@ -236,7 +253,7 @@ $.extend(frappe.ui.toolbar, {
     }
 
     return $(
-      '<li class="custom-menu"><a><i class="fa-fw ' + icon + '"></i> ' + label + "</a></li>"
+      '<li class="custom-menu"><a><i class="fa-fw ' + icon + '"></i> ' + label + "</a></li>",
     )
       .insertBefore(menu.find(".divider"))
       .find("a")
@@ -257,7 +274,7 @@ $.extend(frappe.ui.toolbar, {
     let new_element = $(`<li class="${class_name}">
 			<a class="btn" href="${route}" title="${frappe.utils.to_title_case(
       class_name,
-      true
+      true,
     )}" aria-haspopup="true" aria-expanded="true">
 				<div>
 					<i class="octicon ${icon}"></i>
@@ -332,7 +349,7 @@ frappe.ui.toolbar.setup_session_defaults = function () {
             frappe.set_route(
               "Form",
               "Session Default Settings",
-              "Session Default Settings"
+              "Session Default Settings",
             );
           },
         };
@@ -361,7 +378,7 @@ frappe.ui.toolbar.setup_session_defaults = function () {
               } else {
                 frappe.show_alert({
                   message: __(
-                    "An error occurred while setting Session Defaults"
+                    "An error occurred while setting Session Defaults",
                   ),
                   indicator: "red",
                 });
@@ -370,7 +387,7 @@ frappe.ui.toolbar.setup_session_defaults = function () {
           });
         },
         __("Session Defaults"),
-        __("Save")
+        __("Save"),
       );
     },
   });
@@ -379,50 +396,62 @@ frappe.ui.toolbar.setup_session_defaults = function () {
 // Chức năng khởi tạo Menu Bar nằm dưới Navbar
 frappe.ui.toolbar.setup_custom_menu_bar = async function (hide = false) {
   if (hide) {
-    $('.custom-menu-bar-wrapper').hide();
+    $(".custom-menu-bar-wrapper").hide();
     return;
   } else {
-    $('.custom-menu-bar-wrapper').show();
+    $(".custom-menu-bar-wrapper").show();
     frappe.ui.toolbar.init_menu_bar_scroll_behavior();
 
-    $(document).one('page-change.custom-menu-bar', async function () {
-      const breadcrumbs = frappe.get_route_str().split('/')
-      let link_to
-      if (breadcrumbs.length < 3) link_to = breadcrumbs[breadcrumbs.length - 1]
-      else link_to = breadcrumbs[1]
-      let result = await frappe.xcall('superproject.general.doctype.display.display.get_module_display', { link_to_name: link_to });
-      let module_name = await frappe.xcall('superproject.general.doctype.display.display.get_module_name', { link_to_name: link_to });
-      if (!result) return
-      $('.custom-menu-bar').empty();
-      $('.custom-menu-bar-submenu').remove();
+    $(document).one("page-change.custom-menu-bar", async function () {
+      const breadcrumbs = frappe.get_route_str().split("/");
+      let link_to;
+      if (breadcrumbs.length < 3) link_to = breadcrumbs[breadcrumbs.length - 1];
+      else link_to = breadcrumbs[1];
+      let result = await frappe.xcall(
+        "superproject.general.doctype.display.display.get_module_display",
+        { link_to_name: link_to },
+      );
+      let module_name = await frappe.xcall(
+        "superproject.general.doctype.display.display.get_module_name",
+        { link_to_name: link_to },
+      );
+      if (!result) return;
+      $(".custom-menu-bar").empty();
+      $(".custom-menu-bar-submenu").remove();
 
-      window.custom_module = module_name
+      window.custom_module = module_name;
       $(".navbar-module").text(__(module_name));
 
-      result.forEach(item => {
-        const div = $('<div class="custom-menu-bar-item"></div>').text(item.label || item.link_to).attr('data-link', item.link_to);
+      result.forEach((item) => {
+        const div = $('<div class="custom-menu-bar-item"></div>')
+          .text(__(item.label || item.link_to))
+          .attr("data-link", item.link_to);
 
         if (item.child && item.child.length > 0) {
-          div.addClass('has-child');
-          div.attr('data-group', item.label);
-          const submenu = $('<div class="custom-menu-bar-submenu"></div>').attr('data-group', item.label);
+          div.addClass("has-child");
+          div.attr("data-group", item.label);
+          const submenu = $('<div class="custom-menu-bar-submenu"></div>').attr(
+            "data-group",
+            item.label,
+          );
 
-          item.child.forEach(sub => {
+          item.child.forEach((sub) => {
             if (!sub.link_to) return;
             const subDiv = $('<div class="custom-menu-bar-submenu-item"></div>')
-              .text(sub.title || sub.label || sub.link_to)
-              .attr('data-link', sub.link_to)
-              .attr('data-group', item.label);
-            subDiv.on('click', function (e) {
+              .text(__(sub.title || sub.label || sub.link_to))
+              .attr("data-link", sub.link_to)
+              .attr("data-group", item.label);
+            subDiv.on("click", function (e) {
               e.stopPropagation();
               submenu.hide();
-              div.removeClass('hover-active'); // Chỉ xóa hover state, không xóa active
+              div.removeClass("hover-active"); // Chỉ xóa hover state, không xóa active
 
               if (sub.type === "DocType") {
-                if (sub.is_single) frappe.set_route(['Form', sub.link_to, sub.link_to]);
-                else frappe.set_route(['List', sub.link_to, 'List']);
+                if (sub.is_single)
+                  frappe.set_route(["Form", sub.link_to, sub.link_to]);
+                else frappe.set_route(["List", sub.link_to, "List"]);
               } else if (sub.type === "Report") {
-                frappe.set_route(['query-report', sub.link_to]);
+                frappe.set_route(["query-report", sub.link_to]);
               } else if (sub.type === "Page") {
                 frappe.set_route([sub.link_to]);
               }
@@ -430,167 +459,155 @@ frappe.ui.toolbar.setup_custom_menu_bar = async function (hide = false) {
             submenu.append(subDiv);
           });
 
-          $('body').append(submenu);
+          $("body").append(submenu);
 
           let hideTimeout;
-          div.on('mouseenter', function () {
+          div.on("mouseenter", function () {
             clearTimeout(hideTimeout);
-            $('.custom-menu-bar-submenu').hide();
-            $('.custom-menu-bar-item').removeClass('hover-active'); // Chỉ xóa hover state
-            div.addClass('hover-active');
+            $(".custom-menu-bar-submenu").hide();
+            $(".custom-menu-bar-item").removeClass("hover-active"); // Chỉ xóa hover state
+            div.addClass("hover-active");
 
             const rect = div[0].getBoundingClientRect();
             submenu.css({
               top: rect.bottom + window.scrollY,
               left: rect.left + window.scrollX,
-              display: 'block'
+              display: "block",
             });
           });
 
-          div.on('mouseleave', function () {
+          div.on("mouseleave", function () {
             hideTimeout = setTimeout(() => {
               // chỉ ẩn nếu cả submenu và cha đều không được hover
-              if (!submenu.is(':hover') && !div.is(':hover')) {
+              if (!submenu.is(":hover") && !div.is(":hover")) {
                 submenu.hide();
-                div.removeClass('hover-active');
+                div.removeClass("hover-active");
               }
             }, 150);
           });
 
-          submenu.on('mouseenter', function () {
+          submenu.on("mouseenter", function () {
             clearTimeout(hideTimeout);
             // giữ cha đang hover
-            div.addClass('hover-active');
+            div.addClass("hover-active");
           });
 
-          submenu.on('mouseleave', function () {
+          submenu.on("mouseleave", function () {
             submenu.hide();
-            div.removeClass('hover-active');
+            div.removeClass("hover-active");
           });
         } else {
           // Item không có child - chỉ ẩn submenu khác, không xóa active
-          div.on('mouseenter', function () {
-            $('.custom-menu-bar-submenu').hide();
-            $('.custom-menu-bar-item').removeClass('hover-active');
+          div.on("mouseenter", function () {
+            $(".custom-menu-bar-submenu").hide();
+            $(".custom-menu-bar-item").removeClass("hover-active");
           });
         }
 
         if (item.link_to) {
-          div.on('click', function () {
+          div.on("click", function () {
             if (item.type === "DocType") {
-              if (item.is_single) frappe.set_route(['Form', item.link_to, item.link_to]);
-              else frappe.set_route(['List', item.link_to, 'List']);
+              if (item.is_single)
+                frappe.set_route(["Form", item.link_to, item.link_to]);
+              else frappe.set_route(["List", item.link_to, "List"]);
             } else if (item.type === "Report") {
-              frappe.set_route(['query-report', item.link_to]);
+              frappe.set_route(["query-report", item.link_to]);
             } else if (item.type === "Page") {
               frappe.set_route([item.link_to]);
             }
           });
         }
 
-        $('.custom-menu-bar').append(div);
+        $(".custom-menu-bar").append(div);
       });
 
       frappe.ui.toolbar.init_menu_bar_scroll_behavior();
       frappe.ui.toolbar.setup_hightlight_menu_bar();
       frappe.ui.toolbar.render_mobile_menu(result);
-    })
+    });
   }
 };
 
 frappe.ui.toolbar.render_mobile_menu = function (result) {
-  // Tạo overlay nếu chưa có
-  if ($('#mobile-custom-menu-wrapper').length === 0) {
+  // Nếu wrapper chưa có thì tạo mới
+  if ($("#mobile-custom-menu-wrapper").length === 0) {
     const wrapper = $(`
-			<div id="mobile-custom-menu-wrapper" class="d-md-none" style="
-				position: fixed;
-				top: 0;
-				left: 0;
-				width: 100%;
-				height: 100%;
-				background-color: rgba(0,0,0,0.5);
-				display: none;
-				transition: opacity 0.3s;
-				z-index: 1050;
-			">
-				<div id="mobile-custom-menu" style="
-					position: absolute;
-					top: 0;
-					left: -40%;
-					width: 40%;
-					height: 100%;
-					background-color: white;
-					padding: 10px;
-					overflow-y: auto;
-					box-shadow: 2px 0 5px rgba(0,0,0,0.3);
-					transition: left 0.3s;
-				"></div>
+			<div id="mobile-custom-menu-wrapper" class="mobile-menu-overlay d-md-none">
+				<div id="mobile-custom-menu" class="mobile-menu-sidebar"></div>
 			</div>
 		`);
-    $('body').append(wrapper);
+    $("body").append(wrapper);
   }
 
-  const wrapper = $('#mobile-custom-menu-wrapper');
-  const mobileSidebar = $('#mobile-custom-menu');
+  const wrapper = $("#mobile-custom-menu-wrapper");
+  const mobileSidebar = $("#mobile-custom-menu");
 
-
-  // Hàm render menu items
+  // Hàm render menu
   const renderMenuItems = () => {
     mobileSidebar.empty();
-    const menuDiv = $(`
-			<div style="padding:8px 10px; border-radius:5px; margin-bottom:5px; cursor:pointer; display:flex; align-items:center;">
-				<i class="fa fa-home" style="margin-right:8px;"></i>
-				Trang chủ
+
+    // Nút Trang chủ
+    const homeDiv = $(`
+			<div class="mobile-menu-item" data-link="module-list">
+				<div class="mobile-item-header">
+					<div class="mobile-item-label">
+						<i class="fa fa-home" style="margin-right:8px;"></i> Trang chủ
+					</div>
+				</div>
 			</div>
 		`);
-    menuDiv.on("click", e => {
+    homeDiv.on("click", (e) => {
       e.stopPropagation();
-      frappe.set_route("module-list")
+      frappe.set_route("module-list");
       hideMenu();
-    })
-    mobileSidebar.append(menuDiv)
-    const breadcrumbs = frappe.get_route_str().split('/');
+    });
+    mobileSidebar.append(homeDiv);
+
+    const breadcrumbs = frappe.get_route_str().split("/");
     const currentLink = breadcrumbs[1] || breadcrumbs[0];
 
-    if (currentLink === "module-list") return
+    if (currentLink === "module-list") return;
 
-    result.forEach(item => {
-      const itemDiv = $('<div style="padding:8px 10px; border-radius:5px; margin-bottom:5px; cursor:pointer; position:relative;"></div>')
-        .text(item.label || item.link_to);
+    result.forEach((item) => {
+      const itemDiv = $('<div class="mobile-menu-item"></div>').attr(
+        "data-link",
+        item.link_to,
+      );
+      const header = $('<div class="mobile-item-header"></div>');
+      const labelSpan = $('<div class="mobile-item-label"></div>').html(
+        `${__(item.label || item.link_to)}`,
+      );
 
+      header.append(labelSpan);
+
+      // Nếu có submenu
       if (item.child && item.child.length > 0) {
-        const subMenu = $('<div style="display:none;margin-top:10px;"></div>');
+        const toggleIcon = $(
+          '<span class="mobile-item-toggle"><i class="fa fa-caret-down"></i></span>',
+        );
+        header.append(toggleIcon);
 
-        // Nút toggle tam giác
-        const toggleBtn = $('<span style="position:absolute; right:10px; cursor:pointer;"><i class="fa fa-caret-down"></i></span>');
-        itemDiv.append(toggleBtn);
-
-        // Click vào itemDiv toggle submenu với animation
-        itemDiv.on('click', e => {
-          e.stopPropagation();
-          subMenu.slideToggle(200); // animation 200ms
-          toggleBtn.find('i').toggleClass('fa-caret-down fa-caret-up');
-        });
-
+        const subMenu = $('<div class="mobile-submenu"></div>');
         let shouldShowSubmenu = false;
 
-        item.child.forEach(sub => {
-          const subDiv = $('<div style="padding:8px 10px; border-radius:5px; cursor:pointer;"></div>')
-            .text(sub.title || sub.label || sub.link_to);
+        item.child.forEach((sub) => {
+          const subDiv = $('<div class="mobile-subitem"></div>')
+            .attr("data-sub-link", sub.link_to)
+            .text(__(sub.title || sub.label || sub.link_to));
 
-          // Highlight nếu currentLink trùng subItem
           if (sub.link_to === currentLink) {
-            subDiv.css('background-color', '#f0f0f0');
+            subDiv.addClass("mobile-item-active");
             shouldShowSubmenu = true;
           }
 
-          subDiv.on('click', e => {
+          subDiv.on("click", (e) => {
             e.stopPropagation();
             if (sub.type === "DocType") {
-              if (sub.is_single) frappe.set_route(['Form', sub.link_to, sub.link_to]);
-              else frappe.set_route(['List', sub.link_to, 'List']);
+              if (sub.is_single)
+                frappe.set_route(["Form", sub.link_to, sub.link_to]);
+              else frappe.set_route(["List", sub.link_to, "List"]);
             } else if (sub.type === "Report") {
-              frappe.set_route(['query-report', sub.link_to]);
+              frappe.set_route(["query-report", sub.link_to]);
             } else if (sub.type === "Page") {
               frappe.set_route([sub.link_to]);
             }
@@ -600,62 +617,70 @@ frappe.ui.toolbar.render_mobile_menu = function (result) {
           subMenu.append(subDiv);
         });
 
-        if (shouldShowSubmenu) {
-          subMenu.show(); // mở sẵn subMenu khi currentLink là subItem
-          toggleBtn.find('i').removeClass('fa-caret-down').addClass('fa-caret-up');
-        }
+        // ✅ Bấm vào label của item cha để mở/đóng submenu
+        header.on("click", (e) => {
+          e.stopPropagation();
+          subMenu.slideToggle(200);
+          const icon = toggleIcon.find("i");
+          icon.toggleClass("fa-caret-down fa-caret-up");
+        });
 
+        itemDiv.append(header);
         itemDiv.append(subMenu);
-      } else {
-        if (item.link_to === currentLink) {
-          itemDiv.css('background-color', '#f0f0f0');
+
+        if (shouldShowSubmenu) {
+          subMenu.show();
+          toggleIcon.find("i").removeClass("fa-caret-down").addClass("fa-caret-up");
         }
-        itemDiv.on('click', function () {
+      } else {
+        // Không có submenu
+        if (item.link_to === currentLink) {
+          itemDiv.addClass("mobile-item-active");
+        }
+        header.on("click", (e) => {
+          e.stopPropagation();
           if (item.type === "DocType") {
-            if (item.is_single) frappe.set_route(['Form', item.link_to, item.link_to]);
-            else frappe.set_route(['List', item.link_to, 'List']);
+            if (item.is_single) frappe.set_route(["Form", item.link_to, item.link_to]);
+            else frappe.set_route(["List", item.link_to, "List"]);
           } else if (item.type === "Report") {
-            frappe.set_route(['query-report', item.link_to]);
+            frappe.set_route(["query-report", item.link_to]);
           } else if (item.type === "Page") {
             frappe.set_route([item.link_to]);
           }
           hideMenu();
         });
+        itemDiv.append(header);
       }
 
       mobileSidebar.append(itemDiv);
     });
-
-
   };
 
   renderMenuItems();
 
-  // Hàm show menu với animation
+  // Animation hiển thị menu
   const showMenu = () => {
     wrapper.show();
     setTimeout(() => {
-      wrapper.css('opacity', '1');
-      mobileSidebar.css('left', '0');
+      wrapper.css("opacity", "1");
+      mobileSidebar.css("left", "0");
     }, 10);
   };
 
-  // Hàm hide menu với animation
+  // Animation ẩn menu
   const hideMenu = () => {
-    wrapper.css('opacity', '0');
-    mobileSidebar.css('left', '-40%');
-    setTimeout(() => {
-      wrapper.hide();
-    }, 300);
+    wrapper.css("opacity", "0");
+    mobileSidebar.css("left", "-40%");
+    setTimeout(() => wrapper.hide(), 300);
   };
 
-  // Gắn click vào menu-btn
-  $(document).off('click.mobile-menu-btn').on('click.mobile-menu-btn', '.mobile-menu-btn', function () {
-    showMenu();
-  });
+  // Gắn sự kiện mở menu
+  $(document)
+    .off("click.mobile-menu-btn")
+    .on("click.mobile-menu-btn", ".mobile-menu-btn", showMenu);
 
-  // Click vào overlay (không phải menu) để ẩn
-  wrapper.off('click').on('click', function (e) {
+  // Click overlay ngoài menu để ẩn
+  wrapper.off("click").on("click", function (e) {
     if (e.target === this) hideMenu();
   });
 };
@@ -663,7 +688,7 @@ frappe.ui.toolbar.render_mobile_menu = function (result) {
 // Chức năng khởi tạo cơ chế hiển thị mũi tên/hỗ trợ scroll ngang khi SL Chức năng lớn
 frappe.ui.toolbar.init_menu_bar_scroll_behavior = function () {
   const updateScrollButtons = () => {
-    const container = $('.custom-menu-bar');
+    const container = $(".custom-menu-bar");
 
     if (container[0]) {
       const hasOverflow = container[0].scrollWidth > container[0].clientWidth;
@@ -673,41 +698,57 @@ frappe.ui.toolbar.init_menu_bar_scroll_behavior = function () {
         const maxScroll = container[0].scrollWidth - container[0].clientWidth;
 
         if (scrollLeft <= 0) {
-          $('.custom-menu-bar-scroll-btn.left').removeClass('show');
-          $('.custom-menu-bar-scroll-btn.right').addClass('show');
+          $(".custom-menu-bar-scroll-btn.left").removeClass("show");
+          $(".custom-menu-bar-scroll-btn.right").addClass("show");
         } else if (scrollLeft >= maxScroll - 1) {
-          $('.custom-menu-bar-scroll-btn.left').addClass('show');
-          $('.custom-menu-bar-scroll-btn.right').removeClass('show');
+          $(".custom-menu-bar-scroll-btn.left").addClass("show");
+          $(".custom-menu-bar-scroll-btn.right").removeClass("show");
         } else {
-          $('.custom-menu-bar-scroll-btn.left').addClass('show');
-          $('.custom-menu-bar-scroll-btn.right').addClass('show');
+          $(".custom-menu-bar-scroll-btn.left").addClass("show");
+          $(".custom-menu-bar-scroll-btn.right").addClass("show");
         }
       } else {
-        $('.custom-menu-bar-scroll-btn').removeClass('show');
+        $(".custom-menu-bar-scroll-btn").removeClass("show");
       }
     }
   };
 
-  $('.custom-menu-bar-scroll-btn.left').off('click').on('click', function () {
-    const container = $('.custom-menu-bar');
-    const currentScroll = container.scrollLeft();
-    container.animate({ scrollLeft: currentScroll - 300 }, 250, 'swing', updateScrollButtons);
-  });
+  $(".custom-menu-bar-scroll-btn.left")
+    .off("click")
+    .on("click", function () {
+      const container = $(".custom-menu-bar");
+      const currentScroll = container.scrollLeft();
+      container.animate(
+        { scrollLeft: currentScroll - 300 },
+        250,
+        "swing",
+        updateScrollButtons,
+      );
+    });
 
-  $('.custom-menu-bar-scroll-btn.right').off('click').on('click', function () {
-    const container = $('.custom-menu-bar');
-    const currentScroll = container.scrollLeft();
-    container.animate({ scrollLeft: currentScroll + 300 }, 250, 'swing', updateScrollButtons);
-  });
+  $(".custom-menu-bar-scroll-btn.right")
+    .off("click")
+    .on("click", function () {
+      const container = $(".custom-menu-bar");
+      const currentScroll = container.scrollLeft();
+      container.animate(
+        { scrollLeft: currentScroll + 300 },
+        250,
+        "swing",
+        updateScrollButtons,
+      );
+    });
 
-  $('.custom-menu-bar').off('wheel').on('wheel', function (e) {
-    e.preventDefault();
-    const delta = e.originalEvent.deltaY || e.originalEvent.deltaX;
-    this.scrollLeft += delta;
-    updateScrollButtons();
-  });
+  $(".custom-menu-bar")
+    .off("wheel")
+    .on("wheel", function (e) {
+      e.preventDefault();
+      const delta = e.originalEvent.deltaY || e.originalEvent.deltaX;
+      this.scrollLeft += delta;
+      updateScrollButtons();
+    });
 
-  $('.custom-menu-bar').off('scroll').on('scroll', updateScrollButtons);
+  $(".custom-menu-bar").off("scroll").on("scroll", updateScrollButtons);
 
   requestAnimationFrame(() => {
     requestAnimationFrame(updateScrollButtons);
@@ -719,21 +760,61 @@ frappe.ui.toolbar.setup_hightlight_menu_bar = async function () {
   let breadcrumbs = frappe.router.current_route;
   const target = breadcrumbs[1] || breadcrumbs[0];
 
-  // Xóa cả active và hover-active để reset
-  $('.custom-menu-bar-item').removeClass('active hover-active');
+  // Reset trạng thái cho menu bar (desktop)
+  $(".custom-menu-bar-item").removeClass("active hover-active");
+  $(".custom-menu-bar-submenu-item").removeClass("active");
 
-  // Tìm item hoặc sub-item khớp với route hiện tại
+  // Reset trạng thái cho mobile menu
+  $(".mobile-menu-item").removeClass("mobile-item-active");
+  $(".mobile-subitem").removeClass("mobile-item-active");
+
+  // ====== Xử lý MENU BAR (desktop) ======
   const mainMatches = $(`.custom-menu-bar-item[data-link="${target}"]`);
   const subMatches = $(`.custom-menu-bar-submenu-item[data-link="${target}"]`);
 
   mainMatches.each(function () {
-    $(this).addClass('active');
+    $(this).addClass("active");
   });
 
   subMatches.each(function () {
     const sub = $(this);
-    const group = sub.attr('data-group');
+    const group = sub.attr("data-group");
     const parent = $(`.custom-menu-bar-item.has-child[data-group="${group}"]`);
-    parent.addClass('active');
+    parent.addClass("active");
   });
-}
+
+  // ====== Xử lý MOBILE MENU ======
+  const mobileMainMatches = $(`.mobile-menu-item[data-link="${target}"]`);
+  const mobileSubMatches = $(`.mobile-subitem[data-sub-link="${target}"]`);
+
+  // Active item chính nếu trùng link
+  mobileMainMatches.each(function () {
+    $(this).addClass("mobile-item-active");
+  });
+
+  // Active sub-item và mở submenu nếu trùng
+  if (mobileSubMatches.length > 0) {
+    mobileSubMatches.each(function () {
+      const sub = $(this);
+      sub.addClass("mobile-item-active");
+
+      // Mở submenu chứa nó
+      const submenu = sub.closest(".mobile-submenu");
+      if (submenu.length) {
+        submenu.slideDown(0); // hiển thị ngay
+        const toggle = submenu.siblings(".mobile-item-header").find("i.fa");
+        toggle.removeClass("fa-caret-down").addClass("fa-caret-up");
+      }
+    });
+  } else {
+    // ❗ Nếu không có subitem nào active → đóng tất cả submenu đang mở
+    $(".mobile-submenu").each(function () {
+      const submenu = $(this);
+      if (submenu.is(":visible")) {
+        submenu.slideUp(0);
+        const toggle = submenu.siblings(".mobile-item-header").find("i.fa");
+        toggle.removeClass("fa-caret-up").addClass("fa-caret-down");
+      }
+    });
+  }
+};

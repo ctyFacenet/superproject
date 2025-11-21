@@ -19,4 +19,6 @@ import "./superproject/list/list_view_select.js"
 import "./superproject/views/facenet/facenet_view.js";
 import "./superproject/router.js";
 
+// Patches Setup
+import "./patches/patches_form.js"
 
