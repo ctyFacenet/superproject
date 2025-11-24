@@ -56,7 +56,7 @@
                     }}</span>
                   </a-tooltip>
 
-                  <img v-if="col.key !== 'actions'" src="/assets/superproject/assets/icons/filter.svg" alt="filter"
+                  <img v-if="col.key !== 'actions'" :src="FilterIcon" alt="filter"
                     class="tw-w-3 tw-h-3 tw-opacity-70 tw-cursor-pointer hover:tw-opacity-100" />
                 </div>
 
@@ -86,7 +86,7 @@
 
                 <template v-else-if="col.key !== 'actions'">
                   <div class="tw-flex tw-items-center">
-                    <img src="/assets/superproject/assets/icons/search.svg" alt="search"
+                    <img :src="SearchIcon" alt="search"
                       class="tw-w-3 tw-h-3 tw-mr-1 tw-opacity-70" />
                     <input v-model="filters[col.key]" type="text"
                       class="tw-w-full tw-border-none focus:tw-outline-none tw-text-[12px] tw-bg-transparent" />
@@ -263,6 +263,7 @@ import dayjs from "dayjs";
 import { getDoctypeConfig } from "./config/doctype-configs";
 import { colorMap } from "../utils/status-colors";
 import IconRenderer from "../components/IconRenderer.vue"
+import { SearchIcon, FilterIcon } from "../../assets/index";
 
 const statusColors = ref({});
 
@@ -694,6 +695,13 @@ table th::before {
   width: 1px;
   height: 100%;
   background: rgba(0, 174, 238, 0.1);
+}
+
+@media (max-width: 768px) {
+  table td::before,
+  table th::before {
+    display: none;
+  }
 }
 
 .actions-sticky {

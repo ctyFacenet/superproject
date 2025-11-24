@@ -10,3 +10,5 @@ export const EyeIcon = ICON_BASE + "eye.svg";
 export const ArrowRightIcon = ICON_BASE + "arrow_right.svg";
 export const FilterTimeIcon = ICON_BASE + "filter_time.svg";
 export const DisplayColumnsIcon = ICON_BASE + "display_columns.svg";
+export const ChartIcon = ICON_BASE + "chart.svg";
+export const CloseCircleIcon = ICON_BASE + "close_circle.svg"

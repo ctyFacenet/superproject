@@ -9,15 +9,16 @@ import {
   FileExcelOutlined,
   EyeOutlined,
   EditOutlined,
-  PictureOutlined,
-  CloseOutlined,
+  CloseCircleOutlined,
   HistoryOutlined,
+  PlusCircleOutlined,
+  PrinterOutlined,
 } from "@ant-design/icons-vue";
 import { DocType } from "../../utils/consts.js";
-import { DisplayColumnsIcon, AddPlusIcon } from "../../../assets/index.js";
+import { DisplayColumnsIcon, ChartIcon } from "../../../assets/index.js";
 
 const baseCopyAction = {
-  label: "Ẩn/hiện cột",
+  label: "",
   icon: DisplayColumnsIcon,
   color: "#6B7280",
   hoverColor: "#9CA3AF",
@@ -58,7 +59,7 @@ export const doctypeConfigs = {
     actions: [
       {
         label: "Thêm mới",
-        icon: AddPlusIcon,
+        icon: PlusCircleOutlined,
         color: "#0EA5E9",
         hoverColor: "#38BDF8",
         onClick: () => frappe.new_doc(DocType.SALE_ORDER),
@@ -119,7 +120,7 @@ export const doctypeConfigs = {
     actions: [
       {
         label: "Tạo đơn sản xuất nội bộ",
-        icon: AddPlusIcon,
+        icon: PlusCircleOutlined,
         color: "#0EA5E9",
         hoverColor: "#38BDF8",
         onClick: () => frappe.msgprint("Tạo đơn sản xuất nội bộ"),
@@ -140,7 +141,7 @@ export const doctypeConfigs = {
       },
       {
         label: "Tạo lệnh sản xuất",
-        icon: AddPlusIcon,
+        icon: PlusCircleOutlined,
         color: "#0EA5E9",
         hoverColor: "#38BDF8",
         onClick: () => frappe.msgprint("Tạo lệnh sản xuất"),
@@ -171,7 +172,7 @@ export const doctypeConfigs = {
       },
       {
         label: "Tạo lệnh sản xuất",
-        icon: AddPlusIcon,
+        icon: PlusCircleOutlined,
         color: "#01ABA8",
         hoverColor: "#A78BFA",
         onClick: (row) => frappe.msgprint(`Tạo lệnh sản xuất ${row.name}`),
@@ -191,7 +192,7 @@ export const doctypeConfigs = {
     actions: [
       {
         label: "Thêm mới",
-        icon: AddPlusIcon,
+        icon: PlusCircleOutlined,
         color: "#0EA5E9",
         hoverColor: "#38BDF8",
         onClick: () => frappe.new_doc(DocType.WORK_ORDER),
@@ -200,23 +201,30 @@ export const doctypeConfigs = {
     ],
     rowActions: [
       {
-        label: "Xem chi tiết",
+        label: "Xem kế hoạch sản xuất",
         icon: EyeOutlined,
-        color: "#3B82F6",
+        color: "#01ABA8",
         hoverColor: "#60A5FA",
         onClick: (row) => frappe.msgprint(`Xem ${row.name}`),
       },
       {
-        label: "Xem hình ảnh",
-        icon: PictureOutlined,
-        color: "#8B5CF6",
+        label: "Lập kế hoạch sản xuất",
+        icon: ChartIcon,
+        color: "#01ABA8",
         hoverColor: "#A78BFA",
-        onClick: (row) => frappe.msgprint(`Xem hình ảnh ${row.name}`),
+        onClick: (row) => frappe.msgprint(`Lập kế hoạch sản xuất ${row.name}`),
+      },
+      {
+        label: "Phê duyệt",
+        icon: FileDoneOutlined,
+        color: "#01ABA8",
+        hoverColor: "#A78BFA",
+        onClick: (row) => frappe.msgprint(`Phê duyệt ${row.name}`),
       },
       {
         label: "Xóa",
         icon: DeleteOutlined,
-        color: "#EF4444",
+        color: "#01ABA8",
         hoverColor: "#F87171",
         onClick: (row) => frappe.msgprint(`Xóa ${row.name}`),
       },
@@ -228,7 +236,7 @@ export const doctypeConfigs = {
     actions: [
       {
         label: "Thêm mới",
-        icon: AddPlusIcon,
+        icon: PlusCircleOutlined,
         color: "#0EA5E9",
         hoverColor: "#38BDF8",
         onClick: () => frappe.new_doc(DocType.WORK_ORDER_APPROVED),
@@ -239,14 +247,14 @@ export const doctypeConfigs = {
       {
         label: "Xem chi tiết",
         icon: EyeOutlined,
-        color: "#3B82F6",
+        color: "#01ABA8",
         hoverColor: "#60A5FA",
         onClick: (row) => frappe.msgprint(`Xem ${row.name}`),
       },
       {
         label: "Hủy duyệt",
-        icon: CloseOutlined,
-        color: "#F59E0B",
+        icon: CloseCircleOutlined,
+        color: "#01ABA8",
         hoverColor: "#FBBF24",
         onClick: (row) => frappe.msgprint(`Hủy duyệt ${row.name}`),
       },
@@ -309,7 +317,29 @@ export const doctypeConfigs = {
       },
       baseCopyAction,
     ],
-    rowActions: baseRowActions(),
+    rowActions: [
+      {
+        label: "Duyệt huỷ tem",
+        icon: FileDoneOutlined,
+        color: "#01ABA8",
+        hoverColor: "#60A5FA",
+        onClick: (row) => frappe.msgprint(`Duyệt huỷ tem ${row.name}`),
+      },
+      {
+        label: "In lại tem",
+        icon: PrinterOutlined,
+        color: "#01ABA8",
+        hoverColor: "#FBBF24",
+        onClick: (row) => frappe.msgprint(`In lại tem ${row.name}`),
+      },
+      {
+        label: "Xoá",
+        icon: DeleteOutlined,
+        color: "#01ABA8",
+        hoverColor: "#FBBF24",
+        onClick: (row) => frappe.msgprint(`Xoá ${row.name}`),
+      },
+    ],
   },
   [DocType.TRACEABILITY]: {
     title: "DANH SÁCH TRUY XUẤT NGUỒN GỐC SẢN PHẨM",
@@ -318,7 +348,7 @@ export const doctypeConfigs = {
     actions: [
       {
         label: "Thêm mới",
-        icon: AddPlusIcon,
+        icon: PlusCircleOutlined,
         color: "#0EA5E9",
         hoverColor: "#38BDF8",
         onClick: () => frappe.new_doc(DocType.TRACEABILITY),
@@ -329,7 +359,7 @@ export const doctypeConfigs = {
       {
         label: "Xem chi tiết",
         icon: EyeOutlined,
-        color: "#3B82F6",
+        color: "#01ABA8",
         hoverColor: "#60A5FA",
         onClick: (row) => frappe.msgprint(`Xem ${row.name}`),
       },
@@ -342,7 +372,7 @@ export const doctypeConfigs = {
     actions: [
       {
         label: "Thêm mới",
-        icon: AddPlusIcon,
+        icon: PlusCircleOutlined,
         color: "#0EA5E9",
         hoverColor: "#38BDF8",
         onClick: () => frappe.new_doc(DocType.PERIOD_END_CLOSING),
@@ -357,7 +387,7 @@ export const doctypeConfigs = {
     actions: [
       {
         label: "Thêm mới",
-        icon: AddPlusIcon,
+        icon: PlusCircleOutlined,
         color: "#0EA5E9",
         hoverColor: "#38BDF8",
         onClick: () => frappe.new_doc(DocType.STATISTICAL_REPORT),
