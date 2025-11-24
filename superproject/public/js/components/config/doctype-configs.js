@@ -2,12 +2,10 @@ import {
   FileTextOutlined,
   SearchOutlined,
   CalendarOutlined,
-  PlusOutlined,
   UnlockOutlined,
   LockOutlined,
   FileDoneOutlined,
   DeleteOutlined,
-  CopyOutlined,
   FileExcelOutlined,
   EyeOutlined,
   EditOutlined,
@@ -16,9 +14,11 @@ import {
   HistoryOutlined,
 } from "@ant-design/icons-vue";
 import { DocType } from "../../utils/consts.js";
+import { DisplayColumnsIcon, AddPlusIcon } from "../../../assets/index.js";
+
 const baseCopyAction = {
-  label: "",
-  icon: CopyOutlined,
+  label: "Ẩn/hiện cột",
+  icon: DisplayColumnsIcon,
   color: "#6B7280",
   hoverColor: "#9CA3AF",
   onClick: () => window.dispatchEvent(
@@ -32,21 +32,21 @@ const baseRowActions = (view = true) =>
     view && {
       label: "Xem chi tiết",
       icon: EyeOutlined,
-      color: "#3B82F6",
+      color: "#01ABA8",
       hoverColor: "#60A5FA",
       onClick: (row) => frappe.msgprint(`Xem ${row.name}`),
     },
     {
       label: "Chỉnh sửa",
       icon: EditOutlined,
-      color: "#22C55E",
+      color: "#01ABA8",
       hoverColor: "#4ADE80",
       onClick: (row) => frappe.msgprint(`Chỉnh sửa ${row.name}`),
     },
     {
       label: "Xóa",
       icon: DeleteOutlined,
-      color: "#EF4444",
+      color: "#01ABA8",
       hoverColor: "#F87171",
       onClick: (row) => frappe.msgprint(`Xóa ${row.name}`),
     },
@@ -58,7 +58,7 @@ export const doctypeConfigs = {
     actions: [
       {
         label: "Thêm mới",
-        icon: PlusOutlined,
+        icon: AddPlusIcon,
         color: "#0EA5E9",
         hoverColor: "#38BDF8",
         onClick: () => frappe.new_doc(DocType.SALE_ORDER),
@@ -91,22 +91,22 @@ export const doctypeConfigs = {
     rowActions: [
       {
         label: "Duyệt",
-        icon: PictureOutlined,
-        color: "#3B82F6",
+        icon: FileDoneOutlined,
+        color: "#01ABA8",
         hoverColor: "#60A5FA",
         onClick: (row) => frappe.msgprint(`Duyệt ${row.name}`),
       },
       {
         label: "Huỷ duyệt",
-        icon: LockOutlined,
-        color: "#22C55E",
+        icon: UnlockOutlined,
+        color: "#01ABA8",
         hoverColor: "#4ADE80",
         onClick: (row) => frappe.msgprint(`Huỷ duyệt ${row.name}`),
       },
       {
         label: "Xem lịch sử",
         icon: HistoryOutlined,
-        color: "#EF4444",
+        color: "#01ABA8",
         hoverColor: "#F87171",
         onClick: (row) => frappe.msgprint(`Xem lịch sử ${row.name}`),
       },
@@ -119,7 +119,7 @@ export const doctypeConfigs = {
     actions: [
       {
         label: "Tạo đơn sản xuất nội bộ",
-        icon: PlusOutlined,
+        icon: AddPlusIcon,
         color: "#0EA5E9",
         hoverColor: "#38BDF8",
         onClick: () => frappe.msgprint("Tạo đơn sản xuất nội bộ"),
@@ -140,7 +140,7 @@ export const doctypeConfigs = {
       },
       {
         label: "Tạo lệnh sản xuất",
-        icon: PlusOutlined,
+        icon: AddPlusIcon,
         color: "#0EA5E9",
         hoverColor: "#38BDF8",
         onClick: () => frappe.msgprint("Tạo lệnh sản xuất"),
@@ -156,23 +156,30 @@ export const doctypeConfigs = {
     ],
     rowActions: [
       {
-        label: "Chỉnh sửa",
+        label: "Chỉnh sửa BOM",
         icon: EditOutlined,
-        color: "#22C55E",
+        color: "#01ABA8",
         hoverColor: "#4ADE80",
         onClick: (row) => frappe.msgprint(`Chỉnh sửa ${row.name}`),
       },
       {
-        label: "Xem hình ảnh",
-        icon: PictureOutlined,
-        color: "#8B5CF6",
+        label: "Duyệt",
+        icon: FileDoneOutlined,
+        color: "#01ABA8",
         hoverColor: "#A78BFA",
-        onClick: (row) => frappe.msgprint(`Xem hình ảnh ${row.name}`),
+        onClick: (row) => frappe.msgprint(`Duyệt ${row.name}`),
+      },
+      {
+        label: "Tạo lệnh sản xuất",
+        icon: AddPlusIcon,
+        color: "#01ABA8",
+        hoverColor: "#A78BFA",
+        onClick: (row) => frappe.msgprint(`Tạo lệnh sản xuất ${row.name}`),
       },
       {
         label: "Xóa",
         icon: DeleteOutlined,
-        color: "#EF4444",
+        color: "#01ABA8",
         hoverColor: "#F87171",
         onClick: (row) => frappe.msgprint(`Xóa ${row.name}`),
       },
@@ -184,7 +191,7 @@ export const doctypeConfigs = {
     actions: [
       {
         label: "Thêm mới",
-        icon: PlusOutlined,
+        icon: AddPlusIcon,
         color: "#0EA5E9",
         hoverColor: "#38BDF8",
         onClick: () => frappe.new_doc(DocType.WORK_ORDER),
@@ -221,7 +228,7 @@ export const doctypeConfigs = {
     actions: [
       {
         label: "Thêm mới",
-        icon: PlusOutlined,
+        icon: AddPlusIcon,
         color: "#0EA5E9",
         hoverColor: "#38BDF8",
         onClick: () => frappe.new_doc(DocType.WORK_ORDER_APPROVED),
@@ -311,7 +318,7 @@ export const doctypeConfigs = {
     actions: [
       {
         label: "Thêm mới",
-        icon: PlusOutlined,
+        icon: AddPlusIcon,
         color: "#0EA5E9",
         hoverColor: "#38BDF8",
         onClick: () => frappe.new_doc(DocType.TRACEABILITY),
@@ -335,7 +342,7 @@ export const doctypeConfigs = {
     actions: [
       {
         label: "Thêm mới",
-        icon: PlusOutlined,
+        icon: AddPlusIcon,
         color: "#0EA5E9",
         hoverColor: "#38BDF8",
         onClick: () => frappe.new_doc(DocType.PERIOD_END_CLOSING),
@@ -350,7 +357,7 @@ export const doctypeConfigs = {
     actions: [
       {
         label: "Thêm mới",
-        icon: PlusOutlined,
+        icon: AddPlusIcon,
         color: "#0EA5E9",
         hoverColor: "#38BDF8",
         onClick: () => frappe.new_doc(DocType.STATISTICAL_REPORT),

@@ -966,6 +966,11 @@ video {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1)) !important;
 }
 
+.tw-object-contain {
+  -o-object-fit: contain !important;
+     object-fit: contain !important;
+}
+
 .tw-p-2 {
   padding: 0.5rem !important;
 }
@@ -1210,10 +1215,6 @@ video {
 
 .tw-duration-200 {
   transition-duration: 200ms !important;
-}
-
-.tw-ease-in-out {
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
 .\[all\:unset\] {

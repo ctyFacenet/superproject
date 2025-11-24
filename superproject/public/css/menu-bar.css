@@ -31,8 +31,6 @@
   cursor: pointer;
   user-select: none;
   position: relative;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
   transition:
     transform 0.2s ease,
     background-color 0.3s ease,

@@ -54,7 +54,6 @@
                   <BaseChart type="doughnut" :data="donutChartData2" :options="donutChartOptions('08/2025')" />
                 </div>
               </div>
-
               <div
                 class="tw-flex tw-items-center tw-justify-end tw-gap-3 tw-overflow-x-auto tw-max-w-full tw-pb-1 hide-scrollbar">
                 <div class="tw-flex tw-items-center tw-gap-2 tw-flex-nowrap">
@@ -62,7 +61,7 @@
                     <a-button type="link"
                       class="tw-flex tw-items-center tw-text-[#0ba5ec] hover:tw-text-[#0987c1] tw-font-medium tw-px-1 tw-whitespace-nowrap"
                       @click="btn.onClick">
-                      <component :is="btn.icon" v-if="btn.icon" />
+                      <IconRenderer :icon="btn.icon" customClass="tw-mr-1" />
                       {{ btn.label }}
                     </a-button>
                   </template>
@@ -76,6 +75,7 @@
                   </template>
                 </a-input>
               </div>
+
 
             </div>
           </slot>
@@ -100,6 +100,7 @@ import BaseTable from "./BaseTable.vue";
 import { SearchOutlined, ReloadOutlined } from "@ant-design/icons-vue";
 import { getDoctypeConfig } from "./config/doctype-configs";
 import BaseChart from "../components/BaseChart.vue";
+import IconRenderer from "../components/IconRenderer.vue";
 import {
   barChartData,
   barChartOptions,

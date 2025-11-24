@@ -53,7 +53,7 @@
                   <a-tooltip :title="col.title">
                     <span class="tw-truncate tw-font-semibold">{{
                       col.title
-                      }}</span>
+                    }}</span>
                   </a-tooltip>
 
                   <img v-if="col.key !== 'actions'" src="/assets/superproject/assets/icons/filter.svg" alt="filter"
@@ -145,11 +145,8 @@
                           props.doctype,
                         ).rowActions" :key="index">
                           <a-tooltip :title="action.label">
-                            <component :is="action.icon"
-                              class="tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out" :style="{
-                                color: action.color,
-                                fontSize: '15px',
-                              }" @click.stop="action.onClick(row)" />
+                            <IconRenderer :icon="action.icon" :color="action.color"
+                              customClass="tw-cursor-pointer" @click.stop="action.onClick(row)" />
                           </a-tooltip>
                         </template>
                       </div>
@@ -168,11 +165,11 @@
                 (currentPage - 1) * pageSize,
                 currentPage * pageSize,
               )" :key="i" :class="[
-                  'tw-text-[13px] tw-cursor-pointer',
-                  selectedRows.has(row)
-                    ? 'tw-bg-blue-50'
-                    : 'hover:tw-bg-gray-50',
-                ]" @click="handleRowClick($event, row)">
+                'tw-text-[13px] tw-cursor-pointer',
+                selectedRows.has(row)
+                  ? 'tw-bg-blue-50'
+                  : 'hover:tw-bg-gray-50',
+              ]" @click="handleRowClick($event, row)">
                 <td class="left-sticky tw-text-center tw-border tw-py-1">
                   {{ i + 1 + (currentPage - 1) * pageSize }}
                 </td>
@@ -199,11 +196,8 @@
                         props.doctype,
                       ).rowActions" :key="index">
                         <a-tooltip :title="action.label">
-                          <component :is="action.icon"
-                            class="tw-cursor-pointer tw-transition-all tw-duration-200 tw-ease-in-out" :style="{
-                              color: action.color,
-                              fontSize: '15px',
-                            }" @click.stop="action.onClick(row)" />
+                          <IconRenderer :icon="action.icon" :color="action.color"
+                            customClass="tw-cursor-pointer" @click.stop="action.onClick(row)" />
                         </a-tooltip>
                       </template>
                     </div>
@@ -268,6 +262,7 @@ import { ref, computed, watch, shallowRef, onMounted, onUnmounted } from "vue";
 import dayjs from "dayjs";
 import { getDoctypeConfig } from "./config/doctype-configs";
 import { colorMap } from "../utils/status-colors";
+import IconRenderer from "../components/IconRenderer.vue"
 
 const statusColors = ref({});
 
