@@ -133,7 +133,7 @@
                     <template v-if="col.key === 'status'">
                       <span :style="statusColors[row.status] ||
                         'background-color:#e5e7eb; color:#374151;'
-                        " class="tw-inline-block tw-rounded-lg tw-px-2 tw-py-[2px] tw-text-[12px] tw-font-medium">
+                        " class="status-badge">
                         {{ row.status }}
                       </span>
                     </template>
@@ -184,7 +184,7 @@
                   <template v-if="col.key === 'status'">
                     <span :style="statusColors[row.status] ||
                       'background-color:#e5e7eb; color:#374151;'
-                      " class="tw-inline-block tw-rounded-lg tw-px-2 tw-py-[2px] tw-text-[12px] tw-font-medium">
+                      " class="status-badge">
                       {{ row.status }}
                     </span>
                   </template>
@@ -669,6 +669,33 @@ table {
   border-spacing: 0 !important;
 }
 
+table td, table th {
+  border: none !important;
+  position: relative;
+}
+
+table td::after,
+table th::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(0, 174, 238, 0.1);
+}
+
+table td::before,
+table th::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 1px;
+  height: 100%;
+  background: rgba(0, 174, 238, 0.1);
+}
+
 .actions-sticky {
   position: sticky !important;
   right: 0 !important;
@@ -840,4 +867,19 @@ tbody tr:hover {
     z-index: auto !important;
   }
 }
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;  
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 4px; 
+  line-height: 1;
+  min-width: 200px;   
+  text-align: center;
+  color: white;   
+}
+
 </style>
