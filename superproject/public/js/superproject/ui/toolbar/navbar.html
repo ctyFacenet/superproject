@@ -113,6 +113,12 @@
 							{% endfor %}
 						</div>
 					</li>
+          <li class="nav-item dropdown dropdown-mobile">
+            <button type="button" class="btn-log-out" onclick="toggleFullScreen()">
+              <i id="fullscreen-icon" class="fa-solid fa-expand text-center"></i>
+            </button>
+          </li>
+
 					<li class="nav-item dropdown dropdown-navbar-user dropdown-mobile dropdown-logout d-none d-md-block" style="margin-right:15px;">
 						<button 
 							type="button" 
@@ -150,6 +156,26 @@
 </div>
 
 <script>
+
+function toggleFullScreen() {
+    const body = document.body;
+    const icon = document.getElementById("fullscreen-icon");
+
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().then(() => {
+        body.classList.add("fullscreen-mode");
+        icon.classList.remove("fa-expand");
+        icon.classList.add("fa-compress");
+      });
+    } else {
+      document.exitFullscreen().then(() => {
+        body.classList.remove("fullscreen-mode");
+        icon.classList.remove("fa-compress");
+        icon.classList.add("fa-expand");
+      });
+    }
+  }
+
   function confirmLogout() {
     customConfirmModal({
       title: "Xác nhận đăng xuất",

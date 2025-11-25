@@ -2,15 +2,17 @@
   <img
     v-if="isUrl"
     :src="icon"
-    :class="['tw-object-contain', customClass]"
+    :style="{ width: size + 'px', height: size + 'px', ...colorStyle }"
+    class="tw-object-contain"
+    :class="customClass"
     alt="icon"
   />
 
   <component
     v-else
     :is="icon"
+    :style="{ fontSize: size + 'px', ...colorStyle }"
     :class="customClass"
-    :style="{ color: color }"
   />
 </template>
 
@@ -18,19 +20,14 @@
 import { computed } from "vue";
 
 const props = defineProps({
-  icon: {
-    type: [String, Object, Function],
-    required: true,
-  },
-  color: {
-    type: String,
-    default: null,
-  },
-  customClass: {
-    type: String,
-    default: "",
-  },
+  icon: [String, Object, Function],
+  size: { type: Number, default: 16 }, 
+  color: { type: String, default: null },
+  customClass: { type: String, default: "" }
 });
 
 const isUrl = computed(() => typeof props.icon === "string");
+const colorStyle = computed(() =>
+  props.color ? { color: props.color, fill: props.color } : {}
+);
 </script>

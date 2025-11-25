@@ -1,5 +1,5 @@
 <template>
-  <div class="tw-flex tw-flex-col lg:tw-flex-row tw-gap-4 tw-p-4 tw-min-h-screen tw-overflow-auto">
+  <div class="tw-flex tw-flex-col lg:tw-flex-row tw-gap-4 tw-p-1 tw-min-h-screen tw-overflow-auto">
     <Transition name="slide-left">
       <div v-if="!state.hide_tree && !config.hideTree" class="tw-flex-shrink-0 tw-sticky lg:tw-left-0">
         <slot name="tree">
@@ -61,7 +61,7 @@
                     <a-button type="link"
                       class="tw-flex tw-items-center tw-text-[#0ba5ec] hover:tw-text-[#0987c1] tw-font-medium tw-px-1 tw-whitespace-nowrap"
                       @click="btn.onClick">
-                      <IconRenderer :icon="btn.icon" customClass="tw-mr-1" />
+                      <IconRenderer :icon="btn.icon" customClass="tw-mr-1" :size="18"/>
                       {{ btn.label }}
                     </a-button>
                   </template>

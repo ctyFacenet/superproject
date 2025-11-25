@@ -971,6 +971,10 @@ video {
      object-fit: contain !important;
 }
 
+.tw-p-1 {
+  padding: 0.25rem !important;
+}
+
 .tw-p-2 {
   padding: 0.5rem !important;
 }
