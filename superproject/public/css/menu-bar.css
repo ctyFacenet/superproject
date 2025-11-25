@@ -150,11 +150,12 @@
 }
 
 .navbar-module {
-  font-size: 0.85rem;
+  font-size: 1.5rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   color: white;
   margin-block: 2px;
+  font-weight: bold;
 }
 
 .navbar-breadcrumb {
@@ -247,4 +248,32 @@
   cursor: pointer;
   padding-left: 8px;
   padding-right: 4px;
+}
+
+
+.page-breadcrumb-container {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.95rem;
+  color: #007bff;
+}
+
+.page-breadcrumb-container i.fa-home {
+  font-size: 1rem;
+}
+
+.page-breadcrumb-container .breadcrumb-home:hover span {
+  text-decoration: underline;
+}
+
+.page-breadcrumb-container i.fa-angle-right {
+  color: #7d7d7d;
+}
+
+
+@media (max-width: 768px) {
+  .page-breadcrumb-container {
+    display: none !important;
+  }
 }
