@@ -13,6 +13,7 @@ import {
   HistoryOutlined,
   PlusCircleOutlined,
   PrinterOutlined,
+  ImportOutlined
 } from "@ant-design/icons-vue";
 import { DocType } from "../../utils/consts.js";
 import { DisplayColumnsIcon, ChartIcon } from "../../../assets/index.js";
@@ -307,6 +308,13 @@ export const doctypeConfigs = {
         color: "#16A34A",
         hoverColor: "#4ADE80",
         onClick: () => frappe.msgprint("Đang xuất Excel..."),
+      },
+      {
+        label: "Import Excel",
+        icon: ImportOutlined,
+        color: "#16A34A",
+        hoverColor: "#4ADE80",
+        onClick: () => frappe.msgprint("Đang nhập Excel..."),
       },
       {
         label: "Xoá",
