@@ -1,0 +1,43 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-11-25 11:38:18.889356",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "configure"
+ ],
+ "fields": [
+  {
+   "fieldname": "configure",
+   "fieldtype": "Small Text",
+   "label": "C\u1ea5u h\u00ecnh"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-11-25 11:39:08.131748",
+ "modified_by": "Administrator",
+ "module": "SCADA & TPM",
+ "name": "Display Configuration",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

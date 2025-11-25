@@ -1,0 +1,44 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-11-25 14:30:16.984820",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "machine"
+ ],
+ "fields": [
+  {
+   "fieldname": "machine",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e1y"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-11-25 14:31:37.138015",
+ "modified_by": "Administrator",
+ "module": "SCADA & TPM",
+ "name": "Scada Statistical Report",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
