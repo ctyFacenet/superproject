@@ -240,7 +240,7 @@
         <div class="tw-hidden sm:tw-flex tw-items-center tw-gap-2">
           <span>Đi đến</span>
           <a-input-number v-model:value="goToPage" :min="1" :max="totalPages" @pressEnter="jumpToPage"
-            style="width: 70px" size="small" />
+            style="width: 110px; height: 30px" size="small" />
         </div>
       </div>
 
