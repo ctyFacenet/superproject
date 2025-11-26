@@ -1,6 +1,6 @@
 <template>
   <div
-    class="tw-relative tw-border tw-border-gray-100 tw-bg-white tw-rounded-lg tw-shadow-sm tw-p-4 sm:tw-p-6 tw-text-sm tw-flex tw-flex-col tw-h-full">
+    class="tw-relative tw-border tw-border-gray-100 tw-bg-white tw-rounded-lg tw-shadow-sm tw-p-4 tw-text-sm tw-flex tw-flex-col tw-h-full">
     <a-spin :spinning="loading" size="large" class="tw-w-full tw-h-full">
       <a-popover :key="storageKey" v-model:open="showColumnPicker" trigger="click" placement="top">
         <template #content>
@@ -730,7 +730,16 @@ table th::before {
   right: 0 !important;
   z-index: 10 !important;
   background: white !important;
+}
+.actions-sticky::after {
+  content: "";
+  position: absolute;
+  left: -6px;
+  top: 0;
+  width: 6px;
+  height: 100%;
   box-shadow: -4px 0 6px rgba(0, 0, 0, 0.15);
+  pointer-events: none;
 }
 
 th.actions-sticky {
