@@ -257,6 +257,15 @@
   gap: 6px;
   font-size: 0.95rem;
   color: #007bff;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.page-breadcrumb-container span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
 }
 
 .page-breadcrumb-container i.fa-home {
