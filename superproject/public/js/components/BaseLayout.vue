@@ -61,7 +61,7 @@
                     <a-button type="link"
                       class="tw-flex tw-items-center tw-text-[#0ba5ec] hover:tw-text-[#0987c1] tw-font-medium tw-px-1 tw-whitespace-nowrap"
                       @click="btn.onClick">
-                      <IconRenderer :icon="btn.icon" customClass="tw-mr-1" :size="18"/>
+                      <IconRenderer :icon="btn.icon" customClass="tw-mr-1" :size="18" :color="btn.color"/>
                       {{ btn.label }}
                     </a-button>
                   </template>

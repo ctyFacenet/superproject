@@ -1,6 +1,5 @@
 import {
   FileTextOutlined,
-  SearchOutlined,
   CalendarOutlined,
   UnlockOutlined,
   LockOutlined,
@@ -13,20 +12,21 @@ import {
   HistoryOutlined,
   PlusCircleOutlined,
   PrinterOutlined,
-  ImportOutlined
+  ImportOutlined,
+  SwitcherOutlined,
+  BarChartOutlined,
+  MonitorOutlined
 } from "@ant-design/icons-vue";
 import { DocType } from "../../utils/consts.js";
-import { DisplayColumnsIcon, ChartIcon } from "../../../assets/index.js";
 
 const baseCopyAction = {
   label: "",
-  icon: DisplayColumnsIcon,
-  color: "#6B7280",
+  icon: SwitcherOutlined,
+  color: "#01aba8",
   hoverColor: "#9CA3AF",
   onClick: () => window.dispatchEvent(
     new CustomEvent("open-column-picker", { detail: { doctype: frappe.get_route()[1] } })
   )
-
 };
 
 const baseRowActions = (view = true) =>
@@ -61,7 +61,7 @@ export const doctypeConfigs = {
       {
         label: "Thêm mới",
         icon: PlusCircleOutlined,
-        color: "#0EA5E9",
+        color: "#00aeee",
         hoverColor: "#38BDF8",
         onClick: () => frappe.new_doc(DocType.SALE_ORDER),
       },
@@ -77,14 +77,14 @@ export const doctypeConfigs = {
       {
         label: "Duyệt",
         icon: LockOutlined,
-        color: "#2563EB",
+        color: "#00aeee",
         hoverColor: "#3B82F6",
         onClick: () => frappe.msgprint("Đã duyệt"),
       },
       {
         label: "Huỷ duyệt",
         icon: UnlockOutlined,
-        color: "#F59E0B",
+        color: "#00aeee",
         hoverColor: "#FBBF24",
         onClick: () => frappe.msgprint("Huỷ duyệt"),
       },
@@ -122,35 +122,35 @@ export const doctypeConfigs = {
       {
         label: "Tạo đơn sản xuất nội bộ",
         icon: PlusCircleOutlined,
-        color: "#0EA5E9",
+        color: "#00aeee",
         hoverColor: "#38BDF8",
         onClick: () => frappe.msgprint("Tạo đơn sản xuất nội bộ"),
       },
       {
         label: "Duyệt",
         icon: FileDoneOutlined,
-        color: "#2563EB",
+        color: "#00aeee",
         hoverColor: "#3B82F6",
         onClick: () => frappe.msgprint("Duyệt"),
       },
       {
         label: "Huỷ duyệt",
         icon: UnlockOutlined,
-        color: "#F59E0B",
+        color: "#00aeee",
         hoverColor: "#FBBF24",
         onClick: () => frappe.msgprint("Huỷ duyệt"),
       },
       {
         label: "Tạo lệnh sản xuất",
         icon: PlusCircleOutlined,
-        color: "#0EA5E9",
+        color: "#00aeee",
         hoverColor: "#38BDF8",
         onClick: () => frappe.msgprint("Tạo lệnh sản xuất"),
       },
       {
         label: "Xoá",
         icon: DeleteOutlined,
-        color: "#EF4444",
+        color: "#00aeee",
         hoverColor: "#F87171",
         onClick: () => frappe.msgprint("Xoá"),
       },
@@ -194,7 +194,7 @@ export const doctypeConfigs = {
       {
         label: "Thêm mới",
         icon: PlusCircleOutlined,
-        color: "#0EA5E9",
+        color: "#00aeee",
         hoverColor: "#38BDF8",
         onClick: () => frappe.new_doc(DocType.WORK_ORDER),
       },
@@ -210,7 +210,7 @@ export const doctypeConfigs = {
       },
       {
         label: "Lập kế hoạch sản xuất",
-        icon: ChartIcon,
+        icon: BarChartOutlined,
         color: "#01ABA8",
         hoverColor: "#A78BFA",
         onClick: (row) => frappe.msgprint(`Lập kế hoạch sản xuất ${row.name}`),
@@ -238,7 +238,7 @@ export const doctypeConfigs = {
       {
         label: "Thêm mới",
         icon: PlusCircleOutlined,
-        color: "#0EA5E9",
+        color: "#00aeee",
         hoverColor: "#38BDF8",
         onClick: () => frappe.new_doc(DocType.WORK_ORDER_APPROVED),
       },
@@ -269,21 +269,21 @@ export const doctypeConfigs = {
       {
         label: "Thống kê NVL thừa",
         icon: FileTextOutlined,
-        color: "#3B82F6",
+        color: "#00aeee",
         hoverColor: "#60A5FA",
         onClick: () => frappe.msgprint("Thống kê NVL thừa"),
       },
       {
         label: "Kiểm kê tồn kho",
-        icon: SearchOutlined,
-        color: "#22C55E",
+        icon: MonitorOutlined,
+        color: "#00aeee",
         hoverColor: "#4ADE80",
         onClick: () => frappe.msgprint("Kiểm kê tồn kho"),
       },
       {
         label: "Chốt số cuối kỳ",
         icon: CalendarOutlined,
-        color: "#F59E0B",
+        color: "#00aeee",
         hoverColor: "#FBBF24",
         onClick: () => frappe.msgprint("Chốt số cuối kỳ"),
       },
@@ -298,28 +298,28 @@ export const doctypeConfigs = {
       {
         label: "Duyệt huỷ tem",
         icon: FileDoneOutlined,
-        color: "#2563EB",
+        color: "#00aeee",
         hoverColor: "#3B82F6",
         onClick: () => frappe.msgprint("Duyệt huỷ tem"),
       },
       {
         label: "Xuất Excel",
         icon: FileExcelOutlined,
-        color: "#16A34A",
+        color: "#00aeee",
         hoverColor: "#4ADE80",
         onClick: () => frappe.msgprint("Đang xuất Excel..."),
       },
       {
         label: "Import Excel",
         icon: ImportOutlined,
-        color: "#16A34A",
+        color: "#00aeee",
         hoverColor: "#4ADE80",
         onClick: () => frappe.msgprint("Đang nhập Excel..."),
       },
       {
         label: "Xoá",
         icon: DeleteOutlined,
-        color: "#EF4444",
+        color: "#00aeee",
         hoverColor: "#F87171",
         onClick: () => frappe.msgprint("Xoá"),
       },
@@ -357,7 +357,7 @@ export const doctypeConfigs = {
       {
         label: "Thêm mới",
         icon: PlusCircleOutlined,
-        color: "#0EA5E9",
+        color: "#00aeee",
         hoverColor: "#38BDF8",
         onClick: () => frappe.new_doc(DocType.TRACEABILITY),
       },
@@ -381,7 +381,7 @@ export const doctypeConfigs = {
       {
         label: "Thêm mới",
         icon: PlusCircleOutlined,
-        color: "#0EA5E9",
+        color: "#00aeee",
         hoverColor: "#38BDF8",
         onClick: () => frappe.new_doc(DocType.PERIOD_END_CLOSING),
       },
@@ -396,7 +396,7 @@ export const doctypeConfigs = {
       {
         label: "Thêm mới",
         icon: PlusCircleOutlined,
-        color: "#0EA5E9",
+        color: "#00aeee",
         hoverColor: "#38BDF8",
         onClick: () => frappe.new_doc(DocType.STATISTICAL_REPORT),
       },
