@@ -55,6 +55,7 @@ const baseRowActions = (view = true) =>
   ].filter(Boolean);
 
 export const doctypeConfigs = {
+  //Module APS
   [DocType.SALE_ORDER]: {
     title: "DANH SÁCH ĐƠN HÀNG TỔNG",
     actions: [
@@ -403,11 +404,99 @@ export const doctypeConfigs = {
       baseCopyAction,
     ],
   },
+
+  // Module SCADA & TPM
+  [DocType.MAINTENANCE_PLANNING]: {
+    title: "Kế hoạch bảo dưỡng máy móc",
+    groupByField: "machinegroup",
+    enableCollapse: true,
+    actions: [
+      {
+        label: "Thêm mới",
+        icon: PlusCircleOutlined,
+        color: "#00aeee",
+        hoverColor: "#38BDF8",
+        onClick: () => frappe.new_doc(DocType.MAINTENANCE_PLANNING),
+      },
+      {
+        label: "Xem lịch bảo dưỡng",
+        icon: CalendarOutlined,
+        color: "#00aeee",
+        hoverColor: "#38BDF8",
+        onClick: () => { frappe.msgprint("Xem lịch bảo dưỡng") },
+      },
+      {
+        label: "Xoá",
+        icon: DeleteOutlined,
+        color: "#00aeee",
+        hoverColor: "#38BDF8",
+        onClick: () => { },
+      },
+      baseCopyAction,
+    ],
+    rowActions: [
+      {
+        label: "Thêm nhật trình bảo dưỡng",
+        icon: PlusCircleOutlined,
+        color: "#01ABA8",
+        hoverColor: "#60A5FA",
+        onClick: () => frappe.new_doc(DocType.MAINTENANCE_LOG),
+      },
+      {
+        label: "Xem chi tiết",
+        icon: EyeOutlined,
+        color: "#01ABA8",
+        hoverColor: "#FBBF24",
+        onClick: () => { },
+      },
+      {
+        label: "Chỉnh sửa",
+        icon: EditOutlined,
+        color: "#01ABA8",
+        hoverColor: "#FBBF24",
+        onClick: () => { },
+      },
+      {
+        label: "Xoá",
+        icon: DeleteOutlined,
+        color: "#01ABA8",
+        hoverColor: "#FBBF24",
+        onClick: () => { },
+      },
+    ],
+  },
+  [DocType.MAINTENANCE_LOG]: {
+    title: "Nhật trình bảo dưỡng máy móc",
+    groupByField: "machinegroup",
+    enableCollapse: true,
+    actions: [
+      {
+        label: "Thêm mới",
+        icon: PlusCircleOutlined,
+        color: "#00aeee",
+        hoverColor: "#38BDF8",
+        onClick: () => frappe.new_doc(DocType.MAINTENANCE_LOG),
+      },
+      {
+        label: "Xoá",
+        icon: DeleteOutlined,
+        color: "#00aeee",
+        hoverColor: "#38BDF8",
+        onClick: () => { },
+      },
+      baseCopyAction,
+    ],
+    rowActions: baseRowActions(),
+  },
 };
 
-export const getDoctypeConfig = (doctype) =>
-  doctypeConfigs[doctype] || {
-    title: doctype?.toUpperCase() || "DANH SÁCH",
-    actions: [baseCopyAction],
-    rowActions: baseRowActions(),
-  };
+export const getDoctypeConfig = (doctype) => {
+  return {
+    enableCollapse: false,
+    ...(doctypeConfigs[doctype] || {
+      title: doctype?.toUpperCase() || "DANH SÁCH",
+      actions: [baseCopyAction],
+      rowActions: baseRowActions(),
+    })
+  }
+}

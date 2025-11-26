@@ -5,21 +5,113 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "machinegroup"
+  "machinegroup",
+  "machinecode",
+  "machinename",
+  "column_break_hmbz",
+  "maintenancetype",
+  "maintenancedate",
+  "column_break_popj",
+  "downtimestarttime",
+  "downtimeendtime",
+  "column_break_hnuk",
+  "expecteddowntime",
+  "description",
+  "column_break_ktpb",
+  "managerincharge",
+  "maintenancefile"
  ],
  "fields": [
   {
    "fieldname": "machinegroup",
    "fieldtype": "Small Text",
    "in_list_view": 1,
-   "label": "Nh\u00f3m m\u00e1y",
+   "label": "Nh\u00f3m m\u00e1y"
+  },
+  {
+   "fieldname": "machinecode",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e3 m\u00e1y",
    "reqd": 1
+  },
+  {
+   "fieldname": "column_break_hmbz",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_popj",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_hnuk",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_ktpb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "machinename",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "T\u00ean m\u00e1y"
+  },
+  {
+   "default": "B\u1ea3o d\u01b0\u1ee1ng \u0111\u1ecbnh k\u1ef3",
+   "fieldname": "maintenancetype",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Lo\u1ea1i b\u1ea3o d\u01b0\u1ee1ng",
+   "options": "B\u1ea3o d\u01b0\u1ee1ng \u0111\u1ecbnh k\u1ef3\nB\u1ea3o d\u01b0\u1ee1ng h\u00e0ng ng\u00e0y\nS\u1eeda ch\u1eefa"
+  },
+  {
+   "fieldname": "maintenancedate",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Ng\u00e0y b\u1ea3o d\u01b0\u1ee1ng"
+  },
+  {
+   "fieldname": "downtimestarttime",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Th\u1eddi gian b\u1eaft \u0111\u1ea7u d\u1eebng m\u00e1y"
+  },
+  {
+   "fieldname": "downtimeendtime",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Th\u1eddi gian k\u1ebft th\u00fac d\u1eebng m\u00e1y"
+  },
+  {
+   "fieldname": "expecteddowntime",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Th\u1eddi gian d\u1eebng m\u00e1y"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Text",
+   "in_list_view": 1,
+   "label": "Di\u1ec5n gi\u1ea3i"
+  },
+  {
+   "fieldname": "managerincharge",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Ph\u1ee5 tr\u00e1ch qu\u1ea3n l\u00fd"
+  },
+  {
+   "fieldname": "maintenancefile",
+   "fieldtype": "Attach",
+   "in_list_view": 1,
+   "label": "File h\u1ea1ng m\u1ee5c b\u1ea3o d\u01b0\u1ee1ng"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-11-25 11:37:32.254278",
+ "modified": "2025-11-26 14:04:31.714199",
  "modified_by": "Administrator",
  "module": "SCADA & TPM",
  "name": "Maintenance Log",

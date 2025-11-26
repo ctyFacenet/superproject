@@ -5,21 +5,128 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "machinegroup"
+  "machinegroup",
+  "machinecode",
+  "machinename",
+  "column_break_vkiq",
+  "maintenancetype",
+  "maintenancecycledays",
+  "lastmaintenancedate",
+  "column_break_zfqc",
+  "nextmaintenancedate",
+  "expecteddowntimeminutes",
+  "expectedstartminutes",
+  "column_break_nyfl",
+  "expectedendminutes",
+  "managerincharge",
+  "column_break_awhx",
+  "maintenancefile",
+  "description"
  ],
  "fields": [
   {
    "fieldname": "machinegroup",
    "fieldtype": "Small Text",
    "in_list_view": 1,
-   "label": "Nh\u00f3m m\u00e1y",
+   "label": "Nh\u00f3m m\u00e1y"
+  },
+  {
+   "fieldname": "column_break_vkiq",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_zfqc",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_nyfl",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_awhx",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "lastmaintenancedate",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Ng\u00e0y b\u1ea3o d\u01b0\u1ee1ng g\u1ea7n nh\u1ea5t"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Text",
+   "in_list_view": 1,
+   "label": "Di\u1ec5n gi\u1ea3i"
+  },
+  {
+   "fieldname": "machinecode",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e3 m\u00e1y",
    "reqd": 1
+  },
+  {
+   "fieldname": "nextmaintenancedate",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Ng\u00e0y b\u1ea3o d\u01b0\u1ee1ng k\u1ebf ti\u1ebfp",
+   "reqd": 1
+  },
+  {
+   "fieldname": "managerincharge",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Ph\u1ee5 tr\u00e1ch qu\u1ea3n l\u00fd"
+  },
+  {
+   "fieldname": "machinename",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "T\u00ean m\u00e1y"
+  },
+  {
+   "fieldname": "expecteddowntimeminutes",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Th\u1eddi gian d\u1eebng m\u00e1y d\u1ef1 ki\u1ebfn (ph\u00fat)"
+  },
+  {
+   "fieldname": "maintenancefile",
+   "fieldtype": "Attach",
+   "in_list_view": 1,
+   "label": "File h\u1ea1ng m\u1ee5c b\u1ea3o d\u01b0\u1ee1ng"
+  },
+  {
+   "default": "B\u1ea3o d\u01b0\u1ee1ng \u0111\u1ecbnh k\u1ef3",
+   "fieldname": "maintenancetype",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Lo\u1ea1i b\u1ea3o d\u01b0\u1ee1ng",
+   "options": "B\u1ea3o d\u01b0\u1ee1ng \u0111\u1ecbnh k\u1ef3\nB\u1ea3o d\u01b0\u1ee1ng h\u00e0ng ng\u00e0y\nS\u1eeda ch\u1eefa"
+  },
+  {
+   "fieldname": "expectedstartminutes",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Th\u1eddi gian b\u1eaft \u0111\u1ea7u d\u1ef1 ki\u1ebfn (ph\u00fat)"
+  },
+  {
+   "fieldname": "maintenancecycledays",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Chu k\u1ef3 b\u1ea3o d\u01b0\u1ee1ng (ng\u00e0y)"
+  },
+  {
+   "fieldname": "expectedendminutes",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Th\u1eddi gian k\u1ebft th\u00fac d\u1ef1 ki\u1ebfn (ph\u00fat)"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-11-25 11:34:54.636513",
+ "modified": "2025-11-26 10:50:37.650669",
  "modified_by": "Administrator",
  "module": "SCADA & TPM",
  "name": "Maintenance Planning",

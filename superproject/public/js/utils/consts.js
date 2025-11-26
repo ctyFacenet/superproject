@@ -9,4 +9,8 @@ export const DocType = Object.freeze({
   TRACEABILITY: "Traceability",
   PERIOD_END_CLOSING: "Period End Closing",
   STATISTICAL_REPORT: "Statistical Report",
+  DISPLAY_CONFIGURATION: "Display Configuration",
+  MAINTENANCE_LOG: "Maintenance Log",
+  MAINTENANCE_PLANNING: "Maintenance Planning",
+  SCADA_STATISTICAL_REPORT: "Scada Statistical Report"
 });

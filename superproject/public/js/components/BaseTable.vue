@@ -53,7 +53,7 @@
                   <a-tooltip :title="col.title">
                     <span class="tw-truncate tw-font-semibold">{{
                       col.title
-                    }}</span>
+                      }}</span>
                   </a-tooltip>
 
                   <img v-if="col.key !== 'actions'" :src="FilterIcon" alt="filter"
@@ -86,8 +86,7 @@
 
                 <template v-else-if="col.key !== 'actions'">
                   <div class="tw-flex tw-items-center">
-                    <img :src="SearchIcon" alt="search"
-                      class="tw-w-3 tw-h-3 tw-mr-1 tw-opacity-70" />
+                    <img :src="SearchIcon" alt="search" class="tw-w-3 tw-h-3 tw-mr-1 tw-opacity-70" />
                     <input v-model="filters[col.key]" type="text"
                       class="tw-w-full tw-border-none focus:tw-outline-none tw-text-[12px] tw-bg-transparent" />
                   </div>
@@ -99,6 +98,7 @@
           <tbody>
             <template v-if="groupByField && groupedRows.length">
               <template v-for="(group, gIndex) in groupedRows" :key="group.key">
+
                 <tr class="tw-font-semibold tw-text-red-600 tw-text-[13px]">
                   <td class="left-sticky tw-z-10 tw-border"></td>
 
@@ -107,17 +107,32 @@
                       @change="toggleGroup(group.key, $event)" />
                   </td>
 
-                  <td class="tw-border tw-text-left tw-pl-3" :colspan="filteredColumns.length">
-                    {{ group.key }}
+                  <td class="tw-border tw-pl-3 tw-py-1" :colspan="filteredColumns.length">
+                    <div class="tw-flex tw-items-center tw-gap-2">
+
+                      <button v-if="config.enableCollapse" class="tw-w-[18px] tw-h-[18px] tw-flex tw-items-center tw-justify-center
+             tw-border tw-border-gray-100 tw-rounded-sm tw-bg-white
+             hover:tw-bg-gray-100 hover:tw-border-green-300 tw-transition"
+                        @click.stop="toggleCollapseGroup(group.key)">
+                        <component :is="collapsedGroups.has(group.key) ? PlusOutlined : MinusOutlined"
+                          class="tw-text-[12px]" />
+                      </button>
+
+                      <span class="tw-font-bold tw-text-red-600 tw-text-[13px] tw-leading-none tw-cursor-pointer"
+                        @click="config.enableCollapse && toggleCollapseGroup(group.key)">
+                        {{ group.key }}
+                      </span>
+
+                    </div>
                   </td>
+
                 </tr>
 
-                <tr v-for="(row, i) in group.rows" :key="row.name" :class="[
-                  'tw-text-[13px] tw-cursor-pointer tw-transition-colors tw-duration-150',
-                  selectedRows.has(row)
-                    ? 'tw-bg-blue-50'
-                    : 'hover:tw-bg-gray-50',
-                ]" @click="handleRowClick($event, row)">
+                <tr v-for="(row, i) in group.rows" :key="row.name"
+                  v-if="!config.enableCollapse || !collapsedGroups.has(group.key)" :class="[
+                    'tw-text-[13px] tw-cursor-pointer tw-transition-colors tw-duration-150',
+                    selectedRows.has(row) ? 'tw-bg-blue-50' : 'hover:tw-bg-gray-50',
+                  ]" @click="handleRowClick($event, row)">
                   <td class="left-sticky tw-text-center tw-border tw-py-1">
                     {{ totalPreviousRows(gIndex) + i + 1 }}
                   </td>
@@ -128,12 +143,11 @@
                   </td>
 
                   <td v-for="col in filteredColumns" :key="col.key"
-                    class="tw-border tw-px-2 tw-py-1 tw-text-center tw-relative" :class="col.key === 'actions' ? 'actions-sticky td-sticky' : ''
-                      ">
+                    class="tw-border tw-px-2 tw-py-1 tw-text-center tw-relative"
+                    :class="col.key === 'actions' ? 'actions-sticky td-sticky' : ''">
                     <template v-if="col.key === 'status'">
-                      <span :style="statusColors[row.status] ||
-                        'background-color:#e5e7eb; color:#374151;'
-                        " class="status-badge">
+                      <span :style="statusColors[row.status] || 'background-color:#e5e7eb; color:#374151;'"
+                        class="status-badge">
                         {{ row.status }}
                       </span>
                     </template>
@@ -141,12 +155,10 @@
                     <template v-else-if="col.key === 'actions'">
                       <div v-if="getDoctypeConfig(props.doctype)?.rowActions"
                         class="actions-cell tw-flex tw-items-center tw-justify-center tw-gap-3">
-                        <template v-for="(action, index) in getDoctypeConfig(
-                          props.doctype,
-                        ).rowActions" :key="index">
+                        <template v-for="(action, index) in getDoctypeConfig(props.doctype).rowActions" :key="index">
                           <a-tooltip :title="action.label">
-                            <IconRenderer :icon="action.icon" :color="action.color"
-                              customClass="tw-cursor-pointer" @click.stop="action.onClick(row)" />
+                            <IconRenderer :icon="action.icon" :color="action.color" customClass="tw-cursor-pointer"
+                              @click.stop="action.onClick(row)" />
                           </a-tooltip>
                         </template>
                       </div>
@@ -157,6 +169,7 @@
                     </template>
                   </td>
                 </tr>
+
               </template>
             </template>
 
@@ -166,9 +179,7 @@
                 currentPage * pageSize,
               )" :key="i" :class="[
                 'tw-text-[13px] tw-cursor-pointer',
-                selectedRows.has(row)
-                  ? 'tw-bg-blue-50'
-                  : 'hover:tw-bg-gray-50',
+                selectedRows.has(row) ? 'tw-bg-blue-50' : 'hover:tw-bg-gray-50',
               ]" @click="handleRowClick($event, row)">
                 <td class="left-sticky tw-text-center tw-border tw-py-1">
                   {{ i + 1 + (currentPage - 1) * pageSize }}
@@ -179,12 +190,11 @@
                 </td>
 
                 <td v-for="col in filteredColumns" :key="col.key"
-                  class="tw-border tw-px-2 tw-py-1 tw-text-center tw-relative" :class="col.key === 'actions' ? 'actions-sticky td-sticky' : ''
-                    ">
+                  class="tw-border tw-px-2 tw-py-1 tw-text-center tw-relative"
+                  :class="col.key === 'actions' ? 'actions-sticky td-sticky' : ''">
                   <template v-if="col.key === 'status'">
-                    <span :style="statusColors[row.status] ||
-                      'background-color:#e5e7eb; color:#374151;'
-                      " class="status-badge">
+                    <span :style="statusColors[row.status] || 'background-color:#e5e7eb; color:#374151;'"
+                      class="status-badge">
                       {{ row.status }}
                     </span>
                   </template>
@@ -192,12 +202,10 @@
                   <template v-else-if="col.key === 'actions'">
                     <div v-if="getDoctypeConfig(props.doctype)?.rowActions"
                       class="actions-cell tw-flex tw-items-center tw-justify-center tw-gap-3">
-                      <template v-for="(action, index) in getDoctypeConfig(
-                        props.doctype,
-                      ).rowActions" :key="index">
+                      <template v-for="(action, index) in getDoctypeConfig(props.doctype).rowActions" :key="index">
                         <a-tooltip :title="action.label">
-                          <IconRenderer :icon="action.icon" :color="action.color"
-                            customClass="tw-cursor-pointer" @click.stop="action.onClick(row)" />
+                          <IconRenderer :icon="action.icon" :color="action.color" customClass="tw-cursor-pointer"
+                            @click.stop="action.onClick(row)" />
                         </a-tooltip>
                       </template>
                     </div>
@@ -217,6 +225,7 @@
               </td>
             </tr>
           </tbody>
+
         </table>
       </div>
 
@@ -264,6 +273,7 @@ import { getDoctypeConfig } from "./config/doctype-configs";
 import { colorMap } from "../utils/status-colors";
 import IconRenderer from "../components/IconRenderer.vue"
 import { SearchIcon, FilterIcon } from "../../assets/index";
+import { PlusOutlined, MinusOutlined } from "@ant-design/icons-vue";
 
 const statusColors = ref({});
 
@@ -333,6 +343,15 @@ function resetColumns() {
 
 const config = computed(() => getDoctypeConfig(props.doctype));
 const groupByField = computed(() => config.value.groupByField);
+
+const collapsedGroups = ref(new Set());
+
+const toggleCollapseGroup = (key) => {
+  if (!config.value.enableCollapse) return;
+  if (collapsedGroups.value.has(key)) collapsedGroups.value.delete(key);
+  else collapsedGroups.value.add(key);
+};
+
 
 async function fetchData() {
   loading.value = true;
@@ -670,7 +689,8 @@ table {
   border-spacing: 0 !important;
 }
 
-table td, table th {
+table td,
+table th {
   border: none !important;
   position: relative;
 }
@@ -698,6 +718,7 @@ table th::before {
 }
 
 @media (max-width: 768px) {
+
   table td::before,
   table th::before {
     display: none;
@@ -880,14 +901,13 @@ tbody tr:hover {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 8px 12px;  
+  padding: 8px 12px;
   font-size: 13px;
   font-weight: 600;
-  border-radius: 4px; 
+  border-radius: 4px;
   line-height: 1;
-  min-width: 200px;   
+  min-width: 200px;
   text-align: center;
-  color: white;   
+  color: white;
 }
-
 </style>
