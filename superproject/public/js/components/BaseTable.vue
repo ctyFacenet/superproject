@@ -731,16 +731,6 @@ table th::before {
   z-index: 10 !important;
   background: white !important;
 }
-.actions-sticky::after {
-  content: "";
-  position: absolute;
-  left: -6px;
-  top: 0;
-  width: 6px;
-  height: 100%;
-  box-shadow: -4px 0 6px rgba(0, 0, 0, 0.15);
-  pointer-events: none;
-}
 
 th.actions-sticky {
   background-color: rgb(191 219 254) !important;
