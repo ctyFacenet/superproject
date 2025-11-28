@@ -139,7 +139,7 @@
       </div>
 
       <div class="tw-text-right tw-mt-4">
-        <a-button type="primary" @click="apply">Áp dụng</a-button>
+        <a-button type="primary" @click="confirmLogout">Áp dụng</a-button>
       </div>
     </div>
   </div>
@@ -266,5 +266,28 @@ function apply() {
     }
   }
   frappe.msgprint({ message: "Đã áp dụng cấu hình!", title: "Thành công", indicator: "green" });
+}
+
+function confirmLogout() {
+  customConfirmModal({
+    title: "Xác nhận lưu cấu hình",
+    message: "Bạn có chắc chắn muốn lưu cấu hình?",
+    note: "Thông tin dữ liệu cũ sẽ được thay đổi trong cơ sở dữ liệu",
+    type: "info",
+    buttons: [
+      {
+        text: "Hủy bỏ",
+        class: "btn-secondary",
+        onClick: () => { }
+      },
+      {
+        text: "Xác nhận",
+        class: "btn-primary",
+        onClick: () => {
+          apply();
+        }
+      }
+    ]
+  });
 }
 </script>

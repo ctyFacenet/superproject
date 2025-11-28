@@ -30,7 +30,7 @@ function customConfirmModal({
 
   const modalHtml = `
     <div class="modal fade" id="${MODAL_ID}" tabindex="-1">
-      <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-dialog">
         <div class="modal-content">
 
           <div class="modal-header">
