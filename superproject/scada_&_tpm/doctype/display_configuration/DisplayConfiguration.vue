@@ -17,8 +17,8 @@
       <div class="tw-font-bold tw-text-[16px] tw-mb-2 tw-text-center">Các thông số</div>
 
       <a-input v-model="search" placeholder="Tìm kiếm thuộc tính" size="small"
-        class="tw-mb-3 tw-rounded-sm tw-border-[#0ba5ec] tw-p-1" allowClear>
-        <template #prefix>
+        class="tw-mb-3 tw-rounded-sm tw-p-2" allowClear>
+        <template #suffix>
           <SearchOutlined class="tw-text-gray-400" />
         </template>
       </a-input>
@@ -79,9 +79,11 @@
             <template #item="{ element, index }">
               <div class="tw-flex tw-items-center tw-gap-4 tw-bg-white tw-rounded tw-border tw-p-3 tw-flex-wrap">
 
-                <div class="drag-handle tw-w-6 tw-flex tw-justify-center tw-items-center tw-cursor-pointer">
-                  <IconRenderer :icon="DragOutlined" :size="20" />
-                </div>
+                <a-tooltip title="Kéo thả để thay đổi thứ tự" placement="top" color="#333">
+                  <div class="drag-handle tw-w-6 tw-flex tw-justify-center tw-items-center tw-cursor-pointer">
+                    <IconRenderer :icon="DragOutlined" :size="20" />
+                  </div>
+                </a-tooltip>
 
                 <div class="tw-flex tw-items-center tw-gap-2 tw-min-w-[200px]">
                   <span class="tw-text-sm tw-font-medium">Từ</span>
