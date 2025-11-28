@@ -68,7 +68,7 @@
                 </div>
 
                 <a-input placeholder="Nhập thông tin để tìm kiếm"
-                  class="sm:tw-w-[220px] md:tw-w-[260px] lg:tw-w-[300px] tw-h-[30px] tw-text-[13px] tw-rounded-sm tw-border-[#0ba5ec] focus:tw-shadow-none tw-flex-shrink-0"
+                  class="sm:tw-w-[220px] md:tw-w-[260px] lg:tw-w-[300px] tw-h-[30px] tw-text-[13px] tw-rounded-sm focus:tw-shadow-none tw-flex-shrink-0"
                   size="small" allowClear>
                   <template #prefix>
                     <SearchOutlined class="tw-text-gray-400" />
