@@ -1,15 +1,20 @@
 <template>
   <div class="tw-flex tw-items-center tw-gap-3 tw-p-3 tw-flex-wrap">
     <span class="tw-text-sm tw-font-medium">Chọn line</span>
-    <a-select show-search allowClear placeholder="Chọn line" class="tw-w-48 sm:tw-w-56" />
+
+    <a-select v-model="selectedLine" show-search allowClear placeholder="Chọn line" class="tw-w-48 sm:tw-w-56"
+      @change="onLineChange">
+      <a-select-option v-for="line in Object.keys(lines)" :key="line" :value="line">
+        {{ line }}
+      </a-select-option>
+    </a-select>
   </div>
 
   <div class="tw-flex tw-gap-4 tw-p-4 tw-flex-col md:tw-flex-row">
+
     <div
       class="tw-w-full md:tw-w-64 tw-border tw-rounded-lg tw-p-3 tw-bg-white tw-flex tw-flex-col tw-order-2 md:tw-order-1">
-      <div class="tw-font-bold tw-text-[16px] tw-mb-2 tw-text-center">
-        Các thông số
-      </div>
+      <div class="tw-font-bold tw-text-[16px] tw-mb-2 tw-text-center">Các thông số</div>
 
       <a-input v-model="search" placeholder="Tìm kiếm thuộc tính" size="small"
         class="tw-mb-3 tw-rounded-sm tw-border-[#0ba5ec] tw-p-1" allowClear>
@@ -19,11 +24,9 @@
       </a-input>
 
       <div class="tw-space-y-1 tw-overflow-y-auto tw-flex-1">
-        <div v-for="item in filteredParams" :key="item" @click="selectParam(item)"
-          class="tw-px-3 tw-py-2 tw-rounded tw-transition cursor-pointer" :class="selectedParam === item
-            ? 'tw-bg-blue-100 tw-text-blue-600'
-            : 'tw-hover:bg-gray-100'
-            ">
+        <div v-for="item in filteredParams" :key="item" @click="scrollToParam(item)"
+          class="tw-px-3 tw-py-2 tw-rounded-sm tw-transition tw-cursor-pointer"
+          :class="selectedParam === item ? 'tw-bg-blue-100 tw-text-blue-600' : 'tw-hover:bg-gray-100'">
           {{ item }}
         </div>
       </div>
@@ -32,10 +35,11 @@
     <div
       class="tw-flex-1 tw-space-y-6 tw-h-auto md:tw-h-[85vh] tw-overflow-y-auto tw-pr-0 md:tw-pr-2 tw-order-1 md:tw-order-2">
 
-      <div v-for="(conf, idx) in configs" :key="idx" class="tw-border tw-rounded-lg tw-bg-white tw-p-4 tw-space-y-4">
-        <div class="tw-font-bold tw-text-center tw-text-[16px]">
-          Cấu hình thông tin hiển thị
-        </div>
+      <div v-for="(conf, idx) in configs" :key="idx" :ref="el => (configRefs[idx] = el)" :class="[
+        'tw-border tw-rounded-lg tw-p-4 tw-space-y-4 tw-transition-all tw-duration-500',
+        highlightIndex === idx ? 'tw-bg-yellow-100 tw-shadow-md' : 'tw-bg-white'
+      ]">
+        <div class="tw-font-bold tw-text-center tw-text-[16px]">Cấu hình thông tin hiển thị</div>
 
         <div class="tw-flex tw-items-center tw-gap-6 tw-flex-wrap">
           <div class="tw-flex tw-items-center tw-gap-2 tw-min-w-[200px]">
@@ -60,9 +64,8 @@
         </div>
 
         <div class="tw-border tw-rounded-lg tw-p-4 tw-bg-[#fafafa]">
-          <div class="tw-font-bold tw-mb-3 tw-text-center tw-text-[16px]">
-            Cấu hình màu sắc
-          </div>
+
+          <div class="tw-font-bold tw-mb-3 tw-text-center tw-text-[16px]">Cấu hình màu sắc</div>
 
           <div class="tw-flex tw-justify-end tw-mb-3">
             <a-select v-model="conf.applyType" placeholder="Chọn Loại hàng áp dụng" class="tw-w-56" allowClear>
@@ -75,6 +78,7 @@
           <draggable v-model="conf.colorConfigs" handle=".drag-handle" item-key="id" class="tw-space-y-3">
             <template #item="{ element, index }">
               <div class="tw-flex tw-items-center tw-gap-4 tw-bg-white tw-rounded tw-border tw-p-3 tw-flex-wrap">
+
                 <div class="drag-handle tw-w-6 tw-flex tw-justify-center tw-items-center tw-cursor-pointer">
                   <IconRenderer :icon="DragOutlined" :size="20" />
                 </div>
@@ -118,19 +122,17 @@
           <div class="tw-flex tw-items-center tw-justify-between tw-mt-4">
             <div @click="addColor(conf)"
               class="tw-text-blue-600 tw-flex tw-items-center tw-gap-2 tw-cursor-pointer tw-font-medium">
-              <IconRenderer :icon="PlusCircleOutlined" />
-              Thêm màu mới
+              <IconRenderer :icon="PlusCircleOutlined" /> Thêm màu mới
             </div>
+
             <div @click="removeConfig(idx)"
               class="tw-text-red-600 tw-flex tw-items-center tw-gap-2 tw-cursor-pointer tw-font-medium">
-              <IconRenderer :icon="DeleteOutlined" />
-              Xóa cấu hình
+              <IconRenderer :icon="DeleteOutlined" /> Xóa cấu hình
             </div>
           </div>
         </div>
-
         <div @click="addConfig"
-          class="tw-text-blue-600 tw-flex tw-items-center tw-gap-2 tw-cursor-pointer tw-font-medium">
+          class="tw-text-blue-600 tw-flex tw-items-center tw-gap-2 tw-cursor-pointer tw-font-medium tw-justify-start">
           <IconRenderer :icon="PlusCircleOutlined" />
           Thêm cấu hình mới
         </div>
@@ -143,49 +145,40 @@
   </div>
 </template>
 
-
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, nextTick } from "vue";
 import draggable from "vuedraggable";
 import IconRenderer from "../../../public/js/components/IconRenderer.vue";
-import {
-  DeleteOutlined,
-  PlusCircleOutlined,
-  SearchOutlined,
-  DragOutlined
-} from "@ant-design/icons-vue";
+import { DeleteOutlined, PlusCircleOutlined, SearchOutlined, DragOutlined } from "@ant-design/icons-vue";
 
-const props = defineProps({
-  listview: Object,
-});
+const props = defineProps({ listview: Object });
+
+const lines = {
+  "VT5.1": ["Tốc độ quạt", "Nhiệt sấy ra", "Nhiệt ủ ra"],
+  "VT5.2": ["Tốc độ DV", "Chiều dài dây", "Nhiệt sấy vào"],
+  "VT5.3": ["Nhiệt sấy vào", "Tốc độ DV", "Tốc độ quạt", "Nhiệt sấy ra"],
+};
+
+const selectedLine = ref(null);
+const selectedParam = ref(null);
+const highlightIndex = ref(null);
 
 const search = ref("");
-const selectedParam = ref(null);
-
-const params = ref([
-  "Tốc độ quạt",
-  "Nhiệt sấy ra",
-  "Nhiệt sấy vào",
-  "Tốc độ DV",
-  "Chiều dài dây",
-  "Nhiệt ủ ra",
-]);
+const params = ref([]);
 
 const filteredParams = computed(() =>
-  params.value.filter((p) =>
-    p.toLowerCase().includes(search.value.toLowerCase())
-  )
+  params.value.filter(p => p.toLowerCase().includes(search.value.toLowerCase()))
 );
 
 const configs = ref([]);
+const configRefs = ref([]);
 
-function selectParam(param) {
-  selectedParam.value = param;
+function onLineChange(line) {
+  params.value = line ? [...lines[line]] : [];
+  selectedParam.value = null;
+  configs.value = [];
 
-  let exist = configs.value.find((c) => c.name === param);
-  if (exist) return;
-
-  configs.value.push({
+  configs.value = params.value.map(param => ({
     name: param,
     unit: "RPM",
     row: 1,
@@ -200,6 +193,37 @@ function selectParam(param) {
         level: "Rủi ro",
       },
     ],
+  }));
+
+  nextTick(() => (configRefs.value = []));
+}
+
+async function scrollToParam(param) {
+  selectedParam.value = param;
+
+  const idx = configs.value.findIndex(c => c.name === param);
+  if (idx === -1) return;
+
+  await nextTick();
+  const el = configRefs.value[idx];
+
+  if (el) {
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+    highlightIndex.value = idx;
+
+    setTimeout(() => {
+      if (highlightIndex.value === idx) highlightIndex.value = null;
+    }, 1000);
+  }
+}
+
+function addColor(conf) {
+  conf.colorConfigs.push({
+    id: crypto.randomUUID(),
+    from: "",
+    to: "",
+    color: "#000000",
+    level: "Bình thường",
   });
 }
 
@@ -214,49 +238,22 @@ function addConfig() {
   });
 }
 
-function removeConfig(index) {
-  configs.value.splice(index, 1);
-}
-
-function addColor(conf) {
-  conf.colorConfigs.push({
-    id: crypto.randomUUID(),
-    from: "",
-    to: "",
-    color: "#000000",
-    level: "Bình thường",
-  });
-}
 
 function removeColor(conf, index) {
   conf.colorConfigs.splice(index, 1);
 }
 
+function removeConfig(index) {
+  configs.value.splice(index, 1);
+}
+
 function validateRange(conf) {
-  const ranges = conf.colorConfigs;
-
-  for (let i = 0; i < ranges.length; i++) {
-    const r = ranges[i];
-
-    if (r.from === "" || r.to === "") {
-      return `Khoảng ${i + 1}: Vui lòng nhập đầy đủ giá trị từ & đến`;
-    }
-    if (isNaN(r.from) || isNaN(r.to)) {
-      return `Khoảng ${i + 1}: Giá trị phải là số hợp lệ`;
-    }
-    if (Number(r.from) >= Number(r.to)) {
-      return `Khoảng ${i + 1}: 'Từ' phải nhỏ hơn 'Đến'`;
-    }
+  for (let i = 0; i < conf.colorConfigs.length; i++) {
+    const r = conf.colorConfigs[i];
+    if (!r.from || !r.to) return `Khoảng ${i + 1}: Vui lòng nhập đầy đủ`;
+    if (isNaN(+r.from) || isNaN(+r.to)) return `Khoảng ${i + 1}: Giá trị phải là số`;
+    if (+r.from >= +r.to) return `Khoảng ${i + 1}: 'Từ' phải nhỏ hơn 'Đến'`;
   }
-
-  ranges.sort((a, b) => Number(a.from) - Number(b.from));
-
-  for (let i = 0; i < ranges.length - 1; i++) {
-    if (Number(ranges[i].to) > Number(ranges[i + 1].from)) {
-      return `Khoảng ${i + 1} và ${i + 2} bị chồng lấp`;
-    }
-  }
-
   return null;
 }
 
@@ -264,15 +261,10 @@ function apply() {
   for (const conf of configs.value) {
     const err = validateRange(conf);
     if (err) {
-      frappe.msgprint({ title: "Lỗi cấu hình", message: err, indicator: "red" });
+      frappe.msgprint({ message: err, title: "Lỗi", indicator: "red" });
       return;
     }
   }
-
-  frappe.msgprint({
-    title: "Thành công",
-    message: "Đã áp dụng cấu hình!",
-    indicator: "green",
-  });
+  frappe.msgprint({ message: "Đã áp dụng cấu hình!", title: "Thành công", indicator: "green" });
 }
 </script>
