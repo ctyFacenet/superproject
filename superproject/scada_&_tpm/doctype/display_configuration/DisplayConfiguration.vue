@@ -2,7 +2,7 @@
   <div class="tw-flex tw-items-center tw-gap-3 tw-p-3 tw-flex-wrap">
     <span class="tw-text-sm tw-font-medium">Chọn line</span>
 
-    <a-select v-model="selectedLine" show-search allowClear placeholder="Chọn line" class="tw-w-48 sm:tw-w-56"
+    <a-select v-model:value="selectedLine" show-search allowClear placeholder="Chọn line" class="tw-w-48 sm:tw-w-56"
       @change="onLineChange">
       <a-select-option v-for="line in Object.keys(lines)" :key="line" :value="line">
         {{ line }}
@@ -16,9 +16,9 @@
       class="tw-w-full md:tw-w-64 tw-border tw-rounded-lg tw-p-3 tw-bg-white tw-flex tw-flex-col tw-order-2 md:tw-order-1">
       <div class="tw-font-bold tw-text-[16px] tw-mb-2 tw-text-center">Các thông số</div>
 
-      <a-input v-model="search" placeholder="Tìm kiếm thuộc tính" size="small" class="tw-mb-3 tw-rounded-sm tw-p-2"
-        allowClear>
-        <template #suffix>
+      <a-input v-model:value="search" placeholder="Tìm kiếm thuộc tính" size="small"
+        class="tw-mb-3 tw-rounded-sm tw-p-1" allowClear>
+        <template #prefix>
           <SearchOutlined class="tw-text-gray-400" />
         </template>
       </a-input>
@@ -44,12 +44,12 @@
         <div class="tw-flex tw-items-center tw-gap-6 tw-flex-wrap">
           <div class="tw-flex tw-items-center tw-gap-2 tw-min-w-[200px]">
             <span class="tw-text-sm tw-font-medium">Tên</span>
-            <a-input v-model="conf.name" class="tw-flex-1" />
+            <a-input v-model:value="conf.name" class="tw-flex-1" />
           </div>
 
           <div class="tw-flex tw-items-center tw-gap-2 tw-min-w-[140px]">
             <span class="tw-text-sm tw-font-medium">Đơn vị</span>
-            <a-input v-model="conf.unit" class="tw-flex-1" />
+            <a-input v-model:value="conf.unit" class="tw-flex-1" />
           </div>
 
           <div class="tw-flex tw-items-center tw-gap-2 tw-min-w-[120px]">
@@ -89,14 +89,14 @@
 
                 <div class="tw-flex tw-items-center tw-gap-2 tw-min-w-[200px]">
                   <span class="tw-text-sm tw-font-medium">Từ</span>
-                  <a-input v-model="element.from" class="tw-w-36">
+                  <a-input v-model:value="element.from" class="tw-w-36">
                     <template #suffix>{{ conf.unit }}</template>
                   </a-input>
                 </div>
 
                 <div class="tw-flex tw-items-center tw-gap-2 tw-min-w-[200px]">
                   <span class="tw-text-sm tw-font-medium">Đến</span>
-                  <a-input v-model="element.to" class="tw-w-36">
+                  <a-input v-model:value="element.to" class="tw-w-36">
                     <template #suffix>{{ conf.unit }}</template>
                   </a-input>
                 </div>
@@ -109,7 +109,7 @@
 
                 <div class="tw-flex tw-items-center tw-gap-2 tw-min-w-[160px]">
                   <span class="tw-text-sm tw-font-medium">Mức độ</span>
-                  <a-select v-model="element.level" class="tw-w-32">
+                  <a-select v-model:value="element.level" class="tw-w-32">
                     <a-select-option value="Rủi ro">Rủi ro</a-select-option>
                     <a-select-option value="Bình thường">Bình thường</a-select-option>
                     <a-select-option value="Nguy hiểm">Nguy hiểm</a-select-option>
