@@ -594,6 +594,10 @@ video {
   z-index: 40 !important;
 }
 
+.tw-z-\[5\] {
+  z-index: 5 !important;
+}
+
 .tw-order-1 {
   order: 1 !important;
 }

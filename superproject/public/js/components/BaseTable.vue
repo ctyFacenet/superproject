@@ -1,6 +1,6 @@
 <template>
   <div
-    class="tw-relative tw-border tw-border-gray-100 tw-bg-white tw-rounded-lg tw-shadow-sm tw-p-4 tw-text-sm tw-flex tw-flex-col tw-h-full">
+    class="tw-relative tw-border tw-border-gray-100 tw-bg-white tw-rounded-lg tw-shadow-sm tw-p-4 tw-text-sm tw-flex tw-flex-col tw-h-full tw-z-[5]">
     <a-spin :spinning="loading" size="large" class="tw-w-full tw-h-full">
       <a-popover :key="storageKey" v-model:open="showColumnPicker" trigger="click" placement="top">
         <template #content>
@@ -53,11 +53,9 @@
                   <a-tooltip :title="col.title">
                     <span class="tw-truncate tw-font-semibold">{{
                       col.title
-                      }}</span>
+                    }}</span>
                   </a-tooltip>
-
-                  <img v-if="col.key !== 'actions'" :src="FilterIcon" alt="filter"
-                    class="tw-w-3 tw-h-3 tw-opacity-70 tw-cursor-pointer hover:tw-opacity-100" />
+                    <IconRenderer v-if="col.key !== 'actions'" :icon="FilterFilled" customClass="tw-cursor-pointer"/>
                 </div>
 
                 <div
@@ -86,7 +84,7 @@
 
                 <template v-else-if="col.key !== 'actions'">
                   <div class="tw-flex tw-items-center">
-                    <img :src="SearchIcon" alt="search" class="tw-w-3 tw-h-3 tw-mr-1 tw-opacity-70" />
+                    <IconRenderer :icon="SearchOutlined" customClass="tw-opacity-70"/>
                     <input v-model="filters[col.key]" type="text"
                       class="tw-w-full tw-border-none focus:tw-outline-none tw-text-[12px] tw-bg-transparent" />
                   </div>
@@ -272,8 +270,7 @@ import dayjs from "dayjs";
 import { getDoctypeConfig } from "./config/doctype-configs";
 import { colorMap } from "../utils/status-colors";
 import IconRenderer from "../components/IconRenderer.vue"
-import { SearchIcon, FilterIcon } from "../../assets/index";
-import { PlusOutlined, MinusOutlined } from "@ant-design/icons-vue";
+import { PlusOutlined, MinusOutlined, SearchOutlined, FilterFilled } from "@ant-design/icons-vue";
 
 const statusColors = ref({});
 
