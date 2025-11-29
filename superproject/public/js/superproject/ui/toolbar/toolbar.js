@@ -203,7 +203,11 @@ frappe.ui.toolbar.Toolbar = class {
       const docname = route[2];
 
       let docname_title;
-      if (docname.startsWith("new-" + doctype.toLowerCase().replace(/ /g, "-"))) {
+      if (
+        typeof docname === "string" &&
+        typeof doctype === "string" &&
+        docname.startsWith("new-" + doctype.toLowerCase().replace(/ /g, "-"))
+      ) {
         docname_title = __("New {0}", [__(doctype)]);
       } else {
         docname_title = __(docname);
