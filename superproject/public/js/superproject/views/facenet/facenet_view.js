@@ -75,8 +75,8 @@ frappe.views.FacenetView = class FacenetView extends frappe.views.ListView {
         primary_action: async (values) => {
           const res = await frappe.xcall("superproject.general.doctype.display_doctype_setting.display_doctype_setting.open_settings", { doctype: this.doctype, settings: JSON.stringify(values) })
           d.hide();
-          if (values.hide_tree != this.hide_tree) this.component.updateSetting("hide_tree", values.hide_tree)
-          if (values.hide_flex != this.hide_flex) this.component.updateSetting("hide_flex", values.hide_flex)
+          if (values.hide_tree !== this.hide_tree) this.component.updateSetting("hide_tree", values.hide_tree)
+          if (values.hide_flex !== this.hide_flex) this.component.updateSetting("hide_flex", values.hide_flex)
           this.hide_tree = values.hide_tree
           this.hide_flex = values.hide_flex
         }

@@ -178,7 +178,6 @@ frappe.ui.toolbar.Toolbar = class {
   }
 
   async custom_setup() {
-    // Gắn sự kiện cho nút Back - Chỉ gắn 1 lần duy nhất khi tải trang
     $(".custom-btn-back")
       .off("click")
       .on("click", () => {
@@ -195,66 +194,91 @@ frappe.ui.toolbar.Toolbar = class {
 
     await frappe.ui.toolbar.setup_custom_menu_bar();
 
-    $(document).on("page-change", async function () {
-      const breadcrumbs = frappe.router.current_route;
+    $(document).on("page-change", async () => {
+      const route = frappe.get_route();
+      if (!route || route.length === 0) return;
+
+      const view = route[0];
+      const doctype = route[1];
+      const docname = route[2];
+
+      let docname_title;
+      if (docname.startsWith("new-" + doctype.toLowerCase().replace(/ /g, "-"))) {
+        docname_title = __("New {0}", [__(doctype)]);
+      } else {
+        docname_title = __(docname);
+      }
 
       let breadcrumb_html = "";
 
-      if (breadcrumbs.length >= 3) {
-        const doctype = breadcrumbs[1];
-        const record_name = breadcrumbs[2];
-        if (
-          frappe.views.view_modes.includes(breadcrumbs[2]) ||
-          breadcrumbs[2] === breadcrumbs[1]
-        ) {
-          breadcrumb_html = `<span>${__(doctype)}</span>`;
-        } else {
-          let response = await frappe.db.get_value(
-            doctype,
-            record_name,
-            frappe.meta.get_docfield(doctype, frappe.get_meta(doctype).title_field)
-              ?.fieldname || "name",
-          );
-          let title = Object.values(response.message || {})[0] || "...";
-
-          breadcrumb_html = `
-						<span class="breadcrumb-link custom-breadcrumb" data-doctype="${doctype}" style="cursor:pointer;">
-							${__(doctype)}
-						</span>
-						<i class="fa fa-angle-right mx-1"></i>
-						<span>${__(title)}</span>`;
-        }
-      } else {
-        let title = breadcrumbs[breadcrumbs.length - 1]
+      if (!doctype) {
+        let title = route[route.length - 1]
           .toLowerCase()
           .split(/[-\s]+/)
           .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
           .join(" ");
-        breadcrumb_html = `<span>${__(title)}</span>`;
+
+        $(".page-breadcrumb-container").html(`<span>${__(title)}</span>`);
+        return;
+      }
+
+      if (view === "List") {
+        breadcrumb_html = `
+            <span class="breadcrumb-link custom-breadcrumb"
+                  data-doctype="${doctype}"
+                  style="cursor:pointer;">
+                ${__(doctype)}
+            </span>
+        `;
+      } else if (view === "Form" && docname) {
+        let meta = frappe.get_meta(doctype);
+        let title_field = meta?.title_field || "name";
+        let response = await frappe.db.get_value(doctype, docname, title_field);
+        let real_title = Object.values(response?.message || {})[0] || docname_title;
+
+        breadcrumb_html = `
+            <span class="breadcrumb-link custom-breadcrumb"
+                  data-doctype="${doctype}"
+                  style="cursor:pointer;">
+                ${__(doctype)}
+            </span>
+            <i class="fa fa-angle-right mx-1"></i>
+            <span class="breadcrumb-docname"
+                  style="cursor:pointer;"
+                  data-docname="${docname}">
+                ${__(real_title)}
+            </span>
+        `;
       }
 
       let home_html = `
-    <span class="breadcrumb-home" data-link="module-list" style="cursor:pointer; display:flex; align-items:center; gap:4px;">
-        <i class="fa fa-home"></i>
-        <span>${__("Home")}</span>
-    </span>
-    <i class="fa fa-angle-right mx-1"></i>
-`;
+        <span class="breadcrumb-home"
+              data-link="module-list"
+              style="cursor:pointer; display:flex; align-items:center; gap:4px;">
+            <i class="fa fa-home"></i>
+            <span>${__("Home")}</span>
+        </span>
+        <i class="fa fa-angle-right mx-1"></i>
+    `;
 
       $(".page-breadcrumb-container").html(home_html + breadcrumb_html);
 
       $(".breadcrumb-home")
         .off("click")
-        .on("click", function () {
+        .on("click", () => {
           frappe.set_route("module-list");
         });
 
       $(".breadcrumb-link")
         .off("click")
-        .on("click", function (e) {
-          e.preventDefault();
-          const doctype = $(this).data("doctype");
-          frappe.set_route("List", doctype);
+        .on("click", function () {
+          frappe.set_route("List", $(this).data("doctype"));
+        });
+
+      $(".breadcrumb-docname")
+        .off("click")
+        .on("click", function () {
+          frappe.utils.copy_to_clipboard($(this).text());
         });
 
       frappe.ui.toolbar.setup_hightlight_menu_bar();
