@@ -16,8 +16,8 @@
       class="tw-w-full md:tw-w-64 tw-border tw-rounded-lg tw-p-3 tw-bg-white tw-flex tw-flex-col tw-order-2 md:tw-order-1">
       <div class="tw-font-bold tw-text-[16px] tw-mb-2 tw-text-center">Các thông số</div>
 
-      <a-input v-model="search" placeholder="Tìm kiếm thuộc tính" size="small"
-        class="tw-mb-3 tw-rounded-sm tw-p-2" allowClear>
+      <a-input v-model="search" placeholder="Tìm kiếm thuộc tính" size="small" class="tw-mb-3 tw-rounded-sm tw-p-2"
+        allowClear>
         <template #suffix>
           <SearchOutlined class="tw-text-gray-400" />
         </template>
@@ -75,9 +75,11 @@
             </a-select>
           </div>
 
-          <draggable v-model="conf.colorConfigs" handle=".drag-handle" item-key="id" class="tw-space-y-3">
+          <draggable v-model="conf.colorConfigs" item-key="id" handle=".drag-handle" class="tw-space-y-3"
+            @change="onDrag(conf)">
             <template #item="{ element, index }">
-              <div class="tw-flex tw-items-center tw-gap-4 tw-bg-white tw-rounded tw-border tw-p-3 tw-flex-wrap">
+              <div :key="element.id"
+                class="tw-flex tw-items-center tw-gap-4 tw-bg-white tw-rounded tw-border tw-p-3 tw-flex-wrap">
 
                 <a-tooltip title="Kéo thả để thay đổi thứ tự" placement="top" color="#333">
                   <div class="drag-handle tw-w-6 tw-flex tw-justify-center tw-items-center tw-cursor-pointer">
@@ -133,6 +135,7 @@
             </div>
           </div>
         </div>
+
         <div @click="addConfig"
           class="tw-text-blue-600 tw-flex tw-items-center tw-gap-2 tw-cursor-pointer tw-font-medium tw-justify-start">
           <IconRenderer :icon="PlusCircleOutlined" />
@@ -177,27 +180,29 @@ const configRefs = ref([]);
 
 function onLineChange(line) {
   params.value = line ? [...lines[line]] : [];
-  selectedParam.value = null;
   configs.value = [];
 
-  configs.value = params.value.map(param => ({
-    name: param,
-    unit: "RPM",
-    row: 1,
-    col: 1,
-    applyType: null,
-    colorConfigs: [
-      {
-        id: crypto.randomUUID(),
-        from: -100000,
-        to: 300,
-        color: "#ff0000",
-        level: "Rủi ro",
-      },
-    ],
-  }));
+  configs.value = params.value.map((param) => {
+    const block = {
+      name: param,
+      unit: "RPM",
+      row: 1,
+      col: 1,
+      applyType: null,
+      colorConfigs: [
+        {
+          id: crypto.randomUUID(),
+          from: -100000,
+          to: 300,
+          color: "#ff0000",
+          level: "Rủi ro",
+        },
+      ],
+    };
 
-  nextTick(() => (configRefs.value = []));
+    return block;
+  });
+
 }
 
 async function scrollToParam(param) {
@@ -208,45 +213,49 @@ async function scrollToParam(param) {
 
   await nextTick();
   const el = configRefs.value[idx];
-
   if (el) {
     el.scrollIntoView({ behavior: "smooth", block: "start" });
-    highlightIndex.value = idx;
-
-    setTimeout(() => {
-      if (highlightIndex.value === idx) highlightIndex.value = null;
-    }, 1000);
   }
+
+  highlightIndex.value = idx;
+  setTimeout(() => {
+    if (highlightIndex.value === idx) highlightIndex.value = null;
+  }, 1200);
 }
 
 function addColor(conf) {
-  conf.colorConfigs.push({
+  const item = {
     id: crypto.randomUUID(),
     from: "",
     to: "",
     color: "#000000",
     level: "Bình thường",
-  });
+  };
+  conf.colorConfigs.push(item);
+}
+
+function removeColor(conf, index) {
+  conf.colorConfigs.splice(index, 1);
 }
 
 function addConfig() {
-  configs.value.push({
+  const block = {
     name: "",
     unit: "",
     row: 1,
     col: 1,
     applyType: null,
     colorConfigs: [],
-  });
-}
-
-
-function removeColor(conf, index) {
-  conf.colorConfigs.splice(index, 1);
+  };
+  configs.value.push(block);
 }
 
 function removeConfig(index) {
   configs.value.splice(index, 1);
+}
+
+function onDrag(conf) {
+  console.log("🔄 Drag reorder:", conf.colorConfigs);
 }
 
 function validateRange(conf) {
@@ -260,34 +269,33 @@ function validateRange(conf) {
 }
 
 function apply() {
+  configs.value.forEach((c, i) => {
+    console.log(`Block ${i}:`, c);
+  });
+
   for (const conf of configs.value) {
     const err = validateRange(conf);
     if (err) {
-      frappe.msgprint({ message: err, title: "Lỗi", indicator: "red" });
+      frappe.msgprint({ message: err, indicator: "red" });
       return;
     }
   }
-  frappe.msgprint({ message: "Đã áp dụng cấu hình!", title: "Thành công", indicator: "green" });
+
+  frappe.msgprint({ message: "Đã áp dụng cấu hình!", indicator: "green" });
 }
 
 function confirmApply() {
   customConfirmModal({
     title: "Xác nhận lưu cấu hình",
     message: "Bạn có chắc chắn muốn lưu cấu hình?",
-    note: "Thông tin dữ liệu cũ sẽ được thay đổi trong cơ sở dữ liệu",
+    note: "Thông tin dữ liệu cũ sẽ được thay đổi",
     type: "info",
     buttons: [
-      {
-        text: "Hủy bỏ",
-        class: "btn-secondary",
-        onClick: () => { }
-      },
+      { text: "Hủy", class: "btn-secondary" },
       {
         text: "Xác nhận",
         class: "btn-primary",
-        onClick: () => {
-          apply();
-        }
+        onClick: apply
       }
     ]
   });
