@@ -1,6 +1,5 @@
 frappe.listview_settings["Machine Monitoring"] = {
   refresh: async function (listview) {
-
     $(listview.page.body)
       .find(
         ".list-row-container, .list-paging-area, .listview-control, .listview-header, .result, .page-form",
@@ -72,7 +71,7 @@ function renderUI(listview, $wrapper) {
 
     availability: m.availability || 0,
     status: m.status || "Tạm dừng",
-    record: m
+    record: m,
   }));
 
   function nowTime() {
@@ -83,9 +82,9 @@ function renderUI(listview, $wrapper) {
 
   let html = `
   <div class="mm-time-banner">
-      <div>Thời gian hiện tại: <span id="mm-clock">${nowTime()}</span></div>
-      <div>Tần suất cập nhật: 3 phút</div>
-      <div>Thời gian cập nhật mới nhất: ${last_update}</div>
+      <div>Thời gian hiện tại: <span id="mm-clock" class="mm-time-text">${nowTime()}</span></div>
+      <div>Tần suất cập nhật: <span class="mm-time-text">3 phút</span></div>
+      <div>Thời gian cập nhật mới nhất: <span class="mm-time-text">${last_update}</span></div>
   </div>
 
   <table class="mm-status-table">
@@ -201,7 +200,7 @@ function renderUI(listview, $wrapper) {
     frappe.call({
       method: "superproject.machine_dashboard.get_layout_by_type",
       args: {
-        data: JSON.stringify(record)
+        data: JSON.stringify(record),
       },
       callback(r) {
         if (!r.message) return;
