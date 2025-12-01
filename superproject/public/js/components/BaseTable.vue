@@ -53,9 +53,9 @@
                   <a-tooltip :title="col.title">
                     <span class="tw-truncate tw-font-semibold">{{
                       col.title
-                    }}</span>
+                      }}</span>
                   </a-tooltip>
-                    <IconRenderer v-if="col.key !== 'actions'" :icon="FilterFilled" customClass="tw-cursor-pointer"/>
+                  <IconRenderer v-if="col.key !== 'actions'" :icon="FilterFilled" customClass="tw-cursor-pointer" />
                 </div>
 
                 <div
@@ -69,24 +69,28 @@
 
               <th v-if="!props.hideSelect" class="left-sticky-2 tw-top-[33px] tw-z-30 tw-border"></th>
 
-              <th v-for="col in filteredColumns" :key="col.key" class="tw-px-2 tw-py-1 tw-border"
+              <th v-for="col in filteredColumns" :key="col.key" class="tw-border"
                 :class="col.key === 'actions' ? 'actions-sticky th-sticky' : ''"
                 :style="{ width: colWidths[col.key] + 'px' }">
                 <template v-if="col.fieldtype === 'Date'">
                   <a-range-picker v-model:value="dateFilters[col.key]" format="DD/MM/YYYY" size="small"
-                    :placeholder="['Từ ngày', 'Đến ngày']" class="tw-w-full tw-text-xs" />
+                    :placeholder="['Từ ngày', 'Đến ngày']"
+                    class="tw-w-full tw-text-xs tw-rounded-sm tw-p-1 tw-shadow tw-bg-white" />
                 </template>
 
                 <template v-else-if="col.key === 'status'">
                   <a-select v-model:value="statusFilter" show-search allowClear placeholder="Chọn trạng thái"
-                    style="width: 200px" :options="statusOptions" :filter-option="filterOption" />
+                    class="tw-w-full tw-shadow tw-bg-white tw-rounded-sm" :options="statusOptions" :filter-option="filterOption" />
                 </template>
 
                 <template v-else-if="col.key !== 'actions'">
                   <div class="tw-flex tw-items-center">
-                    <IconRenderer :icon="SearchOutlined" customClass="tw-opacity-70"/>
-                    <input v-model="filters[col.key]" type="text"
-                      class="tw-w-full tw-border-none focus:tw-outline-none tw-text-[12px] tw-bg-transparent" />
+                    <a-input v-model:value="filters[col.key]" size="small"
+                      class="tw-rounded-sm tw-p-1 tw-shadow tw-bg-white" allowClear>
+                      <template #prefix>
+                        <IconRenderer :icon="SearchOutlined" customClass="tw-opacity-30" />
+                      </template>
+                    </a-input>
                   </div>
                 </template>
               </th>
@@ -140,8 +144,7 @@
                       @change="toggleRow(group.key, row, $event)" />
                   </td>
 
-                  <td v-for="col in filteredColumns" :key="col.key"
-                    class="tw-border tw-px-2 tw-py-1 tw-text-center tw-relative"
+                  <td v-for="col in filteredColumns" :key="col.key" class="tw-border tw-text-center tw-relative"
                     :class="col.key === 'actions' ? 'actions-sticky td-sticky' : ''">
                     <template v-if="col.key === 'status'">
                       <span :style="statusColors[row.status] || 'background-color:#e5e7eb; color:#374151;'"
@@ -187,8 +190,7 @@
                   <input type="checkbox" :checked="selectedRows.has(row)" @change="toggleRow(null, row, $event)" />
                 </td>
 
-                <td v-for="col in filteredColumns" :key="col.key"
-                  class="tw-border tw-px-2 tw-py-1 tw-text-center tw-relative"
+                <td v-for="col in filteredColumns" :key="col.key" class="tw-border tw-text-center tw-relative"
                   :class="col.key === 'actions' ? 'actions-sticky td-sticky' : ''">
                   <template v-if="col.key === 'status'">
                     <span :style="statusColors[row.status] || 'background-color:#e5e7eb; color:#374151;'"
@@ -902,7 +904,8 @@ tbody tr:hover {
   font-weight: 600;
   border-radius: 4px;
   line-height: 1;
-  min-width: 200px;
+  width: 100%;       
+  min-width: unset !important;
   text-align: center;
   color: white;
 }
