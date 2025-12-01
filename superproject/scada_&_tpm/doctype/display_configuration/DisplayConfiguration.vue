@@ -144,8 +144,15 @@
       </div>
 
       <div class="tw-text-right tw-mt-4">
-        <a-button type="primary" @click="confirmApply">Áp dụng</a-button>
+        <a-button v-if="selectedLine" type="primary" @click="confirmApply">
+          Áp dụng
+        </a-button>
+
+        <div v-else class="marquee-wrapper">
+          <span class="marquee-text">Chọn Line để xem Cấu hình</span>
+        </div>
       </div>
+
     </div>
   </div>
 </template>
@@ -291,7 +298,7 @@ function confirmApply() {
     note: "Thông tin dữ liệu cũ sẽ được thay đổi",
     type: "info",
     buttons: [
-      { text: "Hủy", class: "btn-secondary" },
+      { text: "Hủy bỏ", class: "btn-secondary" },
       {
         text: "Xác nhận",
         class: "btn-primary",
@@ -301,3 +308,36 @@ function confirmApply() {
   });
 }
 </script>
+
+<style scoped>
+.marquee-wrapper {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(-100%);
+    color: #ef4444;
+  }
+
+  50% {
+    color: #fbbf24;
+  }
+
+  100% {
+    transform: translateX(100%);
+    color: #ef4444;
+  }
+}
+
+.marquee-text {
+  display: inline-block;
+  font-size: 1.4rem;
+  font-style: italic;
+  font-weight: 700;
+  padding-left: 100%;
+  animation: marquee 10s linear infinite;
+}
+</style>
