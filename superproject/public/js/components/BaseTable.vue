@@ -1,6 +1,6 @@
 <template>
   <div
-    class="tw-relative tw-border tw-border-gray-100 tw-bg-white tw-rounded-lg tw-shadow-sm tw-p-4 tw-text-sm tw-flex tw-flex-col tw-h-full tw-z-[5]">
+    class="tw-relative tw-border tw-border-gray-100 tw-bg-white tw-shadow-sm tw-text-sm tw-flex tw-flex-col tw-h-full tw-z-[5]">
     <a-spin :spinning="loading" size="large" class="tw-w-full tw-h-full">
       <a-popover :key="storageKey" v-model:open="showColumnPicker" trigger="click" placement="top">
         <template #content>
@@ -55,7 +55,8 @@
                       col.title
                       }}</span>
                   </a-tooltip>
-                  <IconRenderer v-if="col.key !== 'actions'" :icon="FilterOutlined" :size="14" customClass="tw-cursor-pointer" />
+                  <IconRenderer v-if="col.key !== 'actions'" :icon="FilterOutlined" :size="14"
+                    customClass="tw-cursor-pointer" />
                 </div>
 
                 <div
@@ -73,14 +74,14 @@
                 :class="col.key === 'actions' ? 'actions-sticky th-sticky' : ''"
                 :style="{ width: colWidths[col.key] + 'px' }">
                 <template v-if="col.fieldtype === 'Date'">
-                  <a-range-picker v-model:value="dateFilters[col.key]" format="DD/MM/YYYY" size="small"
-                    :placeholder="['Từ ngày', 'Đến ngày']"
-                    class="tw-w-full tw-text-xs tw-rounded-sm tw-p-1 tw-shadow tw-bg-white" />
+                  <a-range-picker v-model:value="dateFilters[col.key]" :placeholder="['Từ ngày', 'Đến ngày']"
+                    class="tw-w-full tw-rounded-sm tw-p-1 tw-shadow tw-bg-white" />
                 </template>
 
                 <template v-else-if="col.key === 'status'">
                   <a-select v-model:value="statusFilter" show-search allowClear placeholder="Chọn trạng thái"
-                    class="tw-w-full tw-shadow tw-bg-white tw-rounded-sm" :options="statusOptions" :filter-option="filterOption" />
+                    class="tw-w-full tw-shadow tw-bg-white tw-rounded-sm" :options="statusOptions"
+                    :filter-option="filterOption" />
                 </template>
 
                 <template v-else-if="col.key !== 'actions'">
@@ -904,7 +905,7 @@ tbody tr:hover {
   font-weight: 600;
   border-radius: 4px;
   line-height: 1;
-  width: 100%;       
+  width: 100%;
   min-width: unset !important;
   text-align: center;
   color: white;

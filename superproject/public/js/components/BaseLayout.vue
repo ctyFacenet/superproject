@@ -4,7 +4,7 @@
       <div v-if="!state.hide_tree && !config.hideTree" class="tw-flex-shrink-0 tw-sticky lg:tw-left-0">
         <slot name="tree">
           <div v-if="showFilter"
-            class="tree-filter lg:tw-w-[250px] tw-bg-white tw-rounded-xl tw-shadow tw-p-3 tw-h-full tw-overflow-y-auto">
+            class="tree-filter lg:tw-w-[250px] tw-bg-white tw-rounded-sm tw-shadow tw-p-3 tw-h-full tw-overflow-y-auto">
             <TreeFilter :doctype="props.doctype" @change="onFilterChange" v-model:filters="activeFilters" />
           </div>
         </slot>
@@ -83,7 +83,7 @@
       </Transition>
 
       <div v-if="!state.hide_records"
-        class="tw-rounded-lg tw-flex-1 tw-min-h-[50vh] tw-bg-white tw-overflow-x-auto tw-overflow-y-auto">
+        class="tw-rounded-sm tw-flex-1 tw-min-h-[50vh] tw-bg-white tw-overflow-x-auto tw-overflow-y-auto">
         <slot name="records">
           <BaseTable :key="props.doctype" :doctype="props.doctype" :hide-select="config.hideSelect"
             :filters="activeFilters" />
