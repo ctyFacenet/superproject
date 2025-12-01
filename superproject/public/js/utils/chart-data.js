@@ -1,5 +1,6 @@
 // src/utils/chart-data.js
 
+//Report APS
 export const barChartData = {
   labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"],
   datasets: [
@@ -100,3 +101,106 @@ export const donutChartOptions = (monthLabel) => ({
   cutout: "45%",
   radius: "60%",
 });
+
+//Report SCADA & TPM
+export const scadaBarData = {
+  labels: [
+    "2024",
+    "2025",
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ],
+  datasets: [
+    {
+      type: "bar",
+      label: "Hiệu suất thiết bị",
+      data: [0, 14376, 0, 20739, 0, 0, 15739, 0, 0, 16999, 0, 0, 0, 24739],
+      backgroundColor: "#7EB2FF",
+      borderRadius: 1,
+      barPercentage: 0.6,
+    },
+    {
+      type: "line",
+      label: "Mục tiêu",
+      data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      borderColor: "#ff4d4f",
+      borderWidth: 2,
+      fill: false,
+      tension: 0.3,
+      pointRadius: 3,
+    },
+  ],
+};
+
+export const scadaBarOptions = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    title: {
+      display: true,
+      text: "Biểu đồ hiệu suất thiết bị",
+      font: { size: 14, weight: "bold" },
+      color: "#333",
+    },
+    legend: { position: "bottom" },
+    datalabels: {
+      color: "#333",
+      anchor: "end",
+      align: "top",
+      formatter: (v) => (v ? v.toLocaleString() : ""),
+    },
+  },
+  scales: {
+    y: {
+      ticks: {
+        callback: (v) => v.toLocaleString() + " %",
+      },
+    },
+  },
+};
+
+export const scadaDonutData = {
+  labels: ["CAN", "KDAI", "KTIEU", "KTRUNG", "MAHZ", "MALH", "MAVT"],
+  datasets: [
+    {
+      data: [10, 5, 8, 12, 4, 6, 3],
+      backgroundColor: [
+        "#4E79A7", // CAN
+        "#F28E2B", // KDAI
+        "#E15759", // KTIEU
+        "#76B7B2", // KTRUNG
+        "#59A14F", // MAHZ
+        "#EDC948", // MALH
+        "#B07AA1", // MAVT
+      ],
+      borderColor: "#fff",
+      borderWidth: 1,
+    },
+  ],
+};
+
+export const scadaDonutOptions = {
+  responsive: true,
+  maintainAspectRatio: false,
+  cutout: "60%",
+  plugins: {
+    title: {
+      display: true,
+      text: "Biểu đồ nguyên nhân dừng máy",
+      font: { size: 14, weight: "bold" },
+      color: "#333",
+    },
+    legend: { position: "bottom" },
+    datalabels: { display: false },
+  },
+};

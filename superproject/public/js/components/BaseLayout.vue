@@ -43,7 +43,19 @@
 
               </div>
 
-              <div v-if="showCharts"
+              <div v-if="showScadaCharts"
+                class="lg:tw-col-span-4 tw-grid tw-grid-cols-1 lg:tw-grid-cols-2 tw-gap-4 tw-border-gray-200 tw-rounded-md">
+                <div class="tw-p-2 tw-border tw-rounded tw-bg-white tw-shadow">
+                  <BaseChart type="bar" :data="scadaBarData" :options="scadaBarOptions" />
+                </div>
+
+                <div
+                  class="tw-p-2 tw-border tw-rounded tw-bg-white tw-shadow tw-flex tw-flex-col lg:tw-flex-row tw-justify-around tw-items-center tw-gap-4">
+                  <BaseChart type="doughnut" :data="scadaDonutData" :options="scadaDonutOptions" />
+                </div>
+              </div>
+
+              <div v-else-if="showCharts"
                 class="lg:tw-col-span-4 tw-grid tw-grid-cols-1 lg:tw-grid-cols-2 tw-gap-4 tw-border-gray-200 tw-rounded-md">
                 <div class="tw-p-2 tw-border tw-rounded tw-bg-white tw-shadow">
                   <BaseChart type="bar" :data="barChartData" :options="barChartOptions" />
@@ -54,6 +66,7 @@
                   <BaseChart type="doughnut" :data="donutChartData2" :options="donutChartOptions('08/2025')" />
                 </div>
               </div>
+
               <div
                 class="tw-flex tw-items-center tw-justify-end tw-gap-3 tw-overflow-x-auto tw-max-w-full tw-pb-1 hide-scrollbar">
                 <div class="tw-flex tw-items-center tw-gap-2 tw-flex-nowrap">
@@ -61,7 +74,7 @@
                     <a-button type="link"
                       class="tw-flex tw-items-center tw-text-[#0ba5ec] hover:tw-text-[#0987c1] tw-font-medium tw-px-1 tw-whitespace-nowrap"
                       @click="btn.onClick">
-                      <IconRenderer :icon="btn.icon" customClass="tw-mr-1" :size="18" :color="btn.color"/>
+                      <IconRenderer :icon="btn.icon" customClass="tw-mr-1" :size="18" :color="btn.color" />
                       {{ btn.label }}
                     </a-button>
                   </template>
@@ -75,7 +88,6 @@
                   </template>
                 </a-input>
               </div>
-
 
             </div>
           </slot>
@@ -107,6 +119,10 @@ import {
   donutChartData1,
   donutChartData2,
   donutChartOptions,
+  scadaDonutData,
+  scadaDonutOptions,
+  scadaBarData,
+  scadaBarOptions
 } from "../utils/chart-data.js"
 import { DocType } from "../utils/consts.js";
 import dayjs from "dayjs";
@@ -145,6 +161,8 @@ const state = reactive({
 });
 
 const showCharts = computed(() => props.doctype === DocType.STATISTICAL_REPORT);
+const showScadaCharts = computed(() => props.doctype === DocType.SCADA_STATISTICAL_REPORT);
+
 
 const currentActions = computed(() => config.value?.actions || []);
 const currentTitle = computed(() => config.value?.title || "");

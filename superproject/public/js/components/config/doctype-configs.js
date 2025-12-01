@@ -491,6 +491,7 @@ export const doctypeConfigs = {
   [DocType.SCADA_STATISTICAL_REPORT]: {
     title: "BÁO CÁO CHI TIẾT TRẠNG THÁI MÁY - NHÓM LINE",
     hideSelect: true,
+    groupByField: "processcode",
   },
 };
 
