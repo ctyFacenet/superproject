@@ -51,11 +51,11 @@
                 }">
                 <div class="tw-flex tw-items-center tw-justify-center tw-gap-1">
                   <a-tooltip :title="col.title">
-                    <span class="tw-truncate tw-font-semibold">{{
+                    <span class="tw-truncate tw-font-semibold tw-text-[14px]">{{
                       col.title
                       }}</span>
                   </a-tooltip>
-                  <IconRenderer v-if="col.key !== 'actions'" :icon="FilterFilled" customClass="tw-cursor-pointer" />
+                  <IconRenderer v-if="col.key !== 'actions'" :icon="FilterOutlined" :size="14" customClass="tw-cursor-pointer" />
                 </div>
 
                 <div
@@ -272,7 +272,7 @@ import dayjs from "dayjs";
 import { getDoctypeConfig } from "./config/doctype-configs";
 import { colorMap } from "../utils/status-colors";
 import IconRenderer from "../components/IconRenderer.vue"
-import { PlusOutlined, MinusOutlined, SearchOutlined, FilterFilled } from "@ant-design/icons-vue";
+import { PlusOutlined, MinusOutlined, SearchOutlined, FilterOutlined } from "@ant-design/icons-vue";
 
 const statusColors = ref({});
 

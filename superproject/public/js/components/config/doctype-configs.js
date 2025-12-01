@@ -488,6 +488,10 @@ export const doctypeConfigs = {
     ],
     rowActions: baseRowActions(),
   },
+  [DocType.SCADA_STATISTICAL_REPORT]: {
+    title: "BÁO CÁO CHI TIẾT TRẠNG THÁI MÁY - NHÓM LINE",
+    hideSelect: true,
+  },
 };
 
 export const getDoctypeConfig = (doctype) => {

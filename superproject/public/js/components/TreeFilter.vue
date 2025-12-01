@@ -1,20 +1,52 @@
 <template>
-  <div class="tw-border tw-rounded-lg tw-p-2 tw-max-h-[70vh] tw-overflow-y-auto">
-    <a-tree checkable :tree-data="treeData" v-model:checkedKeys="checkedKeys" @check="emitChange" />
+  <div class="tw-space-y-4">
+
+    <template v-if="showMachineGroupFilter">
+      <div class="tw-border tw-rounded-lg tw-p-3 tw-bg-white">
+        <div class="tw-font-bold tw-mb-3">Chọn nhóm máy</div>
+
+        <a-radio-group v-model:value="selectedGroup" class="tw-flex tw-flex-col tw-gap-2">
+          <a-radio value="CAN">CAN</a-radio>
+          <a-radio value="KDAI">KDAI</a-radio>
+          <a-radio value="KTIEU">KTIEU</a-radio>
+          <a-radio value="KTRUNG">KTRUNG</a-radio>
+          <a-radio value="MAHZ">MAHZ</a-radio>
+          <a-radio value="MALH">MALH</a-radio>
+          <a-radio value="MAVT">MAVT</a-radio>
+        </a-radio-group>
+      </div>
+
+      <div class="tw-border tw-rounded-lg tw-p-3 tw-bg-white">
+        <div class="tw-font-bold tw-mb-3">Ngày bắt đầu - kết thúc</div>
+
+        <a-range-picker v-model:value="dateRange" class="tw-w-full tw-mb-3" :placeholder="['Từ ngày', 'Đến ngày']" />
+      </div>
+
+    </template>
+
+    <div class="tw-border tw-rounded-lg tw-p-2 tw-max-h-[70vh] tw-overflow-y-auto tw-bg-white">
+      <a-tree checkable :tree-data="treeData" v-model:checkedKeys="checkedKeys" @check="emitChange" />
+    </div>
+
   </div>
 </template>
 
+
 <script setup>
-import { ref, computed, watchEffect } from "vue";
+import { ref, computed } from "vue";
 import { DocType } from "../utils/consts.js";
+
+const selectedGroup = ref("CAN");
+const dateRange = ref(null);
 
 const props = defineProps({
   doctype: { type: String, required: true },
   showDateFilter: { type: Boolean, default: false },
 });
 
-const emit = defineEmits(["change", "update:filters"]);
+const showMachineGroupFilter = computed(() => props.doctype === DocType.SCADA_STATISTICAL_REPORT);
 
+const emit = defineEmits(["change", "update:filters"]);
 const checkedKeys = ref([]);
 
 const now = new Date();
@@ -40,6 +72,24 @@ const recentMonths = computed(() => {
     }
     return { year: y, month: m };
   });
+});
+
+
+const defaultTreeFilter = computed(() => {
+  return years.map((year) => ({
+    title: `Năm ${year}`,
+    key: `year-${year}`,
+    children: months.map((m) => ({
+      title: `Tháng ${m}`,
+      key: `month-${year}-${m}`,
+      children: props.showDateFilter
+        ? Array.from({ length: getDaysInMonth(year, m) }, (_, d) => ({
+          title: `Ngày ${d + 1}`,
+          key: `day-${year}-${m}-${d + 1}`,
+        }))
+        : undefined,
+    })),
+  }));
 });
 
 const treeData = computed(() => {
@@ -96,48 +146,25 @@ const treeData = computed(() => {
         { title: "Kho cán", key: "warehouse-rolling" },
       ];
 
+    case DocType.SCADA_STATISTICAL_REPORT:
+      return defaultTreeFilter.value;
+
     default:
-      return years.map((year) => ({
-        title: `Năm ${year}`,
-        key: `year-${year}`,
-        children: months.map((m) => ({
-          title: `Tháng ${m}`,
-          key: `month-${year}-${m}`,
-          children: props.showDateFilter
-            ? Array.from({ length: getDaysInMonth(year, m) }, (_, d) => ({
-              title: `Ngày ${d + 1}`,
-              key: `day-${year}-${m}-${d + 1}`,
-            }))
-            : undefined,
-        })),
-      }));
+      return defaultTreeFilter.value;
   }
 });
 
 function emitChange() {
-  const filters = { treeKeys: checkedKeys.value };
-  emit("update:filters", filters);
+  emit("update:filters", {
+    treeKeys: checkedKeys.value,
+    group: selectedGroup.value,
+    dateRange: dateRange.value,
+  });
+
   emit("change", checkedKeys.value);
 }
-
-watchEffect(() => {
-  const newNow = new Date();
-  if (
-    newNow.getFullYear() !== currentYear ||
-    newNow.getMonth() + 1 !== currentMonth
-  ) {
-    recentMonths.value = Array.from({ length: 4 }, (_, i) => {
-      let m = newNow.getMonth() + 1 - i;
-      let y = newNow.getFullYear();
-      if (m <= 0) {
-        m += 12;
-        y -= 1;
-      }
-      return { year: y, month: m };
-    });
-  }
-});
 </script>
+
 
 <style scoped>
 .tw-border {

@@ -5,7 +5,22 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "machine"
+  "processcode",
+  "machine",
+  "linegroup",
+  "date",
+  "operatorname",
+  "column_break_lruh",
+  "productionordercode",
+  "outputbtpcode",
+  "status",
+  "starttime",
+  "endtime",
+  "column_break_dogj",
+  "downtimereason",
+  "downtimestarttime",
+  "downtimeendtime",
+  "downtimeminutes"
  ],
  "fields": [
   {
@@ -13,12 +28,99 @@
    "fieldtype": "Small Text",
    "in_list_view": 1,
    "label": "M\u00e1y"
+  },
+  {
+   "fieldname": "processcode",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e3 c\u00f4ng \u0111o\u1ea1n"
+  },
+  {
+   "fieldname": "column_break_lruh",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_dogj",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "linegroup",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Nh\u00f3m line"
+  },
+  {
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Ng\u00e0y"
+  },
+  {
+   "fieldname": "operatorname",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Nh\u00e2n vi\u00ean th\u1ef1c hi\u1ec7n"
+  },
+  {
+   "fieldname": "productionordercode",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e3 l\u1ec7nh s\u1ea3n xu\u1ea5t"
+  },
+  {
+   "fieldname": "outputbtpcode",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e3 BTP \u0111\u1ea7u ra"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Tr\u1ea1ng th\u00e1i",
+   "options": "\u0110ang ch\u1ea1y\nT\u1ea1m d\u1eebng\nH\u1ecfng"
+  },
+  {
+   "fieldname": "starttime",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Th\u1eddi gian b\u1eaft \u0111\u1ea7u"
+  },
+  {
+   "fieldname": "endtime",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Th\u1eddi gian k\u1ebft th\u00fac"
+  },
+  {
+   "fieldname": "downtimereason",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Nguy\u00ean nh\u00e2n d\u1eebng"
+  },
+  {
+   "fieldname": "downtimestarttime",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Th\u1eddi gian b\u1eaft \u0111\u1ea7u d\u1eebng"
+  },
+  {
+   "fieldname": "downtimeendtime",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Th\u1eddi gian k\u1ebft th\u00fac d\u1eebng"
+  },
+  {
+   "fieldname": "downtimeminutes",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Th\u1eddi gian d\u1eebng (Ph\u00fat)"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-11-25 14:31:37.138015",
+ "modified": "2025-12-01 09:04:22.938046",
  "modified_by": "Administrator",
  "module": "SCADA & TPM",
  "name": "Scada Statistical Report",
