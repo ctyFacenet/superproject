@@ -80,7 +80,7 @@
                   </template>
                 </div>
 
-                <a-input placeholder="Nhập thông tin để tìm kiếm"
+                <a-input v-if="!config.hideSearchFullText" placeholder="Nhập thông tin để tìm kiếm"
                   class="sm:tw-w-[220px] md:tw-w-[260px] lg:tw-w-[300px] tw-h-[30px] tw-text-[13px] tw-rounded-sm focus:tw-shadow-none tw-flex-shrink-0"
                   size="small" allowClear>
                   <template #prefix>
