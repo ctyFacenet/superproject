@@ -116,7 +116,7 @@
                   </a-select>
                 </div>
 
-                <a-button type="text" danger @click="removeColor(conf, index)">
+                <a-button type="text" danger @click="confirmDeleteColorConfig(conf, index)">
                   <IconRenderer :icon="DeleteOutlined" :size="18" />
                 </a-button>
               </div>
@@ -129,7 +129,7 @@
               <IconRenderer :icon="PlusCircleOutlined" /> Thêm màu mới
             </div>
 
-            <div @click="removeConfig(idx)"
+            <div @click="confirmDeleteConfig(idx)"
               class="tw-text-red-600 tw-flex tw-items-center tw-gap-2 tw-cursor-pointer tw-font-medium">
               <IconRenderer :icon="DeleteOutlined" /> Xóa cấu hình
             </div>
@@ -303,6 +303,38 @@ function confirmApply() {
         text: "Xác nhận",
         class: "btn-primary",
         onClick: apply
+      }
+    ]
+  });
+}
+function confirmDeleteColorConfig(conf, index) {
+  customConfirmModal({
+    title: "Xoá cấu hình màu",
+    message: "Xác nhận xoá cấu hình màu này?",
+    note: "Cấu hình màu này sẽ bị xoá khỏi hệ thống.",
+    type: "danger",
+    buttons: [
+      { text: "Hủy bỏ", class: "btn-secondary" },
+      {
+        text: "Xoá",
+        class: "btn-danger",
+        onClick: () => removeColor(conf, index),
+      }
+    ]
+  });
+}
+function confirmDeleteConfig(index) {
+  customConfirmModal({
+    title: "Xoá cấu hình",
+    message: "Xác nhận xoá cấu hình này?",
+    note: "Cấu hình này sẽ bị xoá khỏi hệ thống.",
+    type: "danger",
+    buttons: [
+      { text: "Hủy bỏ", class: "btn-secondary" },
+      {
+        text: "Xoá",
+        class: "btn-danger",
+        onClick: () => removeConfig(index),
       }
     ]
   });
