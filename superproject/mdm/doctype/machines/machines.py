@@ -5,5 +5,5 @@
 from frappe.model.document import Document
 
 
-class WarehouseManagement(Document):
+class Machines(Document):
 	pass

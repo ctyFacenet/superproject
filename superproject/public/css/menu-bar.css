@@ -287,3 +287,22 @@
     display: none !important;
   }
 }
+
+.caret-down {
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+.submenu-search-wrapper {
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+  background: white;
+}
+
+.submenu-search-input {
+  width: 100%;
+  padding: 6px 10px;
+  font-size: 0.9rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}

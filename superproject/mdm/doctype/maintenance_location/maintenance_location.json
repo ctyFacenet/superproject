@@ -1,25 +1,25 @@
 {
  "actions": [],
  "allow_rename": 1,
- "creation": "2025-11-12 16:31:51.542190",
+ "creation": "2025-12-02 11:50:23.660496",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "section_break_jalm"
+  "section_break_du3a"
  ],
  "fields": [
   {
-   "fieldname": "section_break_jalm",
+   "fieldname": "section_break_du3a",
    "fieldtype": "Section Break"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-11-12 16:31:51.542190",
+ "modified": "2025-12-02 11:50:23.660496",
  "modified_by": "Administrator",
  "module": "MDM",
- "name": "Warehouse Management",
+ "name": "Maintenance Location",
  "owner": "Administrator",
  "permissions": [
   {

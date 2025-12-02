@@ -475,17 +475,26 @@ frappe.ui.toolbar.setup_custom_menu_bar = async function (hide = false) {
         if (item.child && item.child.length > 0) {
           div.addClass("has-child");
           div.attr("data-group", item.label);
-          const submenu = $('<div class="custom-menu-bar-submenu"></div>').attr(
-            "data-group",
-            item.label,
-          );
+
+          div.append('<span class="caret-down" style="margin-left:6px;">▼</span>');
+
+          const submenu = $(`
+    <div class="custom-menu-bar-submenu" data-group="${item.label}">
+        <div class="submenu-search-wrapper">
+            <input type="text" class="submenu-search-input" placeholder="${__("Search")}" />
+        </div>
+    </div>
+  `);
 
           item.child.forEach((sub) => {
             if (!sub.link_to) return;
-            const subDiv = $('<div class="custom-menu-bar-submenu-item"></div>')
-              .text(__(sub.title || sub.label || sub.link_to))
-              .attr("data-link", sub.link_to)
-              .attr("data-group", item.label);
+            const subDiv = $(`
+      <div class="custom-menu-bar-submenu-item"
+           data-link="${sub.link_to}"
+           data-group="${item.label}">
+         ${__(sub.title || sub.label || sub.link_to)}
+      </div>
+    `);
             subDiv.on("click", function (e) {
               e.stopPropagation();
               submenu.hide();
@@ -494,23 +503,34 @@ frappe.ui.toolbar.setup_custom_menu_bar = async function (hide = false) {
               if (sub.type === "DocType") {
                 if (sub.is_single)
                   frappe.set_route(["Form", sub.link_to, sub.link_to]);
-                else frappe.set_route(["List", sub.link_to, "List"]);
+                else frappe.set_route(["List", sub.link_to]);
               } else if (sub.type === "Report") {
                 frappe.set_route(["query-report", sub.link_to]);
               } else if (sub.type === "Page") {
                 frappe.set_route([sub.link_to]);
               }
             });
+
             submenu.append(subDiv);
           });
 
           $("body").append(submenu);
 
+          submenu.find(".submenu-search-input").on("input", function () {
+            const keyword = $(this).val().toLowerCase();
+            submenu.find(".custom-menu-bar-submenu-item").each(function () {
+              const text = $(this).text().toLowerCase();
+              $(this).toggle(text.includes(keyword));
+            });
+          });
+
           let hideTimeout;
+
           div.on("mouseenter", function () {
             clearTimeout(hideTimeout);
             $(".custom-menu-bar-submenu").hide();
-            $(".custom-menu-bar-item").removeClass("hover-active"); // Chỉ xóa hover state
+            $(".custom-menu-bar-item").removeClass("hover-active");
+
             div.addClass("hover-active");
 
             const rect = div[0].getBoundingClientRect();
@@ -540,6 +560,19 @@ frappe.ui.toolbar.setup_custom_menu_bar = async function (hide = false) {
           submenu.on("mouseleave", function () {
             submenu.hide();
             div.removeClass("hover-active");
+          });
+
+          div.on("click", function (e) {
+            e.stopPropagation();
+            const rect = div[0].getBoundingClientRect();
+
+            $(".custom-menu-bar-submenu").hide();
+            submenu.toggle();
+
+            submenu.css({
+              top: rect.bottom + window.scrollY,
+              left: rect.left + window.scrollX,
+            });
           });
         } else {
           // Item không có child - chỉ ẩn submenu khác, không xóa active

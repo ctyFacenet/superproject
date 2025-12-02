@@ -12,8 +12,14 @@ In Process Inventory,Tồn kho công đoạn
 Period End Closing,Chốt sổ cuối kỳ
 Statistical Report,Báo cáo thống kê
 Warehouse Management,Quản lý kho
+Account Management,Quản lý tài khoản
 BOM Management,Quản lý BOM
 Machine Monitoring,Giám sát máy móc
+Machines,Máy móc
+Machine Group,Nhóm máy
+Line Group,Nhóm line
+Maintenance Location,Vị trí bảo dưỡng
+Downtime Reason,Nguyên nhân dừng máy
 Load More,Xem thêm
 Cancelling documents,Đang hủy bỏ
 Cancel All,Hủy bỏ tất cả

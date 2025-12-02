@@ -5,5 +5,5 @@
 from frappe.tests.utils import FrappeTestCase
 
 
-class TestWarehouseManagement(FrappeTestCase):
+class TestLineGroup(FrappeTestCase):
 	pass
