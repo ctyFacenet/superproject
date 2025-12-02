@@ -3,7 +3,7 @@ function customConfirmModal({
   message = "",
   note = "",
   type = "info",
-  buttons = []
+  buttons = [],
 }) {
   const MODAL_ID = "customConfirmModal";
   $("#" + MODAL_ID).remove();
@@ -11,21 +11,28 @@ function customConfirmModal({
   const alertMap = {
     danger: "alert-danger",
     success: "alert-success",
-    info: "alert-info"
+    info: "alert-info",
   };
 
-  const buttonsHtml = buttons.map((btn, i) =>
-    `<button type="button" class="btn ${btn.class || "btn-secondary"} btn-action" data-idx="${i}">
+  const buttonsHtml = buttons
+    .map(
+      (btn, i) =>
+        `<button type="button" class="btn ${btn.class || "btn-secondary"} btn-action" data-idx="${i}">
         ${btn.text}
-     </button>`
-  ).join("");
+     </button>`,
+    )
+    .join("");
 
   const noteHtml = note
     ? `
-      <div class="alert ${alertMap[type] || "alert-info"} d-flex align-items-center">
-        <i class="fa fa-exclamation-triangle mr-2" style="font-size: 28px"></i>
-        <div><strong>Lưu ý:</strong><br>${note}</div>
-      </div>`
+     <div class="alert ${alertMap[type] || "alert-info"} d-flex align-items-center">
+      <i class="fa fa-exclamation-triangle mr-2" style="font-size: 30px;"></i>
+      <div>
+        <div style="font-size: 18px; font-weight: 700;">Lưu ý:</div>
+        <div style="margin-top: 6px; font-size: 14px;">${note}</div>
+      </div>
+     </div>
+`
     : "";
 
   const modalHtml = `
