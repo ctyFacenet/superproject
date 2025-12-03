@@ -3,6 +3,7 @@ import BaseLayout from "./components/BaseLayout.vue";
 import DisplayLayout from "../../general/doctype/display/DisplayLayout.vue"
 import ModuleList from "../../general/page/module_list/ModuleList.vue"
 import DisplayConfiguration from "../../scada_&_tpm/doctype/display_configuration/DisplayConfiguration.vue";
+import DisplayAccountManagement from "../../mdm/doctype/account_management/DisplayAccountManagement.vue"
 
 frappe.provide("superproject.ui");
 superproject.ui.mountVue = mountVue;
@@ -32,3 +33,4 @@ createVueWrapper("BaseLayout", BaseLayout);
 createVueWrapper("DisplayLayout", DisplayLayout);
 createVueWrapper("ModuleList", ModuleList);
 createVueWrapper("DisplayConfiguration", DisplayConfiguration);
+createVueWrapper("DisplayAccountManagement", DisplayAccountManagement);

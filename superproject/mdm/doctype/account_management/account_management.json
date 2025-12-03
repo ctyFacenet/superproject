@@ -5,18 +5,20 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "section_break_xvgv"
+  "accountname"
  ],
  "fields": [
   {
-   "fieldname": "section_break_xvgv",
-   "fieldtype": "Section Break"
+   "fieldname": "accountname",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "T\u00ean t\u00e0i kho\u1ea3n"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-12-02 11:36:06.488093",
+ "modified": "2025-12-03 14:26:06.432524",
  "modified_by": "Administrator",
  "module": "MDM",
  "name": "Account Management",
