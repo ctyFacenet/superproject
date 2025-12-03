@@ -5,18 +5,61 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "section_break_6qqx"
+  "bomcode",
+  "version",
+  "itemcode",
+  "column_break_rmcg",
+  "itemname",
+  "createddate",
+  "createdby"
  ],
  "fields": [
   {
-   "fieldname": "section_break_6qqx",
-   "fieldtype": "Section Break"
+   "fieldname": "bomcode",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e3 BOM",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_rmcg",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "version",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Version"
+  },
+  {
+   "fieldname": "itemcode",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e3 h\u00e0ng"
+  },
+  {
+   "fieldname": "itemname",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "T\u00ean h\u00e0ng"
+  },
+  {
+   "fieldname": "createddate",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Ng\u00e0y t\u1ea1o"
+  },
+  {
+   "fieldname": "createdby",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Ng\u01b0\u1eddi t\u1ea1o"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-11-12 16:35:44.270233",
+ "modified": "2025-12-03 11:17:46.690528",
  "modified_by": "Administrator",
  "module": "MDM",
  "name": "BOM Management",

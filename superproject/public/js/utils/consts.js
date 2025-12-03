@@ -12,5 +12,6 @@ export const DocType = Object.freeze({
   DISPLAY_CONFIGURATION: "Display Configuration",
   MAINTENANCE_LOG: "Maintenance Log",
   MAINTENANCE_PLANNING: "Maintenance Planning",
-  SCADA_STATISTICAL_REPORT: "Scada Statistical Report"
+  SCADA_STATISTICAL_REPORT: "Scada Statistical Report",
+  BOM_MANAGEMENT: "BOM Management"
 });
