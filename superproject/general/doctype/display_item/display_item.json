@@ -12,7 +12,8 @@
   "link_to",
   "icon",
   "deactive",
-  "direction"
+  "direction",
+  "parent_group"
  ],
  "fields": [
   {
@@ -65,13 +66,19 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Direction"
+  },
+  {
+   "fieldname": "parent_group",
+   "fieldtype": "Data",
+   "label": "Parent Group",
+   "length": 140
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-11-10 13:46:20.358874",
+ "modified": "2025-12-02 14:43:31.226392",
  "modified_by": "Administrator",
  "module": "General",
  "name": "Display Item",

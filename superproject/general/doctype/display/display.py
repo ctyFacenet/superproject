@@ -14,62 +14,90 @@ def get_module_display(link_to_name):
     if not doc or not doc.items:
         return []
 
-    # Xác định module mục tiêu
     target_module = None
     for r in doc.items:
         if r.link_to == link_to_name:
             target_module = r.module
             break
 
-    rows = [r for r in doc.items if r.module == target_module]
-    if not rows:
+    if not target_module:
         return []
 
-    result = []
-    group_cache = {}  # Để gom các bản ghi theo group, nếu group đã được tạo
+    rows = [r for r in doc.items if r.module == target_module and not r.deactive]
+
+    groups = {}
+    items_no_group = []
 
     for r in rows:
-        if r.deactive: continue
+        if r.group:
+            groups.setdefault(r.group, {
+                "label": r.group,
+                "parent": getattr(r, "parent_group", None),
+                "child": [],
+                "type": "group"
+            })
+
+    for r in rows:
+        if r.group and r.parent_group:
+            if r.parent_group not in groups:
+                groups[r.parent_group] = {
+                    "label": r.parent_group,
+                    "parent": None,
+                    "child": [],
+                    "type": "group"
+                }
+
+    for r in rows:
         if not r.link_to:
             continue
 
-        # Nếu có group
-        if r.group:
-            if r.group not in group_cache:
-                group_entry = {
-                    "label": r.group,
-                    "child": []
-                }
-                group_cache[r.group] = group_entry
-                result.append(group_entry)
-            # Thêm vào group hiện tại
-            group_cache[r.group]["child"].append({
-                "type": r.type,
-                "link_to": r.link_to,
-                **({"is_single": frappe.get_meta(r.link_to).issingle} if r.type == "DocType" else {}),
-                **({"title": frappe.db.get_value("Page", r.link_to, "title")} if r.type == "Page" else {})
-            })
-        else:
-            # Không có group → thêm trực tiếp vào result
-            result.append({
-                "label": frappe.db.get_value("Page", r.link_to, "title") if r.type == "Page" else frappe._(r.link_to),
-                "link_to": r.link_to,
-                "type": r.type,
-                **({"is_single": frappe.get_meta(r.link_to).issingle} if r.type == "DocType" else {})
-            })
+        item = {
+            "label": (
+                frappe.db.get_value("Page", r.link_to, "title")
+                if r.type == "Page"
+                else frappe._(r.link_to)
+            ),
+            "type": r.type,
+            "link_to": r.link_to
+        }
 
-    return result
+        if r.type == "DocType":
+            item["is_single"] = frappe.get_meta(r.link_to).issingle
+
+        if r.group and r.group in groups:
+            groups[r.group]["child"].append(item)
+        else:
+            items_no_group.append(item)
+
+
+    root = []
+
+    for name, node in groups.items():
+        parent = node.get("parent")
+        if parent and parent in groups:
+            groups[parent]["child"].append(node)
+
+    for name, node in groups.items():
+        parent = node.get("parent")
+        if not parent or parent not in groups:
+            root.append(node)
+
+    root.extend(items_no_group)
+
+    return root
 
 @frappe.whitelist()
 def get_module_name(link_to_name):
     doc = frappe.get_single("Display")
-    if not doc or not doc.items: return []
-    target_module = None
+    if not doc or not doc.items:
+        return None
+
     for r in doc.items:
         if r.link_to == link_to_name:
-            target_module = r.module
-            break
-    return target_module
+            return r.module
+
+    return None
+
 
 @frappe.whitelist()
 def get_modules_display():
@@ -89,16 +117,13 @@ def get_modules_display():
                 "is_single": frappe.get_meta(item.link_to).issingle if item.link_to else False,
                 "description": "",
                 "icon": "folder",
-                "direction": 0,  # default direction
+                "direction": 0,
             }
-            # Gán description, icon, direction từ doc.modules
+
             for m in doc.modules:
                 if m.module == module_name:
                     modules[module_name]["description"] = m.description
                     modules[module_name]["icon"] = m.icon
                     modules[module_name]["direction"] = m.direction or 0
 
-    # Chuyển sang list và sort theo direction
     return sorted(modules.values(), key=lambda x: x["direction"])
-
-
