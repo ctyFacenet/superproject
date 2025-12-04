@@ -32,7 +32,6 @@
   user-select: none;
   position: relative;
   transition:
-    transform 0.2s ease,
     background-color 0.3s ease,
     color 0.3s ease,
     box-shadow 0.3s ease;
@@ -292,6 +291,7 @@
   padding: 6px 0;
   min-width: 220px;
   z-index: 99999;
+  margin-top: 5px
 }
 
 

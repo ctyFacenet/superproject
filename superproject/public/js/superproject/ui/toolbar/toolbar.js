@@ -516,7 +516,7 @@ function renderTopMenu(item) {
 
   if (item.child && item.child.length > 0) {
     div.addClass("has-child");
-    div.append('<span class="caret-down"><i class="fa fa-angle-down"></i></span>');
+    div.append('<span class="caret-down"><i class="fa fa-angle-down" style="font-size:16px"></i></span>');
 
     const submenu = renderNestedMenu(item);
 

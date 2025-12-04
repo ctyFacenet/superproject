@@ -3,19 +3,25 @@
 
     <div class="tw-flex tw-items-center tw-gap-6 tw-border-b tw-border-gray-300 tw-pb-2">
 
-      <span :class="activeTab === 'accounts'
-        ? 'tw-text-blue-600 tw-font-semibold tw-border-b-2 tw-border-blue-600'
-        : 'tw-text-gray-700 tw-font-medium hover:tw-text-blue-600'" class="tw-py-2 tw-cursor-pointer"
-        @click="activeTab = 'accounts'">
-        Danh sách tài khoản
-      </span>
+      <div class="tw-flex tw-w-max tw-overflow-hidden">
 
-      <span :class="activeTab === 'groups'
-        ? 'tw-text-blue-600 tw-font-semibold tw-border-b-2 tw-border-blue-600'
-        : 'tw-text-gray-700 tw-font-medium hover:tw-text-blue-600'" class="tw-py-2 tw-cursor-pointer"
-        @click="activeTab = 'groups'">
-        Danh sách nhóm quyền
-      </span>
+        <span @click="activeTab = 'accounts'"
+          class="tw-px-4 tw-py-2 tw-cursor-pointer tw-border tw-border-gray-300 tw-border-b-white tw-rounded-t-md"
+          :class="activeTab === 'accounts'
+            ? 'tw-bg-white tw-text-blue-600 tw-font-semibold'
+            : 'tw-bg-gray-50 tw-text-gray-700 hover:tw-bg-gray-100'">
+          Danh sách tài khoản
+        </span>
+
+        <span @click="activeTab = 'groups'"
+          class="tw-px-4 tw-py-2 tw-cursor-pointer tw-border tw-border-gray-300 tw-border-b-white tw-rounded-t-md tw-ml-[3px]"
+          :class="activeTab === 'groups'
+            ? 'tw-bg-white tw-text-blue-600 tw-font-semibold'
+            : 'tw-bg-gray-50 tw-text-gray-700 hover:tw-bg-gray-100'">
+          Danh sách nhóm quyền
+        </span>
+
+      </div>
 
       <div class="tw-ml-auto tw-flex tw-items-center tw-gap-2 tw-cursor-pointer tw-text-blue-600 tw-font-medium"
         @click="onAddNew">
@@ -271,7 +277,6 @@ function onAddNew() {
 </script>
 
 <style scoped>
-
 table {
   border-collapse: separate !important;
   border-spacing: 0 !important;
@@ -304,6 +309,7 @@ table th::before {
   height: 100%;
   background: rgba(0, 174, 238, 0.1);
 }
+
 table td,
 table th {
   border: 1px solid #e5e7eb;
