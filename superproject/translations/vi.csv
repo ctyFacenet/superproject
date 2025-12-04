@@ -1,3 +1,12 @@
+IQC Form,Biểu mẫu IQC
+OQC Form,Biểu mẫu OQC
+PQC Form,Biểu mẫu PQC
+IQC Request,Yêu cầu IQC
+OQC Request,Yêu cầu OQC
+PQC Request,Yêu cầu PQC
+Market Defect Report,Báo cáo lỗi thị trường
+Defect Rate Report,Báo cáo tỉ lệ phế
+QC Result Report,Báo cáo kết quả QC
 Display Configuration,Cấu hình hiển thị
 Maintenance Log,Nhật trình bảo dưỡng
 Maintenance Planning,Lập kế hoạch bảo dưỡng
@@ -20,6 +29,8 @@ Machine Group,Nhóm máy
 Line Group,Nhóm line
 Maintenance Location,Vị trí bảo dưỡng
 Downtime Reason,Nguyên nhân dừng máy
+MDM Department,Phòng ban
+MDM Warehouse,Kho
 Load More,Xem thêm
 Cancelling documents,Đang hủy bỏ
 Cancel All,Hủy bỏ tất cả

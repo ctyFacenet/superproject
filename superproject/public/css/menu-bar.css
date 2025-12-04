@@ -286,8 +286,7 @@
 .custom-menu-bar-submenu {
   position: absolute;
   background: white;
-  border: 1px solid #d0d7de;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
   padding: 6px 0;
   min-width: 220px;
   z-index: 99999;

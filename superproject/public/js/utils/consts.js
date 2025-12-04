@@ -13,5 +13,12 @@ export const DocType = Object.freeze({
   MAINTENANCE_LOG: "Maintenance Log",
   MAINTENANCE_PLANNING: "Maintenance Planning",
   SCADA_STATISTICAL_REPORT: "Scada Statistical Report",
-  BOM_MANAGEMENT: "BOM Management"
+  BOM_MANAGEMENT: "BOM Management",
+  IQC_FORM: "IQC Form",
+  PQC_FORM: "PQC Form",
+  OQC_FORM: "OQC Form",
+  IQC_REQUEST: "IQC Request",
+  PQC_REQUEST: "PQC Request",
+  OQC_REQUEST: "OQC Request"
+
 });

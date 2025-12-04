@@ -515,6 +515,56 @@ export const doctypeConfigs = {
     ],
     rowActions: baseRowActions(),
   },
+
+  //Module QMS
+  [DocType.IQC_FORM]: {
+    title: "DANH SÁCH BIỂU MẪU IQC",
+    hideSelect: true,
+    hideTree: true,
+    actions: [
+      {
+        label: "Thêm mới",
+        icon: PlusCircleOutlined,
+        color: "#00aeee",
+        hoverColor: "#38BDF8",
+        onClick: () => frappe.new_doc(DocType.IQC_FORM),
+      },
+      baseCopyAction,
+    ],
+    rowActions: baseRowActions(false),
+  },
+  [DocType.PQC_FORM]: {
+    title: "DANH SÁCH BIỂU MẪU PQC",
+    hideSelect: true,
+    hideTree: true,
+    actions: [
+      {
+        label: "Thêm mới",
+        icon: PlusCircleOutlined,
+        color: "#00aeee",
+        hoverColor: "#38BDF8",
+        onClick: () => frappe.new_doc(DocType.PQC_FORM),
+      },
+      baseCopyAction,
+    ],
+    rowActions: baseRowActions(false),
+  },
+  [DocType.OQC_FORM]: {
+    title: "DANH SÁCH BIỂU MẪU OQC",
+    hideSelect: true,
+    hideTree: true,
+    actions: [
+      {
+        label: "Thêm mới",
+        icon: PlusCircleOutlined,
+        color: "#00aeee",
+        hoverColor: "#38BDF8",
+        onClick: () => frappe.new_doc(DocType.OQC_FORM),
+      },
+      baseCopyAction,
+    ],
+    rowActions: baseRowActions(false),
+  },
 };
 
 export const getDoctypeConfig = (doctype) => {
