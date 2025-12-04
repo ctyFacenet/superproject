@@ -19,6 +19,9 @@ export const DocType = Object.freeze({
   OQC_FORM: "OQC Form",
   IQC_REQUEST: "IQC Request",
   PQC_REQUEST: "PQC Request",
-  OQC_REQUEST: "OQC Request"
+  OQC_REQUEST: "OQC Request",
+  MARKET_DEFECT_REPORT: "Market Defect Report",
+  DEFECT_RATE_REPORT: "Defect Rate Report",
+  QC_RESULT_REPORT: "QC Result Report"
 
 });

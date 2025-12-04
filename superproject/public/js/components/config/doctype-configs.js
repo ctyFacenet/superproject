@@ -16,6 +16,7 @@ import {
   SwitcherOutlined,
   BarChartOutlined,
   MonitorOutlined,
+  FormOutlined,
 } from "@ant-design/icons-vue";
 import { DocType } from "../../utils/consts.js";
 
@@ -564,6 +565,95 @@ export const doctypeConfigs = {
       baseCopyAction,
     ],
     rowActions: baseRowActions(false),
+  },
+
+  [DocType.IQC_REQUEST]: {
+    title: "DANH SÁCH YÊU CẦU IQC",
+    hideSelect: true,
+    actions: [
+      {
+        label: "Thêm mới",
+        icon: PlusCircleOutlined,
+        color: "#00aeee",
+        hoverColor: "#38BDF8",
+        onClick: () => frappe.new_doc(DocType.IQC_REQUEST),
+      },
+      baseCopyAction,
+    ],
+    rowActions: [
+      {
+        label: "Xem chi tiết",
+        icon: EyeOutlined,
+        color: "#01ABA8",
+        hoverColor: "#60A5FA",
+        onClick: (row) => frappe.msgprint(`Xem ${row.name}`),
+      },
+      {
+        label: "Sửa",
+        icon: EditOutlined,
+        color: "#01ABA8",
+        hoverColor: "#60A5FA",
+        onClick: (row) => frappe.msgprint(`Sửa ${row.name}`),
+      },
+      {
+        label: "Khai báo QC",
+        icon: FormOutlined,
+        color: "#01ABA8",
+        hoverColor: "#60A5FA",
+        onClick: (row) => frappe.msgprint(`Khai báo QC ${row.name}`),
+      },
+    ],
+  },
+  [DocType.PQC_REQUEST]: {
+    title: "DANH SÁCH YÊU CẦU PQC",
+    hideSelect: true,
+    groupByField: "productionordercode",
+    actions: [baseCopyAction],
+    rowActions: [
+      {
+        label: "Xem chi tiết",
+        icon: EyeOutlined,
+        color: "#01ABA8",
+        hoverColor: "#60A5FA",
+        onClick: (row) => frappe.msgprint(`Xem ${row.name}`),
+      },
+    ],
+  },
+  [DocType.OQC_REQUEST]: {
+    title: "DANH SÁCH YÊU CẦU OQC",
+    hideSelect: true,
+    actions: [baseCopyAction],
+    rowActions: [
+      {
+        label: "Khai báo QC",
+        icon: FormOutlined,
+        color: "#01ABA8",
+        hoverColor: "#60A5FA",
+        onClick: (row) => frappe.msgprint(`Xem ${row.name}`),
+      },
+    ],
+  },
+  [DocType.MARKET_DEFECT_REPORT]: {
+    title: "DANH SÁCH LỖI",
+    groupByField: "defectreporttype",
+    actions: [
+      {
+        label: "Tạo báo cáo lỗi thị trường",
+        icon: PlusCircleOutlined,
+        color: "#00aeee",
+        hoverColor: "#38BDF8",
+        onClick: () => { },
+      },
+      {
+        label: "Xoá",
+        icon: DeleteOutlined,
+        color: "#00aeee",
+        hoverColor: "#38BDF8",
+        onClick: () => { },
+      },
+      baseCopyAction,
+    ],
+    rowActions: baseRowActions(),
   },
 };
 

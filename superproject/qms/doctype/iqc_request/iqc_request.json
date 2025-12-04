@@ -5,18 +5,110 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "section_break_uc3l"
+  "iqcrequestcode",
+  "warehousereceiptrequestcode",
+  "materialcode",
+  "materialname",
+  "column_break_jmmm",
+  "iqcstatus",
+  "approvalstatus",
+  "supplier",
+  "lotnumber",
+  "column_break_zhze",
+  "materialquantity",
+  "weight",
+  "inspectiondate",
+  "inspector"
  ],
  "fields": [
   {
-   "fieldname": "section_break_uc3l",
-   "fieldtype": "Section Break"
+   "fieldname": "iqcrequestcode",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e3 y\u00eau c\u1ea7u IQC",
+   "reqd": 1
+  },
+  {
+   "fieldname": "warehousereceiptrequestcode",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e3 y\u00eau c\u1ea7u nh\u1eadp kho"
+  },
+  {
+   "fieldname": "column_break_jmmm",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_zhze",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "materialcode",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e3 v\u1eadt t\u01b0"
+  },
+  {
+   "fieldname": "materialname",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "T\u00ean v\u1eadt t\u01b0"
+  },
+  {
+   "fieldname": "iqcstatus",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Tr\u1ea1ng th\u00e1i IQC",
+   "options": "Ch\u1edd QC\n\u0110ang QC\nHo\u00e0n th\u00e0nh QC"
+  },
+  {
+   "fieldname": "approvalstatus",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Tr\u1ea1ng th\u00e1i duy\u1ec7t",
+   "options": "B\u1ea3n nh\u00e1p\nCh\u1edd duy\u1ec7t\n\u0110\u00e3 duy\u1ec7t"
+  },
+  {
+   "fieldname": "supplier",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Nh\u00e0 cung c\u1ea5p"
+  },
+  {
+   "fieldname": "lotnumber",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Lot"
+  },
+  {
+   "fieldname": "materialquantity",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "S\u1ed1 l\u01b0\u1ee3ng v\u1eadt t\u01b0"
+  },
+  {
+   "fieldname": "weight",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Kh\u1ed1i l\u01b0\u1ee3ng (kg)"
+  },
+  {
+   "fieldname": "inspectiondate",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Ng\u00e0y ki\u1ec3m tra"
+  },
+  {
+   "fieldname": "inspector",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Ng\u01b0\u1eddi ki\u1ec3m tra"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-12-04 09:48:23.310025",
+ "modified": "2025-12-04 14:07:58.393375",
  "modified_by": "Administrator",
  "module": "QMS",
  "name": "IQC Request",

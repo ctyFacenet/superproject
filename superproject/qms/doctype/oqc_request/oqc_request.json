@@ -5,18 +5,122 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "section_break_qgkr"
+  "productionordercode",
+  "oqcrequestcode",
+  "processstep",
+  "itemcode",
+  "column_break_ywgy",
+  "itemname",
+  "oqcstatus",
+  "approvalstatus",
+  "column_break_qexd",
+  "machinecode",
+  "linegroup",
+  "inspectiondate",
+  "column_break_dsqq",
+  "inspector",
+  "approver",
+  "createddate"
  ],
  "fields": [
   {
-   "fieldname": "section_break_qgkr",
-   "fieldtype": "Section Break"
+   "fieldname": "productionordercode",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e3 l\u1ec7nh s\u1ea3n xu\u1ea5t",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_ywgy",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_qexd",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_dsqq",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "oqcrequestcode",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e3 y\u00eau c\u1ea7u OQC"
+  },
+  {
+   "fieldname": "processstep",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "C\u00f4ng \u0111o\u1ea1n"
+  },
+  {
+   "fieldname": "itemcode",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e3 h\u00e0ng"
+  },
+  {
+   "fieldname": "itemname",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "T\u00ean h\u00e0ng"
+  },
+  {
+   "fieldname": "oqcstatus",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Tr\u1ea1ng th\u00e1i OQC",
+   "options": "Ch\u1edd QC\n\u0110ang QC\nHo\u00e0n th\u00e0nh QC"
+  },
+  {
+   "fieldname": "approvalstatus",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Tr\u1ea1ng th\u00e1i duy\u1ec7t",
+   "options": "B\u1ea3n nh\u00e1p\nCh\u1edd duy\u1ec7t\n\u0110\u00e3 duy\u1ec7t"
+  },
+  {
+   "fieldname": "machinecode",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e3 m\u00e1y"
+  },
+  {
+   "fieldname": "linegroup",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Nh\u00f3m line"
+  },
+  {
+   "fieldname": "inspectiondate",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Ng\u00e0y ki\u1ec3m tra"
+  },
+  {
+   "fieldname": "inspector",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Ng\u01b0\u1eddi ki\u1ec3m tra"
+  },
+  {
+   "fieldname": "approver",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Ng\u01b0\u1eddi duy\u1ec7t"
+  },
+  {
+   "fieldname": "createddate",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Ng\u00e0y t\u1ea1o"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-12-04 09:49:00.905832",
+ "modified": "2025-12-04 14:35:14.957265",
  "modified_by": "Administrator",
  "module": "QMS",
  "name": "OQC Request",

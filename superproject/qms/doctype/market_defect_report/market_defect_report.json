@@ -5,18 +5,94 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "section_break_unce"
+  "defectreporttype",
+  "defectreportcode",
+  "customer",
+  "returndate",
+  "column_break_agde",
+  "qrcode",
+  "outputmaterialcode",
+  "outputproductname",
+  "column_break_jpeg",
+  "weight",
+  "createddate",
+  "createdby"
  ],
  "fields": [
   {
-   "fieldname": "section_break_unce",
-   "fieldtype": "Section Break"
+   "fieldname": "defectreporttype",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Lo\u1ea1i b\u00e1o c\u00e1o l\u1ed7i",
+   "reqd": 1
+  },
+  {
+   "fieldname": "defectreportcode",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e3 phi\u1ebfu b\u00e1o c\u00e1o l\u1ed7i"
+  },
+  {
+   "fieldname": "column_break_agde",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_jpeg",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Kh\u00e1ch h\u00e0ng"
+  },
+  {
+   "fieldname": "returndate",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Ng\u00e0y tr\u1ea3 v\u1ec1"
+  },
+  {
+   "fieldname": "qrcode",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e3 QR"
+  },
+  {
+   "fieldname": "outputmaterialcode",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e3 v\u1eadt t\u01b0 \u0111\u1ea7u ra"
+  },
+  {
+   "fieldname": "outputproductname",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "T\u00ean BTP \u0111\u1ea7u ra"
+  },
+  {
+   "fieldname": "weight",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Kh\u1ed1i l\u01b0\u1ee3ng (kg)"
+  },
+  {
+   "fieldname": "createddate",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Ng\u00e0y t\u1ea1o"
+  },
+  {
+   "fieldname": "createdby",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Ng\u01b0\u1eddi t\u1ea1o"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-12-04 09:59:18.112088",
+ "modified": "2025-12-04 15:14:16.577499",
  "modified_by": "Administrator",
  "module": "QMS",
  "name": "Market Defect Report",

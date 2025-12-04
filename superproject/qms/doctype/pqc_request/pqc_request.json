@@ -5,18 +5,88 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "section_break_ghty"
+  "productionordercode",
+  "pqcrequestcode",
+  "processstep",
+  "column_break_imjx",
+  "outputproductcode",
+  "outputproductname",
+  "pqcstatus",
+  "column_break_mdfd",
+  "machinecode",
+  "linegroup",
+  "createddate"
  ],
  "fields": [
   {
-   "fieldname": "section_break_ghty",
-   "fieldtype": "Section Break"
+   "fieldname": "productionordercode",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e3 l\u1ec7nh s\u1ea3n xu\u1ea5t",
+   "reqd": 1
+  },
+  {
+   "fieldname": "pqcrequestcode",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e3 y\u00eau c\u1ea7u PQC"
+  },
+  {
+   "fieldname": "column_break_imjx",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_mdfd",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "processstep",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "C\u00f4ng \u0111o\u1ea1n"
+  },
+  {
+   "fieldname": "outputproductcode",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e3 BTP \u0111\u1ea7u ra"
+  },
+  {
+   "fieldname": "outputproductname",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "T\u00ean BTP \u0111\u1ea7u ra"
+  },
+  {
+   "fieldname": "pqcstatus",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Tr\u1ea1ng th\u00e1i PQC",
+   "options": "Ch\u1edd PQC1\nCh\u1edd PQC2\n\u0110ang PQC1\n\u0110ang PQC2\nHo\u00e0n th\u00e0nh PQC1\nHo\u00e0n th\u00e0nh PQC2"
+  },
+  {
+   "fieldname": "machinecode",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e3 m\u00e1y"
+  },
+  {
+   "fieldname": "linegroup",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Nh\u00f3m line"
+  },
+  {
+   "fieldname": "createddate",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Ng\u00e0y t\u1ea1o"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-12-04 09:48:45.906205",
+ "modified": "2025-12-04 14:14:11.913545",
  "modified_by": "Administrator",
  "module": "QMS",
  "name": "PQC Request",
