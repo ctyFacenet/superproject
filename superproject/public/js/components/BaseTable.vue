@@ -53,7 +53,7 @@
                   <a-tooltip :title="col.title">
                     <span class="tw-truncate tw-font-semibold tw-text-[14px]">{{
                       col.title
-                      }}</span>
+                    }}</span>
                   </a-tooltip>
                   <IconRenderer v-if="col.key !== 'actions'" :icon="FilterOutlined" :size="14"
                     customClass="tw-cursor-pointer" />
@@ -78,9 +78,9 @@
                     class="tw-w-full tw-rounded-sm tw-p-1 tw-shadow tw-bg-white" />
                 </template>
 
-                <template v-else-if="col.key === 'status'">
-                  <a-select v-model:value="statusFilter" show-search allowClear placeholder="Chọn trạng thái"
-                    class="tw-w-full tw-shadow tw-bg-white tw-rounded-sm" :options="statusOptions"
+                <template v-else-if="col.key && col.key.toLowerCase().endsWith('status')">
+                  <a-select v-model:value="statusFilters[col.key]" show-search allowClear placeholder="Chọn trạng thái"
+                    class="tw-w-full tw-shadow tw-bg-white tw-rounded-sm" :options="getStatusOptions(col.key)"
                     :filter-option="filterOption" />
                 </template>
 
@@ -147,10 +147,10 @@
 
                   <td v-for="col in filteredColumns" :key="col.key" class="tw-border tw-text-center tw-relative"
                     :class="col.key === 'actions' ? 'actions-sticky td-sticky' : ''">
-                    <template v-if="col.key === 'status'">
-                      <span :style="statusColors[row.status] || 'background-color:#e5e7eb; color:#374151;'"
+                    <template v-if="col.key && col.key.toLowerCase().endsWith('status')">
+                      <span :style="statusColors[row[col.key]] || 'background-color:#e5e7eb; color:#374151;'"
                         class="status-badge">
-                        {{ row.status }}
+                        {{ row[col.key] }}
                       </span>
                     </template>
 
@@ -193,10 +193,10 @@
 
                 <td v-for="col in filteredColumns" :key="col.key" class="tw-border tw-text-center tw-relative"
                   :class="col.key === 'actions' ? 'actions-sticky td-sticky' : ''">
-                  <template v-if="col.key === 'status'">
-                    <span :style="statusColors[row.status] || 'background-color:#e5e7eb; color:#374151;'"
+                  <template v-if="col.key && col.key.toLowerCase().endsWith('status')">
+                    <span :style="statusColors[row[col.key]] || 'background-color:#e5e7eb; color:#374151;'"
                       class="status-badge">
-                      {{ row.status }}
+                      {{ row[col.key] }}
                     </span>
                   </template>
 
@@ -289,6 +289,9 @@ const emit = defineEmits(["rowClick", "selection-change"]);
 const loading = ref(false);
 const columns = ref([]);
 const rows = ref([]);
+const statusFilters = ref({});
+const metaFields = ref({});
+
 
 const visibleColumns = ref({});
 const showColumnPicker = ref(false);
@@ -366,15 +369,29 @@ async function fetchData() {
         fieldtype: f.fieldtype,
       }));
 
+
+    meta.fields.forEach(f => {
+      metaFields.value[f.fieldname] = f;
+    });
+
     visibleFields.push({ title: "Thao tác", key: "actions" });
     columns.value = visibleFields;
+
+    visibleFields.forEach(col => {
+      if (col.key.toLowerCase().endsWith("status")) {
+        if (!statusFilters.value[col.key]) statusFilters.value[col.key] = "";
+      }
+    });
 
     //Đặt chiều rộng mặc định cho các cột
     visibleFields.forEach((f) => {
       if (!colWidths.value[f.key]) colWidths.value[f.key] = 160;
     });
 
-    const statusField = meta.fields.find((f) => f.fieldname === "status");
+    const statusField = meta.fields.find((f) =>
+      f.fieldname && f.fieldname.toLowerCase().endsWith("status")
+    );
+
     if (statusField && statusField.options) {
       const options = statusField.options
         .split("\n")
@@ -503,14 +520,17 @@ watch(selectedRows, () => {
 
 const filters = ref({});
 const dateFilters = ref({});
-const statusFilter = ref("");
-const statusOptions = computed(() => {
-  const colors = statusColors.value || {};
-  return Object.keys(colors).map((x) => ({
-    label: x,
-    value: x,
-  }));
-});
+
+function getStatusOptions(fieldname) {
+  const field = metaFields.value[fieldname];
+  if (!field?.options) return [];
+
+  return field.options
+    .split("\n")
+    .map(o => o.trim())
+    .filter(Boolean)
+    .map(o => ({ label: o, value: o }));
+}
 
 const filterOption = (input, option) => option.label.toLowerCase().includes(input.toLowerCase());
 
@@ -518,10 +538,12 @@ const filteredRows = computed(() => {
   let result = (allRows.value || []).filter((r, i) => {
     const pass = (columns.value || []).every((c) => {
       if (c.key === "actions") return true;
-      if (c.key === "status" && statusFilter.value) {
-        const ok = r[c.key] === statusFilter.value;
-        return ok;
+
+      if (c.key && c.key.toLowerCase().endsWith("status")) {
+        const selected = statusFilters.value[c.key];
+        if (selected) return r[c.key] === selected;
       }
+
       if (c.fieldtype === "Date") {
         const range = dateFilters.value[c.key];
         if (!range || range?.length !== 2) return true;
@@ -537,7 +559,6 @@ const filteredRows = computed(() => {
       return ok;
     });
 
-    console.groupEnd();
     return pass;
   });
 
@@ -549,21 +570,18 @@ const filteredRows = computed(() => {
 
       if (!dateKey) {
         console.warn("⚠️ Không tìm thấy cột ngày trong columns!");
-        console.groupEnd();
         return false;
       }
 
       const dateField = r[dateKey];
       if (!dateField) {
         console.warn("⚠️ Dòng này không có giá trị cho trường ngày:", dateKey);
-        console.groupEnd();
         return false;
       }
 
       const d = dayjs(dateField, ["YYYY-MM-DD", "DD-MM-YYYY"]);
       if (!d.isValid()) {
         console.warn("⚠️ Không parse được ngày:", dateField);
-        console.groupEnd();
         return false;
       }
 
@@ -587,11 +605,8 @@ const filteredRows = computed(() => {
       const match =
         (treeKeys.some((k) => k.startsWith("month-")) ? hasMonth : true) &&
         (treeKeys.some((k) => k.startsWith("year-")) ? hasYear : true);
-      console.groupEnd();
       return match;
     });
-
-    console.groupEnd();
   }
 
   return result;
