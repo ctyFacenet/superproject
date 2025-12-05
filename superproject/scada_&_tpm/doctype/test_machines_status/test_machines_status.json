@@ -1,0 +1,125 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-12-05 09:14:05.579894",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "machine_code",
+  "machine_name",
+  "dv",
+  "fan",
+  "column_break_awgf",
+  "status",
+  "tin",
+  "last_update",
+  "availability",
+  "column_break_svvp",
+  "tout",
+  "tmid",
+  "len"
+ ],
+ "fields": [
+  {
+   "fieldname": "machine_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "M\u00e3 m\u00e1y"
+  },
+  {
+   "fieldname": "column_break_awgf",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "machine_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "T\u00ean m\u00e1y"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Tr\u1ea1ng th\u00e1i",
+   "options": "\u0110ang ch\u1ea1y\nD\u1eebng\nM\u00e1y l\u1ed7i"
+  },
+  {
+   "fieldname": "dv",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "T\u1ed1c \u0111\u1ed9 DV"
+  },
+  {
+   "fieldname": "fan",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "T\u1ed1c \u0111\u1ed9 qu\u1ea1t"
+  },
+  {
+   "fieldname": "len",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Chi\u1ec1u d\u00e0i d\u00e2y"
+  },
+  {
+   "fieldname": "tin",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Nhi\u1ec7t \u0111\u1ed9 v\u00e0o"
+  },
+  {
+   "fieldname": "tmid",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Nhi\u1ec7t gi\u1eefa"
+  },
+  {
+   "fieldname": "tout",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Nhi\u1ec7t ra"
+  },
+  {
+   "fieldname": "availability",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Availability (%)"
+  },
+  {
+   "fieldname": "last_update",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "L\u1ea7n c\u1eadp nh\u1eadt cu\u1ed1i"
+  },
+  {
+   "fieldname": "column_break_svvp",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-12-05 10:40:22.493715",
+ "modified_by": "Administrator",
+ "module": "SCADA & TPM",
+ "name": "Test Machines Status",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

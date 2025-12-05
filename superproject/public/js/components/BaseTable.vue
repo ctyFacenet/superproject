@@ -53,7 +53,7 @@
                   <a-tooltip :title="col.title">
                     <span class="tw-truncate tw-font-semibold tw-text-[14px]">{{
                       col.title
-                    }}</span>
+                      }}</span>
                   </a-tooltip>
                   <IconRenderer v-if="col.key !== 'actions'" :icon="FilterOutlined" :size="14"
                     customClass="tw-cursor-pointer" />
