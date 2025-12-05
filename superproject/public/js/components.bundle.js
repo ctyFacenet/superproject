@@ -5,6 +5,7 @@ import ModuleList from "../../general/page/module_list/ModuleList.vue"
 import DisplayConfiguration from "../../scada_&_tpm/doctype/display_configuration/DisplayConfiguration.vue";
 import DisplayAccountManagement from "../../mdm/doctype/account_management/DisplayAccountManagement.vue"
 import MachinesStatusView from "../../public/js/components/TestMachinesCard/MachinesStatusView.vue"
+import MachineFormView from "../../public/js/components/TestMachinesCard/MachineFormView.vue"
 
 frappe.provide("superproject.ui");
 superproject.ui.mountVue = mountVue;
@@ -36,3 +37,5 @@ createVueWrapper("ModuleList", ModuleList);
 createVueWrapper("DisplayConfiguration", DisplayConfiguration);
 createVueWrapper("DisplayAccountManagement", DisplayAccountManagement);
 createVueWrapper("MachinesStatusView", MachinesStatusView);
+createVueWrapper("MachineFormView", MachineFormView);
+
