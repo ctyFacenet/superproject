@@ -1,7 +1,7 @@
 // Copyright (c) 2025, FaceNet and contributors
 // For license information, please see license.txt
 
-// frappe.ui.form.on("Statistical Report", {
+// frappe.ui.form.on("Detailed Order Overview Report", {
 // 	refresh(frm) {
 
 // 	},

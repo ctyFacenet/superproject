@@ -158,7 +158,7 @@
  "modified": "2025-11-11 09:33:00.638330",
  "modified_by": "Administrator",
  "module": "APS",
- "name": "Statistical Report",
+ "name": "Detailed Order Overview Report",
  "owner": "Administrator",
  "permissions": [
   {

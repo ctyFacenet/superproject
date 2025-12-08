@@ -391,7 +391,7 @@ export const doctypeConfigs = {
       baseCopyAction,
     ],
   },
-  [DocType.STATISTICAL_REPORT]: {
+  [DocType.DETAILED_ORDER_OVERVIEW_REPORT]: {
     title: "BÁO CÁO TỔNG QUAN ĐƠN HÀNG CHI TIẾT",
     groupByField: "detailordercode",
     hideSelect: true,
@@ -401,7 +401,7 @@ export const doctypeConfigs = {
         icon: PlusCircleOutlined,
         color: "#00aeee",
         hoverColor: "#38BDF8",
-        onClick: () => frappe.new_doc(DocType.STATISTICAL_REPORT),
+        onClick: () => frappe.new_doc(DocType.DETAILED_ORDER_OVERVIEW_REPORT),
       },
       baseCopyAction,
     ],

@@ -160,7 +160,7 @@ const state = reactive({
   hide_records: props.hide_records ?? false,
 });
 
-const showCharts = computed(() => props.doctype === DocType.STATISTICAL_REPORT);
+const showCharts = computed(() => props.doctype === DocType.DETAILED_ORDER_OVERVIEW_REPORT);
 const showScadaCharts = computed(() => props.doctype === DocType.SCADA_STATISTICAL_REPORT);
 
 
