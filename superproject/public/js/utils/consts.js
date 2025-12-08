@@ -9,6 +9,7 @@ export const DocType = Object.freeze({
   TRACEABILITY: "Traceability",
   PERIOD_END_CLOSING: "Period End Closing",
   DETAILED_ORDER_OVERVIEW_REPORT: "Detailed Order Overview Report",
+  REALTIME_PRODUCTION_PROGRESS: "Realtime Production Progress",
   DISPLAY_CONFIGURATION: "Display Configuration",
   MAINTENANCE_LOG: "Maintenance Log",
   MAINTENANCE_PLANNING: "Maintenance Planning",

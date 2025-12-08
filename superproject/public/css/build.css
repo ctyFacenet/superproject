@@ -697,6 +697,10 @@ video {
   height: 0.75rem !important;
 }
 
+.tw-h-4 {
+  height: 1rem !important;
+}
+
 .tw-h-9 {
   height: 2.25rem !important;
 }
@@ -755,6 +759,10 @@ video {
 
 .tw-w-36 {
   width: 9rem !important;
+}
+
+.tw-w-4 {
+  width: 1rem !important;
 }
 
 .tw-w-48 {
@@ -940,6 +948,11 @@ video {
        column-gap: 0.75rem !important;
 }
 
+.tw-gap-x-6 {
+  -moz-column-gap: 1.5rem !important;
+       column-gap: 1.5rem !important;
+}
+
 .tw-gap-y-2 {
   row-gap: 0.5rem !important;
 }
@@ -996,6 +1009,10 @@ video {
 
 .tw-rounded {
   border-radius: 0.25rem !important;
+}
+
+.tw-rounded-full {
+  border-radius: 9999px !important;
 }
 
 .tw-rounded-lg {
@@ -1576,12 +1593,20 @@ video {
     gap: 0.75rem !important;
   }
 
+  .sm\:tw-text-right {
+    text-align: right !important;
+  }
+
   .sm\:tw-text-\[13px\] {
     font-size: 13px !important;
   }
 
   .sm\:tw-text-\[14px\] {
     font-size: 14px !important;
+  }
+
+  .sm\:tw-text-\[20px\] {
+    font-size: 20px !important;
   }
 
   .sm\:tw-text-xs {

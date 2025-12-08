@@ -1,0 +1,99 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-12-08 10:23:00.356740",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "line_group",
+  "line_status",
+  "output_btp_code",
+  "planned_qty",
+  "column_break_tzey",
+  "target_qty",
+  "completed_qty",
+  "completion_rate",
+  "err_unit"
+ ],
+ "fields": [
+  {
+   "fieldname": "line_group",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Nh\u00f3m line"
+  },
+  {
+   "fieldname": "column_break_tzey",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "line_status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Tr\u1ea1ng th\u00e1i nh\u00f3m line",
+   "options": "\u0110ang ch\u1ea1y\nT\u1ea1m d\u1eebng\n\u0110\u00e3 hu\u1ef7"
+  },
+  {
+   "fieldname": "output_btp_code",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e3 BTP \u0111\u1ea7u ra"
+  },
+  {
+   "fieldname": "planned_qty",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "S\u1ed1 l\u01b0\u1ee3ng k\u1ebf ho\u1ea1ch (Kg)"
+  },
+  {
+   "fieldname": "target_qty",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "S\u1ed1 l\u01b0\u1ee3ng m\u1ee5c ti\u00eau (Kg)"
+  },
+  {
+   "fieldname": "completion_rate",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "T\u1ef7 l\u1ec7 ho\u00e0n th\u00e0nh"
+  },
+  {
+   "fieldname": "completed_qty",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "S\u1ed1 l\u01b0\u1ee3ng ho\u00e0n th\u00e0nh (Kg)"
+  },
+  {
+   "fieldname": "err_unit",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "T\u1ec9 l\u1ec7 l\u1ed7i"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-12-08 16:17:07.641604",
+ "modified_by": "Administrator",
+ "module": "APS",
+ "name": "Realtime Production Progress",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
