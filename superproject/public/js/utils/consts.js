@@ -15,6 +15,10 @@ export const DocType = Object.freeze({
   MAINTENANCE_PLANNING: "Maintenance Planning",
   SCADA_STATISTICAL_REPORT: "Scada Statistical Report",
   BOM_MANAGEMENT: "BOM Management",
+  MACHINE_GROUP: "Machine Group",
+  LINE_GROUP: "Line Group",
+  MAINTENANCE_LOCATION: "Maintenance Location",
+  DOWNTIME_REASON: "Downtime Reason",
   IQC_FORM: "IQC Form",
   PQC_FORM: "PQC Form",
   OQC_FORM: "OQC Form",
@@ -24,5 +28,4 @@ export const DocType = Object.freeze({
   MARKET_DEFECT_REPORT: "Market Defect Report",
   DEFECT_RATE_REPORT: "Defect Rate Report",
   QC_RESULT_REPORT: "QC Result Report"
-
 });

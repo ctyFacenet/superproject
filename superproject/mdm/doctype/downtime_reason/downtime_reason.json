@@ -5,18 +5,61 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "section_break_7edw"
+  "cause_code",
+  "cause_name",
+  "cause_type",
+  "column_break_bluq",
+  "phenomenon_description",
+  "defect_cause",
+  "orrective_action"
  ],
  "fields": [
   {
-   "fieldname": "section_break_7edw",
-   "fieldtype": "Section Break"
+   "fieldname": "column_break_bluq",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "phenomenon_description",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00f4 t\u1ea3 hi\u1ec7n t\u01b0\u1ee3ng"
+  },
+  {
+   "fieldname": "cause_code",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e3 nguy\u00ean nh\u00e2n"
+  },
+  {
+   "fieldname": "cause_name",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "T\u00ean nguy\u00ean nh\u00e2n"
+  },
+  {
+   "fieldname": "cause_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Lo\u1ea1i nguy\u00ean nh\u00e2n",
+   "options": "H\u1ecfng\nKh\u00e1c"
+  },
+  {
+   "fieldname": "defect_cause",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Nguy\u00ean nh\u00e2n l\u1ed7i"
+  },
+  {
+   "fieldname": "orrective_action",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Bi\u1ec7n ph\u00e1p kh\u1eafc ph\u1ee5c"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-12-02 11:50:56.739747",
+ "modified": "2025-12-09 13:51:31.088020",
  "modified_by": "Administrator",
  "module": "MDM",
  "name": "Downtime Reason",

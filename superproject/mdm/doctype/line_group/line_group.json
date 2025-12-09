@@ -5,20 +5,54 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "linegroupcode"
+  "line_group_code",
+  "line_group_name",
+  "bobbin_number",
+  "column_break_vfzf",
+  "machine",
+  "status"
  ],
  "fields": [
   {
-   "fieldname": "linegroupcode",
+   "fieldname": "line_group_code",
    "fieldtype": "Small Text",
    "in_list_view": 1,
    "label": "M\u00e3 nh\u00f3m line"
+  },
+  {
+   "fieldname": "line_group_name",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "T\u00ean nh\u00f3m line"
+  },
+  {
+   "fieldname": "column_break_vfzf",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "bobbin_number",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "S\u1ed1 Bobbin"
+  },
+  {
+   "fieldname": "machine",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e1y"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Tr\u1ea1ng th\u00e1i",
+   "options": "Ho\u1ea1t \u0111\u1ed9ng\nNg\u1eebng ho\u1ea1t \u0111\u1ed9ng"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-12-02 10:58:39.780831",
+ "modified": "2025-12-09 11:59:24.316815",
  "modified_by": "Administrator",
  "module": "MDM",
  "name": "Line Group",

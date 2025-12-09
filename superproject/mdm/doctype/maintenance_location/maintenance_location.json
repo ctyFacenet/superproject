@@ -5,18 +5,34 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "section_break_du3a"
+  "maintenance_location_code",
+  "maintenance_location_name",
+  "description"
  ],
  "fields": [
   {
-   "fieldname": "section_break_du3a",
-   "fieldtype": "Section Break"
+   "fieldname": "maintenance_location_code",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e3 v\u1ecb tr\u00ed b\u1ea3o d\u01b0\u1ee1ng"
+  },
+  {
+   "fieldname": "maintenance_location_name",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "T\u00ean v\u1ecb tr\u00ed b\u1ea3o d\u01b0\u1ee1ng"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00f4 t\u1ea3"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-12-02 11:50:23.660496",
+ "modified": "2025-12-09 13:38:27.353104",
  "modified_by": "Administrator",
  "module": "MDM",
  "name": "Maintenance Location",
