@@ -12,15 +12,15 @@
   "column_break_tzey",
   "target_qty",
   "completed_qty",
-  "completion_rate",
-  "err_unit"
+  "completion_rate"
  ],
  "fields": [
   {
    "fieldname": "line_group",
    "fieldtype": "Small Text",
    "in_list_view": 1,
-   "label": "Nh\u00f3m line"
+   "label": "Nh\u00f3m line",
+   "reqd": 1
   },
   {
    "fieldname": "column_break_tzey",
@@ -62,18 +62,12 @@
    "fieldtype": "Float",
    "in_list_view": 1,
    "label": "S\u1ed1 l\u01b0\u1ee3ng ho\u00e0n th\u00e0nh (Kg)"
-  },
-  {
-   "fieldname": "err_unit",
-   "fieldtype": "Float",
-   "in_list_view": 1,
-   "label": "T\u1ec9 l\u1ec7 l\u1ed7i"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-12-08 16:17:07.641604",
+ "modified": "2025-12-09 08:14:34.303758",
  "modified_by": "Administrator",
  "module": "APS",
  "name": "Realtime Production Progress",

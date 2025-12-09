@@ -32,6 +32,10 @@ Maintenance Location,Vị trí bảo dưỡng
 Downtime Reason,Nguyên nhân dừng máy
 MDM Department,Phòng ban
 MDM Warehouse,Kho
+Defect Cause Group,Nhóm nguyên nhân lỗi
+Inspection Item,Hạng mục kiểm tra
+Maintenance Material Group,Nhóm vật tư bảo dưỡng
+Technical Process,Quy trình công nghệ
 Load More,Xem thêm
 Cancelling documents,Đang hủy bỏ
 Cancel All,Hủy bỏ tất cả
