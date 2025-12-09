@@ -592,16 +592,9 @@ function renderNestedMenu(item, isRoot = true) {
 
       groupLabel.on("mouseenter", function () {
         const rect = groupLabel[0].getBoundingClientRect();
-        const parentMenu = groupLabel.closest(".custom-menu-bar-submenu")[0];
-        const parentRect = parentMenu.getBoundingClientRect();
 
         nested.css({
-          top:
-            rect.top -
-            parentRect.top +
-            parentMenu.scrollTop +
-            parentRect.top +
-            window.scrollY,
+          top: rect.top + window.scrollY - 6,
           left: rect.right + window.scrollX + 5,
           display: "block",
         });
