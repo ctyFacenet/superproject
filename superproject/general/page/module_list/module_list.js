@@ -5,6 +5,8 @@ frappe.pages['module-list'].on_page_load = async function (wrapper) {
     single_column: true
   });
 
+  $(wrapper).find('.page-head').hide();
+
   $(".navbar-module").text('Trang chủ')
   // gắn click event
   let component = new superproject.ui.ModuleListComponent({ wrapper: page.body });

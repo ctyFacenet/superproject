@@ -1,18 +1,13 @@
 <template>
   <section>
-    <div class="module-list" style="margin-top: 25px">
+    <div class="module-list">
       <div v-for="m in modules" :key="m.module" class="module-card" @click="openModule(m)">
-        <div class="icon-wrapper">
-          <div class="icon-container">
-            <!-- ✅ Render icon component thực -->
-            <component :is="getIcon(m.icon)" class="module-icon" />
-          </div>
+        <div class="icon-container">
+          <component :is="getIcon(m.icon)" class="module-icon" />
         </div>
 
-        <div class="content-wrapper">
-          <h5 class="module-name">{{ __(m.module) }}</h5>
-          <p class="module-description">{{ __(m.description || "") }}</p>
-        </div>
+        <h5 class="module-name">{{ __(m.module) }}</h5>
+        <p class="module-description">{{ __(m.description || "") }}</p>
       </div>
     </div>
   </section>
@@ -21,7 +16,6 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import {
-  MenuOutlined,
   UserOutlined,
   FolderOutlined,
   FileTextOutlined,
@@ -32,16 +26,14 @@ import {
   ApiOutlined,
   CodeOutlined,
   BulbOutlined,
-  EditOutlined,
   ShoppingOutlined,
   FileOutlined,
 } from "@ant-design/icons-vue";
 
 const modules = ref([]);
 
-// Map icon name → component
 const getIcon = (iconName) => {
-  const iconMap = {
+  const map = {
     user: UserOutlined,
     folder: FolderOutlined,
     file: FileTextOutlined,
@@ -54,21 +46,17 @@ const getIcon = (iconName) => {
     bulb: BulbOutlined,
     shop: ShoppingOutlined,
   };
-  return iconMap[iconName] || FileOutlined;
+  return map[iconName] || FileOutlined;
 };
 
 const openModule = (m) => {
-  if (m.is_single) {
-    frappe.set_route("Form", m.link_to);
-  } else {
-    frappe.set_route("List", m.link_to);
-  }
+  frappe.set_route(m.is_single ? "Form" : "List", m.link_to);
   frappe.ui.toolbar.setup_custom_menu_bar();
 };
 
 onMounted(async () => {
   modules.value = await frappe.xcall(
-    "superproject.general.doctype.display.display.get_modules_display",
+    "superproject.general.doctype.display.display.get_modules_display"
   );
   $(".navbar-module").text("Trang chủ");
 });
@@ -77,160 +65,115 @@ onMounted(async () => {
 <style scoped>
 .module-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
-  max-width: 1600px;
-  margin: 0 auto;
-  padding: 0 20px;
-  justify-items: center;
+  grid-template-columns: repeat(2, 520px);
+  gap: 50px 60px;
+  justify-content: center;
+  padding: 40px 20px;
+  margin-top: 40px;
 }
 
 .module-card {
-  width: 300px;
-  min-width: 300px;
-  max-width: 300px;
-
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  background-color: #e5fce2;
+  width: 520px;
+  height: 300px;
+  background: #e3f2fd;
   border-radius: 14px;
-  padding: 28px 24px;
-  transition: all 0.3s ease;
-  min-height: 150px;
-  box-shadow: 10px 10px lightblue;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 24px;
+  transition:
+    transform 0.25s cubic-bezier(.165, .84, .44, 1),
+    box-shadow 0.25s ease;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.175);
 }
 
 .module-card:hover {
-  background-color: #eff7ff;
-  transform: translateY(-2px);
-}
-
-.icon-wrapper {
-  flex-shrink: 0;
+  transform: scale(1.06);
 }
 
 .icon-container {
-  width: 80px;
-  height: 80px;
-  background-color: #f1f1f1;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-}
-
-.module-card:hover .icon-container {
-  transform: scale(1.05);
+  width: 150px;
+  height: 150px;
   background: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 18px;
 }
 
-/* ✅ Icon mặc định */
 .module-icon {
-  font-size: 36px;
-  color: #5a5a5a;
-  transition:
-    color 0.1s ease,
-    transform 0.1s ease;
-}
-
-/* ✅ Khi hover card */
-.module-card:hover .module-icon {
+  font-size: 80px;
   color: #1976d2;
-  transform: scale(1.15);
-  /* phóng to nhẹ */
 }
 
-.content-wrapper {
-  flex: 1;
-  text-align: left;
-  min-width: 0;
+.module-card:hover .module-icon {
+  transform: scale(1.15);
 }
 
 .module-name {
-  margin: 0 0 8px 0;
-  font-size: 1.3rem;
-  font-weight: 600;
+  margin: 12px 0 6px 0;
+  font-size: 1.6rem;
+  font-weight: 700;
   color: #2c3e50;
-  transition: color 0.3s ease;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.module-card:hover .module-name {
-  color: #1976d2;
+  text-align: center;
 }
 
 .module-description {
   margin: 0;
-  font-size: 0.95rem;
-  color: #7f8c8d;
-  line-height: 1.5;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  font-size: 1rem;
+  color: #666;
+  text-align: center;
+  max-width: 380px;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
   .module-list {
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 18px;
+    grid-template-columns: repeat(2, 420px);
   }
 
   .module-card {
-    width: 260px;
-    min-width: 260px;
-    max-width: 260px;
+    width: 420px;
+    height: 280px;
+  }
+
+  .icon-container {
+    width: 130px;
+    height: 130px;
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .module-list {
     grid-template-columns: 1fr !important;
-    gap: 14px;
-    padding: 0 15px;
+    justify-content: center;
+    padding: 0 20px;
+    gap: 30px;
   }
 
   .module-card {
     width: 100% !important;
-    max-width: 100% !important;
-    min-width: unset;
-
-    flex-direction: column;
-    text-align: center;
-    padding: 20px 16px;
-    gap: 14px;
-    min-height: 160px;
-  }
-
-  .content-wrapper {
-    text-align: center;
+    max-width: 500px;
+    height: auto;
+    padding: 30px 20px;
+    margin: 0 auto;
   }
 
   .icon-container {
-    width: 80px;
-    height: 80px;
+    width: 120px;
+    height: 120px;
   }
 
   .module-icon {
-    font-size: 36px;
+    font-size: 70px;
   }
+}
 
-  .module-name {
-    font-size: 1.1rem;
-    white-space: normal;
-  }
-
-  .module-description {
-    font-size: 0.85rem;
-  }
-
-  .page-head {
-    display: none;
-  }
+.page-head {
+  display: none !important;
 }
 </style>
