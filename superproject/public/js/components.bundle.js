@@ -1,4 +1,5 @@
 import { mountVue, unmountVue } from "./vue_helper.js";
+
 import BaseLayout from "./components/BaseLayout.vue";
 import DisplayLayout from "../../general/doctype/display/DisplayLayout.vue";
 import ModuleList from "../../general/page/module_list/ModuleList.vue";
@@ -16,15 +17,46 @@ function createVueWrapper(name, component) {
   class VueWrapper {
     constructor({ wrapper, ...props }) {
       this.wrapper = wrapper;
-      const mounted = mountVue(component, props, this.wrapper);
 
-      this.app = mounted.app;
-      this.vm = mounted.vm || mounted;
-      this.__vm = this.vm;
+      this.mounted = mountVue(component, props, this.wrapper);
+
+      this.app = this.mounted.app;
+      this.vm = this.mounted.vm;
+      this.el = this.mounted.el;
+      this.destroyed = false;
+
+      this._exposeMethods();
+    }
+
+    _exposeMethods() {
+      if (!this.vm) return;
+
+      const exposed = this.vm.$?.exposed;
+      if (!exposed) return;
+
+      for (const [key, value] of Object.entries(exposed)) {
+        if (typeof value === "function") {
+          this[key] = (...args) => {
+            if (this.destroyed) {
+              console.warn(`[${name}Component] Method "${key}" called after destroy().`);
+              return;
+            }
+            return value(...args);
+          };
+        }
+      }
     }
 
     destroy() {
-      unmountVue(this.app || this.vm);
+      if (this.destroyed) return;
+
+      this.destroyed = true;
+      unmountVue(this.mounted);
+
+      this.app = null;
+      this.vm = null;
+      this.el = null;
+      this.mounted = null;
     }
   }
 
