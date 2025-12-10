@@ -17,7 +17,8 @@ import {
   BarChartOutlined,
   MonitorOutlined,
   FormOutlined,
-  CopyOutlined
+  CopyOutlined,
+  DownloadOutlined
 } from "@ant-design/icons-vue";
 import { DocType } from "../../utils/consts.js";
 
@@ -855,6 +856,22 @@ export const doctypeConfigs = {
       baseCopyAction,
     ],
     rowActions: baseRowActions(),
+  },
+  [DocType.DEFECT_RATE_REPORT]: {
+    title: "BÁO CÁO TỈ LỆ PHẾ",
+    hideSelect: true,
+    hideSearchFullText: true,
+    groupByField: "process_code",
+    actions: [
+      {
+        label: "Export Excel",
+        icon: DownloadOutlined,
+        color: "#00aeee",
+        hoverColor: "#38BDF8",
+        onClick: () => { },
+      },
+      baseCopyAction,
+    ],
   },
 };
 

@@ -5,18 +5,147 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "section_break_gu9y"
+  "process_code",
+  "defect_group",
+  "defect_code",
+  "defect_name",
+  "defect_cause",
+  "column_break_khyg",
+  "scrap_type",
+  "scrap_code",
+  "scrap_name",
+  "scrap_quantity",
+  "column_break_uuru",
+  "material_code",
+  "production_order_code",
+  "machine_code",
+  "line_group",
+  "column_break_haew",
+  "shift",
+  "operator",
+  "declaration_date",
+  "classification"
  ],
  "fields": [
   {
-   "fieldname": "section_break_gu9y",
-   "fieldtype": "Section Break"
+   "fieldname": "process_code",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e3 c\u00f4ng \u0111o\u1ea1n"
+  },
+  {
+   "fieldname": "defect_group",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Nh\u00f3m l\u1ed7i"
+  },
+  {
+   "fieldname": "column_break_khyg",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_uuru",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_haew",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "defect_code",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e3 l\u1ed7i"
+  },
+  {
+   "fieldname": "defect_name",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "T\u00ean l\u1ed7i"
+  },
+  {
+   "fieldname": "defect_cause",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Nguy\u00ean nh\u00e2n l\u1ed7i"
+  },
+  {
+   "fieldname": "scrap_type",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Lo\u1ea1i ph\u1ebf"
+  },
+  {
+   "fieldname": "scrap_code",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e3 ph\u1ebf"
+  },
+  {
+   "fieldname": "scrap_name",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "T\u00ean ph\u1ebf"
+  },
+  {
+   "fieldname": "scrap_quantity",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "S\u1ed1 l\u01b0\u1ee3ng ph\u1ebf"
+  },
+  {
+   "fieldname": "material_code",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e3 v\u1eadt t\u01b0"
+  },
+  {
+   "fieldname": "production_order_code",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e3 l\u1ec7nh s\u1ea3n xu\u1ea5t"
+  },
+  {
+   "fieldname": "machine_code",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e3 m\u00e1y"
+  },
+  {
+   "fieldname": "line_group",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Nh\u00f3m line"
+  },
+  {
+   "fieldname": "shift",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Ca s\u1ea3n xu\u1ea5t"
+  },
+  {
+   "fieldname": "operator",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Nh\u00e2n vi\u00ean th\u1ef1c hi\u1ec7n"
+  },
+  {
+   "fieldname": "declaration_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Ng\u00e0y khai b\u00e1o"
+  },
+  {
+   "fieldname": "classification",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Ph\u00e2n lo\u1ea1i"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-12-04 09:59:42.738015",
+ "modified": "2025-12-10 09:51:15.718780",
  "modified_by": "Administrator",
  "module": "QMS",
  "name": "Defect Rate Report",

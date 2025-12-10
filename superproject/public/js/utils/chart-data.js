@@ -132,7 +132,7 @@ export const scadaBarData = {
     {
       type: "line",
       label: "Mục tiêu",
-      data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      data: new Array(14).fill(0),
       borderColor: "#ff4d4f",
       borderWidth: 2,
       fill: false,
@@ -202,5 +202,121 @@ export const scadaDonutOptions = {
     },
     legend: { position: "bottom" },
     datalabels: { display: false },
+  },
+};
+
+//Report QMS
+export const defectRateData = {
+  labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+  datasets: [
+    {
+      label: "Sản xuất",
+      data: [0, 1.1, 3.3, 0, 0, 5.5, 0, 0, 0, 6.5, 7.2, 0],
+      borderColor: "#3b82f6",
+      backgroundColor: "#3b82f6",
+      borderWidth: 2,
+      pointRadius: 4,
+      tension: 0,
+    },
+    {
+      label: "Thị trường",
+      data: new Array(12).fill(0),
+      borderColor: "#22c55e",
+      backgroundColor: "#22c55e",
+      borderWidth: 2,
+      pointRadius: 3,
+      tension: 0,
+    },
+  ],
+};
+
+export const defectRateOptions = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    legend: {
+      position: "bottom",
+      labels: {
+        usePointStyle: true,
+        pointStyle: "circle",
+        boxWidth: 10,
+        boxHeight: 10,
+        font: { size: 12 },
+      },
+    },
+    title: {
+      display: true,
+      text: "Biểu đồ tỉ lệ phế",
+      font: { size: 15, weight: "bold" },
+    },
+    datalabels: {
+      display: false,
+    },
+    tooltip: {
+      callbacks: {
+        label(ctx) {
+          return `${ctx.dataset.label}: ${ctx.raw}%`;
+        },
+      },
+    },
+  },
+  scales: {
+    y: {
+      min: 0,
+      max: 8,
+      ticks: {
+        callback: (v) => v + " %",
+      },
+    },
+  },
+};
+
+export const errorDonutData = {
+  labels: [
+    "Ngoại quan (phôi xước)",
+    "Lỗi lỗ kim",
+    "Ngoại quan (hai màu do nhiệt nổi hơi)",
+    "Lỗi sổ dây do thanh gạt",
+  ],
+  datasets: [
+    {
+      data: [320, 680, 380, 148],
+      backgroundColor: ["#4e73df", "#1cc88a", "#f6c23e", "#e74a3b"],
+      borderColor: "#fff",
+      borderWidth: 2,
+    },
+  ],
+};
+
+export const errorDonutOptions = {
+  responsive: true,
+  maintainAspectRatio: false,
+  cutout: "55%",
+  plugins: {
+    legend: {
+      position: "bottom",
+      labels: {
+        usePointStyle: true,
+        pointStyle: "circle",
+        boxWidth: 10,
+        boxHeight: 10,
+        font: { size: 12 },
+      },
+    },
+    title: {
+      display: true,
+      text: "Biểu đồ số lượng hàng bị lỗi theo loại lỗi",
+      font: { size: 15, weight: "bold" },
+    },
+    datalabels: { display: false },
+    tooltip: {
+      callbacks: {
+        label(ctx) {
+          const value = ctx.raw;
+          const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
+          return `${value} (${((value / total) * 100).toFixed(2)}%)`;
+        },
+      },
+    },
   },
 };

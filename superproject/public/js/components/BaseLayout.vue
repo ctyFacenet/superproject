@@ -43,7 +43,7 @@
 
               </div>
 
-              <div v-if="showScadaCharts"
+              <div v-if="showScadaStatisticalReportCharts"
                 class="lg:tw-col-span-4 tw-grid tw-grid-cols-1 lg:tw-grid-cols-2 tw-gap-4 tw-border-gray-200 tw-rounded-md">
                 <div class="tw-p-2 tw-border tw-rounded tw-bg-white tw-shadow">
                   <BaseChart type="bar" :data="scadaBarData" :options="scadaBarOptions" />
@@ -55,7 +55,7 @@
                 </div>
               </div>
 
-              <div v-else-if="showCharts"
+              <div v-else-if="showDetailedOrderOverviewCharts"
                 class="lg:tw-col-span-4 tw-grid tw-grid-cols-1 lg:tw-grid-cols-2 tw-gap-4 tw-border-gray-200 tw-rounded-md">
                 <div class="tw-p-2 tw-border tw-rounded tw-bg-white tw-shadow">
                   <BaseChart type="bar" :data="barChartData" :options="barChartOptions" />
@@ -64,6 +64,18 @@
                   class="tw-p-2 tw-border tw-rounded tw-bg-white tw-shadow tw-flex tw-flex-col lg:tw-flex-row tw-justify-around tw-items-center tw-gap-4">
                   <BaseChart type="doughnut" :data="donutChartData1" :options="donutChartOptions('07/2025')" />
                   <BaseChart type="doughnut" :data="donutChartData2" :options="donutChartOptions('08/2025')" />
+                </div>
+              </div>
+
+              <div v-else-if="showQMSDefectRateReportCharts"
+                class="lg:tw-col-span-4 tw-grid tw-grid-cols-1 lg:tw-grid-cols-2 tw-gap-4 tw-border-gray-200 tw-rounded-md">
+                <div class="tw-p-2 tw-border tw-rounded tw-bg-white tw-shadow">
+                  <BaseChart type="line" :data="defectRateData" :options="defectRateOptions" />
+                </div>
+
+                <div
+                  class="tw-p-2 tw-border tw-rounded tw-bg-white tw-shadow tw-flex tw-flex-col lg:tw-flex-row tw-justify-around tw-items-center tw-gap-4">
+                  <BaseChart type="doughnut" :data="errorDonutData" :options="errorDonutOptions"/>
                 </div>
               </div>
 
@@ -122,7 +134,11 @@ import {
   scadaDonutData,
   scadaDonutOptions,
   scadaBarData,
-  scadaBarOptions
+  scadaBarOptions,
+  defectRateData,
+  defectRateOptions,
+  errorDonutData,
+  errorDonutOptions
 } from "../utils/chart-data.js"
 import { DocType } from "../utils/consts.js";
 import dayjs from "dayjs";
@@ -160,8 +176,9 @@ const state = reactive({
   hide_records: props.hide_records ?? false,
 });
 
-const showCharts = computed(() => props.doctype === DocType.DETAILED_ORDER_OVERVIEW_REPORT);
-const showScadaCharts = computed(() => props.doctype === DocType.SCADA_STATISTICAL_REPORT);
+const showDetailedOrderOverviewCharts = computed(() => props.doctype === DocType.DETAILED_ORDER_OVERVIEW_REPORT);
+const showScadaStatisticalReportCharts = computed(() => props.doctype === DocType.SCADA_STATISTICAL_REPORT);
+const showQMSDefectRateReportCharts = computed(() => props.doctype === DocType.DEFECT_RATE_REPORT);
 
 
 const currentActions = computed(() => config.value?.actions || []);
