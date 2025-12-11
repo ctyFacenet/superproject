@@ -873,6 +873,22 @@ export const doctypeConfigs = {
       baseCopyAction,
     ],
   },
+  [DocType.QC_RESULT_REPORT]: {
+    title: "BÁO CÁO KẾT QUẢ QC",
+    hideSelect: true,
+    hideSearchFullText: true,
+    groupByField: "qc_type",
+    actions: [
+      {
+        label: "Export Excel",
+        icon: DownloadOutlined,
+        color: "#00aeee",
+        hoverColor: "#38BDF8",
+        onClick: () => { },
+      },
+      baseCopyAction,
+    ],
+  },
 };
 
 export const getDoctypeConfig = (doctype) => {

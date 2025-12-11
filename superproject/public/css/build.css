@@ -611,6 +611,11 @@ video {
   margin-right: -0.25rem !important;
 }
 
+.tw-mx-auto {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
 .tw-my-1 {
   margin-top: 0.25rem !important;
   margin-bottom: 0.25rem !important;

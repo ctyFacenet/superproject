@@ -75,8 +75,12 @@
 
                 <div
                   class="tw-p-2 tw-border tw-rounded tw-bg-white tw-shadow tw-flex tw-flex-col lg:tw-flex-row tw-justify-around tw-items-center tw-gap-4">
-                  <BaseChart type="doughnut" :data="errorDonutData" :options="errorDonutOptions"/>
+                  <BaseChart type="doughnut" :data="errorDonutData" :options="errorDonutOptions" />
                 </div>
+              </div>
+
+              <div v-else-if="showQMSQCResultReportCharts" class="tw-w-full tw-border-gray-200 tw-rounded-md">
+                <QcResultReport />
               </div>
 
               <div
@@ -125,6 +129,7 @@ import { SearchOutlined, ReloadOutlined } from "@ant-design/icons-vue";
 import { getDoctypeConfig } from "./config/doctype-configs";
 import BaseChart from "../components/BaseChart.vue";
 import IconRenderer from "../components/IconRenderer.vue";
+import QcResultReport from "./qms/QcResultReport.vue";
 import {
   barChartData,
   barChartOptions,
@@ -179,6 +184,7 @@ const state = reactive({
 const showDetailedOrderOverviewCharts = computed(() => props.doctype === DocType.DETAILED_ORDER_OVERVIEW_REPORT);
 const showScadaStatisticalReportCharts = computed(() => props.doctype === DocType.SCADA_STATISTICAL_REPORT);
 const showQMSDefectRateReportCharts = computed(() => props.doctype === DocType.DEFECT_RATE_REPORT);
+const showQMSQCResultReportCharts = computed(() => props.doctype === DocType.QC_RESULT_REPORT);
 
 
 const currentActions = computed(() => config.value?.actions || []);

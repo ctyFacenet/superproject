@@ -320,3 +320,90 @@ export const errorDonutOptions = {
     },
   },
 };
+
+
+export const passRateData = {
+  labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+  datasets: [
+    {
+      label: "IQC",
+      borderColor: "#fbbf24",
+      backgroundColor: "#fbbf24",
+      data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 80, 0, 0],
+      tension: 0,
+
+      pointRadius: 4,
+      pointHoverRadius: 6,
+      pointBackgroundColor: "#fbbf24",
+      pointBorderColor: "#ffffff",
+      pointBorderWidth: 2
+    },
+    {
+      label: "PQC",
+      borderColor: "#22c55e",
+      backgroundColor: "#22c55e",
+      data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 98, 85, 0],
+      tension: 0,
+
+      pointRadius: 4,
+      pointHoverRadius: 6,
+      pointBackgroundColor: "#22c55e",
+      pointBorderColor: "#ffffff",
+      pointBorderWidth: 2
+    },
+    {
+      label: "OQC",
+      borderColor: "#3b82f6",
+      backgroundColor: "#3b82f6",
+      data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 95, 93, 0],
+      tension: 0,
+
+      pointRadius: 4,
+      pointHoverRadius: 6,
+      pointBackgroundColor: "#3b82f6",
+      pointBorderColor: "#ffffff",
+      pointBorderWidth: 2
+    }
+  ]
+};
+
+export const passRateOptions = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    legend: {
+      position: "bottom",
+      labels: {
+        usePointStyle: true,
+        pointStyle: "circle",
+        padding: 12,
+        boxWidth: 8,
+        boxHeight: 8,
+        font: { size: 12 },
+      },
+    },
+    title: {
+      display: true,
+      text: "Biểu đồ tỉ lệ pass",
+      font: { size: 16, weight: "bold" }
+    },
+    datalabels: { display: false },
+  },
+  scales: {
+    y: {
+      min: 0,
+      max: 100,
+      ticks: {
+        padding: 6,
+        callback: (v) => v + " %",
+      },
+      grid: {
+        color: "rgba(0,0,0,0.06)",
+      }
+    },
+    x: {
+      grid: { display: false },
+      ticks: { padding: 4 }
+    }
+  }
+};

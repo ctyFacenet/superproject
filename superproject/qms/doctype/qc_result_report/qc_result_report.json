@@ -5,18 +5,72 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "section_break_1tdp"
+  "qc_type",
+  "process_code",
+  "production_order_code",
+  "machine_code",
+  "column_break_eiai",
+  "line_group",
+  "operator",
+  "production_date",
+  "column_break_zdvg"
  ],
  "fields": [
   {
-   "fieldname": "section_break_1tdp",
-   "fieldtype": "Section Break"
+   "fieldname": "qc_type",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Lo\u1ea1i QC"
+  },
+  {
+   "fieldname": "column_break_eiai",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_zdvg",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "process_code",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e3 c\u00f4ng \u0111o\u1ea1n"
+  },
+  {
+   "fieldname": "production_order_code",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e3 l\u1ec7nh s\u1ea3n xu\u1ea5t"
+  },
+  {
+   "fieldname": "machine_code",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e3 m\u00e1y"
+  },
+  {
+   "fieldname": "line_group",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Nh\u00f3m line"
+  },
+  {
+   "fieldname": "operator",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Nh\u00e2n vi\u00ean th\u1ef1c hi\u1ec7n"
+  },
+  {
+   "fieldname": "production_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Ng\u00e0y s\u1ea3n xu\u1ea5t"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-12-04 10:00:13.926017",
+ "modified": "2025-12-11 08:43:24.575685",
  "modified_by": "Administrator",
  "module": "QMS",
  "name": "QC Result Report",
