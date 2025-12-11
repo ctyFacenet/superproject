@@ -69,7 +69,7 @@ onMounted(async () => {
   gap: 50px 60px;
   justify-content: center;
   padding: 40px 20px;
-  margin-top: 40px;
+  margin: 20px 0;
 }
 
 .module-card {
