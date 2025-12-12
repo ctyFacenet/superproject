@@ -15,7 +15,7 @@ def setup_website():
     frappe.db.set_value("Website Settings", "Website Settings", "favicon", logo_url)
     frappe.db.set_value("Website Settings", "Website Settings", "app_logo", logo_url)
     frappe.db.set_value("Website Settings", "Website Settings", "splash_image", logo_url)
-    frappe.db.set_value("Website Settings", "Website Settings", "app_name", "Trường An Hải Phòng")
+    frappe.db.set_value("Website Settings", "Website Settings", "app_name", "superproject")
     frappe.db.set_value("System Settings", "System Settings", "language", "vi")
     frappe.db.commit()
 
