@@ -21,22 +21,24 @@
         </template>
       </a-popover>
 
-      <div ref="scrollWrapper" class="tw-flex-1 tw-overflow-x-auto tw-overflow-y-auto tw-max-h-[70vh] tw-relative"
-        @scroll="handleScroll">
+      <div class="tw-flex-1 tw-overflow-x-auto tw-overflow-y-auto tw-max-h-[70vh] tw-relative">
         <table class="tw-min-w-max tw-border-collapse tw-w-full">
+
           <thead class="tw-sticky tw-top-0 tw-z-20">
+
             <tr class="tw-bg-blue-200 tw-border-b tw-border-gray-300 tw-text-gray-700 tw-text-[13px]">
-              <th class="left-sticky tw-z-40 tw-bg-blue-200 tw-w-[50px] tw-text-center tw-border">
+              <th class="left-sticky tw-z-40 tw-bg-blue-200 tw-w-[50px]
+                       tw-text-center tw-border">
                 STT
               </th>
 
-              <th v-if="!props.hideSelect"
-                class="left-sticky-2 tw-z-40 tw-bg-blue-200 tw-w-[45px] tw-text-center tw-border">
-                <input type="checkbox" ref="selectAllRef" v-model="selectAll" @change="toggleSelectAll" />
+              <th v-if="!props.hideSelect" class="left-sticky-2 tw-z-40 tw-bg-blue-200 tw-w-[45px]
+           tw-text-center tw-border">
+                <input type="checkbox" v-model="selectAll" :indeterminate.prop="isIndeterminate" @change="toggleSelectAll" />
               </th>
 
-              <th v-for="col in filteredColumns" :key="col.key" class="tw-relative tw-border tw-border-gray-200 tw-font-semibold tw-text-center
-                       tw-px-3 tw-py-2 tw-group" :class="[
+              <th v-for="col in filteredColumns" :key="col.key" class="tw-relative tw-border tw-border-gray-200
+                       tw-font-semibold tw-text-center tw-px-3 tw-py-2 tw-group" :class="[
                         col.key === 'actions' ? 'actions-sticky th-sticky' : '',
                         {
                           'tw-bg-pink-100 tw-text-pink-800':
@@ -52,6 +54,7 @@
                       {{ col.title }}
                     </span>
                   </a-tooltip>
+
                   <IconRenderer v-if="col.key !== 'actions'" :icon="FilterOutlined" :size="14"
                     customClass="tw-cursor-pointer" />
                 </div>
@@ -65,7 +68,8 @@
 
             <tr class="tw-bg-white tw-border-b tw-border-gray-200">
               <th class="left-sticky tw-top-[33px] tw-z-30 tw-border"></th>
-              <th v-if="!props.hideSelect" class="left-sticky-2 tw-top-[33px] tw-z-30 tw-border"></th>
+              <th v-if="!props.hideSelect" class="left-sticky-2 tw-top-[33px] tw-z-30 tw-border">
+              </th>
 
               <th v-for="col in filteredColumns" :key="col.key" class="tw-border"
                 :class="col.key === 'actions' ? 'actions-sticky th-sticky' : ''"
@@ -82,7 +86,7 @@
                 </template>
 
                 <template v-else-if="col.key !== 'actions'">
-                  <a-input v-model:value="filters[col.key]" size="small"
+                  <a-input v-model:value="textFilters[col.key]" size="small"
                     class="tw-rounded-sm tw-p-1 tw-shadow tw-bg-white" allowClear>
                     <template #prefix>
                       <IconRenderer :icon="SearchOutlined" customClass="tw-opacity-30" />
@@ -103,11 +107,13 @@
                 <td v-for="col in filteredColumns" :key="col.key" class="tw-border tw-py-1">
                   <template v-if="col.key === item.field">
                     <div class="tw-flex tw-items-center tw-gap-2 tw-ml-1">
-                      <button v-if="config.enableCollapse" class="tw-w-[18px] tw-h-[18px] tw-flex tw-items-center tw-justify-center
-                               tw-border tw-border-gray-200 tw-rounded-sm tw-bg-white"
-                        @click.stop="toggleCollapse(item.pathKey)">
-                        <component :is="collapsedGroups.has(item.pathKey) ? PlusOutlined : MinusOutlined"
-                          class="tw-text-[12px]" />
+                      <button v-if="config.enableCollapse" class="tw-w-[18px] tw-h-[18px] tw-flex
+                               tw-items-center tw-justify-center
+                               tw-border tw-border-gray-200
+                               tw-rounded-sm tw-bg-white" @click.stop="toggleCollapse(item.pathKey)">
+                        <component :is="collapsedGroups.has(item.pathKey)
+                          ? PlusOutlined
+                          : MinusOutlined" class="tw-text-[12px]" />
                       </button>
 
                       <span class="tw-font-bold tw-cursor-pointer"
@@ -121,7 +127,9 @@
 
               <tr v-else v-show="!isCollapsed(item.groupPath)" :class="[
                 'tw-text-[13px] tw-cursor-pointer',
-                selectedRows.has(item.row) ? 'tw-bg-blue-50' : 'hover:tw-bg-gray-50',
+                selectedRows.has(item.row)
+                  ? 'tw-bg-blue-50'
+                  : 'hover:tw-bg-gray-50',
               ]" @click="handleRowClick($event, item.row)">
                 <td class="left-sticky tw-text-center tw-border">
                   {{ item.index + 1 }}
@@ -167,20 +175,24 @@
           </tbody>
         </table>
       </div>
+
       <div class="tw-flex tw-flex-col sm:tw-flex-row sm:tw-justify-between sm:tw-items-center
-               tw-py-2 tw-px-3 tw-border-gray-200 tw-bg-gray-50 tw-text-[14px] tw-font-medium">
+               tw-py-2 tw-px-3 tw-border-gray-200 tw-bg-gray-50
+               tw-text-[14px] tw-font-medium">
         <a-select v-model:value="pageSize" :options="pageSizeOptions" class="tw-hidden sm:tw-block tw-w-[110px]"
           @change="onPageSizeChange" />
 
-        <div class="tw-flex tw-flex-col sm:tw-flex-row tw-items-center tw-justify-center
-                 tw-gap-2 sm:tw-gap-3 tw-w-full sm:tw-w-auto">
+        <div class="tw-flex tw-flex-col sm:tw-flex-row tw-items-center
+                    tw-justify-center tw-gap-2 sm:tw-gap-3
+                    tw-w-full sm:tw-w-auto">
           <span class="tw-hidden sm:tw-inline tw-text-gray-600 tw-font-medium">
             Trang số {{ currentPage }} của {{ totalPages }}
-            ({{ filteredRows?.length || 0 }} bản ghi)
+            ({{ filteredRows.length }} bản ghi)
           </span>
 
-          <a-pagination v-model:current="currentPage" :total="filteredRows?.length || 0" :pageSize="pageSize"
-            @change="onPageChange" :showSizeChanger="false" size="small" class="tw-my-1 sm:tw-my-0" />
+          <a-pagination v-model:current="currentPage" :total="filteredRows.length" :pageSize="pageSize"
+            :showSizeChanger="false" size="small" @change="currentPage = $event" />
+
         </div>
 
         <div class="tw-hidden sm:tw-flex tw-items-center tw-gap-2">
@@ -195,12 +207,12 @@
                tw-tracking-wide tw-text-gray-600">
         © Copyright
         <a href="https://facenet.vn" target="_blank" rel="noopener noreferrer"
-          class="tw-text-[#0066cc] tw-font-semibold tw-cursor-pointer hover:tw-underline">
+          class="tw-text-[#0066cc] tw-font-semibold hover:tw-underline">
           FaceNet
         </a>.
         All Rights Reserved,&nbsp;Designed by
         <a href="https://facenet.vn" target="_blank" rel="noopener noreferrer"
-          class="tw-text-[#0066cc] tw-font-semibold tw-cursor-pointer hover:tw-underline">
+          class="tw-text-[#0066cc] tw-font-semibold hover:tw-underline">
           FaceNet
         </a>
       </div>
@@ -208,8 +220,6 @@
     </a-spin>
   </div>
 </template>
-
-
 
 <script setup>
 import { ref, computed, watch, shallowRef, onMounted, onUnmounted } from "vue";
@@ -224,18 +234,21 @@ import {
   FilterOutlined,
 } from "@ant-design/icons-vue";
 
+import useResize from "../components/DataTable/composables/useResize";
+import usePagination from "../components/DataTable/composables/usePagination";
+
 const props = defineProps({
   doctype: { type: String, required: true },
   nameKey: { type: String, default: "name" },
   hideSelect: { type: Boolean, default: false },
-  filters: { type: Object, default: () => ({}) },
 });
 
 const emit = defineEmits(["rowClick", "selection-change"]);
 
+const { colWidths, startResize } = useResize();
+
 const loading = ref(false);
 const columns = ref([]);
-const rows = ref([]);
 const allRows = shallowRef([]);
 
 const visibleColumns = ref({});
@@ -245,34 +258,33 @@ const storageKey = computed(() => `visibleColumns_${props.doctype}`);
 const metaFields = ref({});
 const statusFilters = ref({});
 const statusColors = ref({});
-const filters = ref({});
+const textFilters = ref({});
 const dateFilters = ref({});
 
-const colWidths = ref({});
+const selectAll = ref(false);
 
 const config = computed(() => getDoctypeConfig(props.doctype));
-const groupByField = computed(() => config.value.groupByField);
+const groupByField = computed(() => config.value?.groupByField);
 
 onMounted(() => {
   const saved = localStorage.getItem(storageKey.value);
   if (saved) visibleColumns.value = JSON.parse(saved);
 
   const handler = (e) => {
-    const dt = e.detail?.doctype;
-    if (!dt || dt === props.doctype) {
+    if (!e.detail?.doctype || e.detail.doctype === props.doctype) {
       showColumnPicker.value = !showColumnPicker.value;
     }
   };
 
-  window[`_columnPickerHandler_${props.doctype}`] = handler;
+  window[`_columnPicker_${props.doctype}`] = handler;
   window.addEventListener("open-column-picker", handler);
 });
 
 onUnmounted(() => {
-  const handler = window[`_columnPickerHandler_${props.doctype}`];
-  if (handler) {
-    window.removeEventListener("open-column-picker", handler);
-    delete window[`_columnPickerHandler_${props.doctype}`];
+  const h = window[`_columnPicker_${props.doctype}`];
+  if (h) {
+    window.removeEventListener("open-column-picker", h);
+    delete window[`_columnPicker_${props.doctype}`];
   }
 });
 
@@ -286,13 +298,13 @@ const checkedColumns = computed(() =>
   Object.keys(visibleColumns.value).filter((k) => visibleColumns.value[k])
 );
 
-function toggleColumn(key, e) {
+const toggleColumn = (key, e) => {
   visibleColumns.value[key] = e.target.checked;
-}
+};
 
-function resetColumns() {
+const resetColumns = () => {
   Object.keys(visibleColumns.value).forEach((k) => (visibleColumns.value[k] = true));
-}
+};
 
 async function fetchData() {
   loading.value = true;
@@ -313,7 +325,7 @@ async function fetchData() {
     columns.value = visibleFields;
 
     visibleFields.forEach((f) => {
-      if (!colWidths.value[f.key]) colWidths.value[f.key] = 160;
+      colWidths.value[f.key] ||= 160;
       if (f.key.toLowerCase().endsWith("status")) statusFilters.value[f.key] = "";
     });
 
@@ -342,14 +354,10 @@ async function fetchData() {
       ...visibleFields.filter((f) => f.key !== "actions").map((f) => f.key),
     ];
 
-    rows.value = await frappe.db.get_list(props.doctype, {
+    allRows.value = await frappe.db.get_list(props.doctype, {
       fields: fieldNames,
       limit: 1000,
     });
-
-    allRows.value = rows.value;
-  } catch (e) {
-    console.error(e);
   } finally {
     loading.value = false;
   }
@@ -360,13 +368,14 @@ watch(() => props.doctype, fetchData);
 
 const filteredColumns = computed(() => {
   let cols = columns.value.filter((c) => visibleColumns.value[c.key] !== false);
-  if (!config.value?.rowActions?.length)
+  if (!config.value?.rowActions?.length) {
     cols = cols.filter((c) => c.key !== "actions");
+  }
   return cols;
 });
 
-const filteredRows = computed(() => {
-  let result = allRows.value.filter((r) =>
+const filteredRows = computed(() =>
+  allRows.value.filter((r) =>
     columns.value.every((c) => {
       if (c.key === "actions") return true;
 
@@ -383,28 +392,35 @@ const filteredRows = computed(() => {
       }
 
       const val = (r[c.key] || "").toString().toLowerCase();
-      const f = (filters.value[c.key] || "").toLowerCase();
+      const f = (textFilters.value[c.key] || "").toLowerCase();
       return val.includes(f);
     })
-  );
+  )
+);
 
-  return result;
-});
+const {
+  currentPage,
+  pageSize,
+  pageSizeOptions,
+  totalPages,
+  paginatedRows,
+  goToPage,
+  onPageSizeChange,
+  jumpToPage,
+} = usePagination(filteredRows);
 
 const collapsedGroups = ref(new Set());
 
-function toggleCollapse(pathKey) {
-  if (collapsedGroups.value.has(pathKey)) collapsedGroups.value.delete(pathKey);
-  else collapsedGroups.value.add(pathKey);
-}
+const toggleCollapse = (k) =>
+  collapsedGroups.value.has(k)
+    ? collapsedGroups.value.delete(k)
+    : collapsedGroups.value.add(k);
 
-function isCollapsed(path) {
-  return path.some((p) => collapsedGroups.value.has(p));
-}
+const isCollapsed = (path) => path.some((p) => collapsedGroups.value.has(p));
 
 const groupedFlatRows = computed(() => {
   if (!groupByField.value) {
-    return filteredRows.value.map((row, index) => ({
+    return paginatedRows.value.map((row, index) => ({
       type: "row",
       row,
       index,
@@ -446,108 +462,78 @@ const groupedFlatRows = computed(() => {
       result.push({
         type: "group",
         label: key,
-        field: field,
-        level,
+        field,
         pathKey,
         count: items.length,
       });
-
-
       walk(items, level + 1, [...path, pathKey]);
     }
   }
 
-  walk(filteredRows.value, 0, []);
+  walk(paginatedRows.value, 0, []);
   return result;
 });
 
 const selectedRows = ref(new Set());
-const selectAll = ref(false);
-const selectAllRef = ref(null);
-
 watch(selectedRows, () =>
   emit("selection-change", Array.from(selectedRows.value))
 );
 
-function toggleRow(_, row, e) {
-  if (e.target.checked) selectedRows.value.add(row);
-  else selectedRows.value.delete(row);
-}
+const toggleRow = (_, row, e) =>
+  e.target.checked
+    ? selectedRows.value.add(row)
+    : selectedRows.value.delete(row);
 
-function toggleSelectAll() {
-  if (selectAll.value) filteredRows.value.forEach((r) => selectedRows.value.add(r));
-  else selectedRows.value.clear();
-}
-
-const currentPage = ref(1);
-const pageSize = ref(10);
-const pageSizeOptions = [
-  { label: "10 / Trang", value: 10 },
-  { label: "20 / Trang", value: 20 },
-  { label: "50 / Trang", value: 50 },
-  { label: "100 / Trang", value: 100 },
-];
-
-const totalPages = computed(() =>
-  Math.max(1, Math.ceil(filteredRows.value.length / pageSize.value))
-);
-
-const goToPage = ref(null);
-const onPageChange = (p) => (currentPage.value = p);
-const onPageSizeChange = (s) => {
-  pageSize.value = s;
-  currentPage.value = 1;
-};
-const jumpToPage = () => {
-  if (goToPage.value >= 1 && goToPage.value <= totalPages.value)
-    currentPage.value = goToPage.value;
-};
-
-const resizing = ref({ active: false });
-
-function startResize(e, key) {
-  resizing.value = { active: true, key, x: e.pageX, w: colWidths.value[key] };
-  document.addEventListener("mousemove", handleResize);
-  document.addEventListener("mouseup", stopResize);
-}
-
-function handleResize(e) {
-  if (!resizing.value.active) return;
-  colWidths.value[resizing.value.key] = Math.max(
-    80,
-    resizing.value.w + (e.pageX - resizing.value.x)
-  );
-}
-
-function stopResize() {
-  resizing.value.active = false;
-  document.removeEventListener("mousemove", handleResize);
-  document.removeEventListener("mouseup", stopResize);
-}
-
-const scrollWrapper = ref(null);
-function handleScroll() { }
-
-function handleRowClick(event, row) {
-  if (event.target.closest(".actions-cell") || event.target.closest(".checkbox-cell")) return;
+const handleRowClick = (e, row) => {
+  if (e.target.closest(".actions-cell") || e.target.closest(".checkbox-cell"))
+    return;
   emit("rowClick", row);
   const name = row[props.nameKey] || row.name;
   if (name) frappe.set_route("Form", props.doctype, name);
-}
+};
 
-function getStatusOptions(fieldname) {
-  const field = metaFields.value[fieldname];
-  if (!field?.options) return [];
-  return field.options
-    .split("\n")
+const getStatusOptions = (fieldname) =>
+  metaFields.value[fieldname]?.options
+    ?.split("\n")
     .filter(Boolean)
-    .map((o) => ({ label: o, value: o }));
+    .map((o) => ({ label: o, value: o })) || [];
+
+const filterOption = (i, o) =>
+  o.label.toLowerCase().includes(i.toLowerCase());
+
+function toggleSelectAll() {
+  if (selectAll.value) {
+    paginatedRows.value.forEach((row) => {
+      selectedRows.value.add(row);
+    });
+  } else {
+    paginatedRows.value.forEach((row) => {
+      selectedRows.value.delete(row);
+    });
+  }
 }
+const isIndeterminate = computed(() => {
+  const total = paginatedRows.value.length;
+  if (total === 0) return false;
 
-const filterOption = (input, option) =>
-  option.label.toLowerCase().includes(input.toLowerCase());
+  const selectedCount = paginatedRows.value.filter(r =>
+    selectedRows.value.has(r)
+  ).length;
+
+  return selectedCount > 0 && selectedCount < total;
+});
+
+watch([paginatedRows, selectedRows], () => {
+  const total = paginatedRows.value.length;
+  const selectedCount = paginatedRows.value.filter(r =>
+    selectedRows.value.has(r)
+  ).length;
+
+  selectAll.value = total > 0 && selectedCount === total;
+});
+
+
 </script>
-
 
 <style scoped>
 table {
@@ -774,7 +760,7 @@ tbody tr:hover {
   padding: 8px 12px;
   font-size: 13px;
   font-weight: 600;
-  border-radius: 4px;
+  border-radius: 2px;
   line-height: 1;
   width: 100%;
   min-width: unset !important;
