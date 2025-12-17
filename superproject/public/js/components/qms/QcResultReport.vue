@@ -50,7 +50,7 @@ const tableRows = [
 const totalQty = tableRows.reduce((a, b) => a + b.qty, 0);
 </script>
 
-<style>
+<style scoped>
 table {
   width: 100%;
   border-collapse: separate;
