@@ -269,7 +269,8 @@ export const doctypeConfigs = {
 
   [DocType.IN_PROCESS_INVENTORY]: {
     title: "TỒN KHO ĐANG SẢN XUẤT",
-    groupByField: "materialgroup",
+    groupByField: ["materialgroup", "warehousename", "group"],
+    hideSelect: true,
     actions: [
       {
         label: "Thống kê NVL thừa",
@@ -877,7 +878,7 @@ export const doctypeConfigs = {
     title: "BÁO CÁO KẾT QUẢ QC",
     hideSelect: true,
     hideSearchFullText: true,
-    groupByField: "qc_type",
+    groupByField: ["qc_type", "process_code", "production_order_code"],
     actions: [
       {
         label: "Export Excel",
@@ -895,6 +896,8 @@ export const getDoctypeConfig = (doctype) => {
   return {
     enableCollapse: false,
     hideSearchFullText: false,
+    hideTree: false,
+    hideSelect: false,
     ...(doctypeConfigs[doctype] || {
       title: doctype?.toUpperCase() || "DANH SÁCH",
       actions: [baseCopyAction],

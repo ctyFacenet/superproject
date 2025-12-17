@@ -34,9 +34,9 @@
         <tbody>
           <tr v-for="(row, i) in rows" :key="row.name" class="hover:tw-bg-gray-100 tw-transition"
             :style="{ backgroundColor: row.__row_color }">
-            <td class="td text-center">{{ i + 1 }}</td>
+            <td class="td">{{ i + 1 }}</td>
 
-            <td class="td text-center" v-for="f in visibleFields" :key="f.fieldname">
+            <td class="td" v-for="f in visibleFields" :key="f.fieldname">
               <template v-if="f.fieldname === 'line_status'">
                 <span class="status-badge" :class="getLineStatusClass(row[f.fieldname])">
                   {{ row[f.fieldname] }}
@@ -172,6 +172,7 @@ table th {
   padding: 8px;
   border: 1px solid #e5e7eb;
   white-space: nowrap;
+  text-align: center;
 }
 
 table td::after,

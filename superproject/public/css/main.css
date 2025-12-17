@@ -154,7 +154,7 @@ input[type="checkbox"] {
   -webkit-appearance: none !important;
   width: 17px !important;
   height: 17px !important;
-  border-radius: 3px !important;
+  border-radius: 1px !important;
   cursor: pointer !important;
   background-color: #fff !important;
   transition: all 0.2s ease-in-out !important;
