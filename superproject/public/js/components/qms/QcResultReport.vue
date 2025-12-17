@@ -1,5 +1,5 @@
 <template>
-  <div class="tw-w-full tw-mx-auto tw-grid tw-grid-cols-1 lg:tw-grid-cols-2 tw-gap-6 tw-items-start">
+  <div class="tw-w-full tw-mx-auto tw-grid tw-grid-cols-1 lg:tw-grid-cols-2 tw-gap-6">
 
     <div class="tw-border tw-rounded-sm tw-bg-white tw-shadow">
       <BaseChart type="line" :data="passRateData" :options="passRateOptions" />
