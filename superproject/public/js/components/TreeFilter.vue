@@ -170,4 +170,10 @@ function emitChange() {
 .tw-border {
   border-color: #e5e7eb;
 }
+
+:deep(.ant-tree .ant-tree-checkbox .ant-tree-checkbox-inner) {
+  width: 17px !important;
+  height: 17px !important;
+  border-radius: 2px !important;
+}
 </style>
