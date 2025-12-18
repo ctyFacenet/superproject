@@ -6,17 +6,17 @@
       <div class="tw-flex tw-w-max tw-overflow-hidden">
 
         <span @click="activeTab = 'accounts'"
-          class="tw-px-4 tw-py-2 tw-cursor-pointer tw-border tw-border-gray-300 tw-border-b-white tw-rounded-t-md"
+          class="tw-px-4 tw-py-2 tw-cursor-pointer tw-border tw-border-b-white tw-rounded-t-md"
           :class="activeTab === 'accounts'
-            ? 'tw-bg-white tw-text-blue-600 tw-font-semibold'
+            ? 'tw-bg-white tw-text-blue-600 tw-font-semibold tw-border-blue-300'
             : 'tw-bg-gray-50 tw-text-gray-700 hover:tw-bg-gray-100'">
           Danh sách tài khoản
         </span>
 
         <span @click="activeTab = 'groups'"
-          class="tw-px-4 tw-py-2 tw-cursor-pointer tw-border tw-border-gray-300 tw-border-b-white tw-rounded-t-md tw-ml-[3px]"
+          class="tw-px-4 tw-py-2 tw-cursor-pointer tw-border tw-border-b-white tw-rounded-t-md tw-ml-[3px]"
           :class="activeTab === 'groups'
-            ? 'tw-bg-white tw-text-blue-600 tw-font-semibold'
+            ? 'tw-bg-white tw-text-blue-600 tw-font-semibold tw-border-blue-300'
             : 'tw-bg-gray-50 tw-text-gray-700 hover:tw-bg-gray-100'">
           Danh sách nhóm quyền
         </span>

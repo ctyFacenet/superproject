@@ -491,7 +491,6 @@ $(document).on("click", function (e) {
     !$(e.target).closest(".custom-menu-bar-submenu").length
   ) {
     $(".custom-menu-bar-submenu").hide();
-    $(".custom-menu-bar-item").removeClass("active");
     $(".caret-down i").removeClass("fa-angle-up").addClass("fa-angle-down");
   }
 });
