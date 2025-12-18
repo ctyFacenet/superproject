@@ -5,10 +5,10 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "workordercode",
+  "work_order_code",
   "status",
-  "itemcode",
-  "itemname",
+  "item_code",
+  "item_name",
   "can",
   "column_break_qclv",
   "kdai",
@@ -18,18 +18,18 @@
   "malh",
   "column_break_pnda",
   "mavt",
-  "actualstarttime",
-  "actualendtime",
-  "estimatedokquantity",
-  "actualokquantity",
+  "actual_start_time",
+  "actual_end_time",
+  "estimated_ok_quantity",
+  "actual_ok_quantity",
   "uom",
   "column_break_ocil",
-  "actualoutputquantity",
-  "estimatedngquantity",
-  "estimatedoutputquantity",
-  "productionquantity",
-  "actualngquantity",
-  "createdby"
+  "actual_output_quantity",
+  "estimated_ng_quantity",
+  "estimated_output_quantity",
+  "production_quantity",
+  "actual_ng_quantity",
+  "created_by"
  ],
  "fields": [
   {
@@ -43,24 +43,6 @@
   {
    "fieldname": "column_break_ocil",
    "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "workordercode",
-   "fieldtype": "Small Text",
-   "in_list_view": 1,
-   "label": "M\u00e3 l\u1ec7nh s\u1ea3n xu\u1ea5t"
-  },
-  {
-   "fieldname": "itemcode",
-   "fieldtype": "Small Text",
-   "in_list_view": 1,
-   "label": "M\u00e3 h\u00e0ng"
-  },
-  {
-   "fieldname": "itemname",
-   "fieldtype": "Small Text",
-   "in_list_view": 1,
-   "label": "T\u00ean h\u00e0ng"
   },
   {
    "fieldname": "can",
@@ -105,71 +87,11 @@
    "label": "MAVT"
   },
   {
-   "fieldname": "actualstarttime",
-   "fieldtype": "Date",
-   "in_list_view": 1,
-   "label": "Th\u1eddi gian b\u1eaft \u0111\u1ea7u s\u1ea3n xu\u1ea5t th\u1ef1c t\u1ebf"
-  },
-  {
-   "fieldname": "actualendtime",
-   "fieldtype": "Date",
-   "in_list_view": 1,
-   "label": "Th\u1eddi gian k\u1ebft th\u00fac s\u1ea3n xu\u1ea5t th\u1ef1c t\u1ebf"
-  },
-  {
-   "fieldname": "productionquantity",
-   "fieldtype": "Float",
-   "in_list_view": 1,
-   "label": "S\u1ed1 l\u01b0\u1ee3ng s\u1ea3n xu\u1ea5t"
-  },
-  {
-   "fieldname": "estimatedoutputquantity",
-   "fieldtype": "Float",
-   "in_list_view": 1,
-   "label": "S\u1ed1 l\u01b0\u1ee3ng \u0111\u1ea7u ra \u01b0\u1edbc t\u00ednh"
-  },
-  {
-   "fieldname": "estimatedokquantity",
-   "fieldtype": "Float",
-   "in_list_view": 1,
-   "label": "S\u1ed1 l\u01b0\u1ee3ng OK \u01b0\u1edbc t\u00ednh"
-  },
-  {
-   "fieldname": "estimatedngquantity",
-   "fieldtype": "Float",
-   "in_list_view": 1,
-   "label": "S\u1ed1 l\u01b0\u1ee3ng NG \u01b0\u1edbc t\u00ednh"
-  },
-  {
-   "fieldname": "actualoutputquantity",
-   "fieldtype": "Float",
-   "in_list_view": 1,
-   "label": "S\u1ed1 l\u01b0\u1ee3ng \u0111\u1ea7u ra th\u1ef1c t\u1ebf"
-  },
-  {
-   "fieldname": "actualokquantity",
-   "fieldtype": "Float",
-   "in_list_view": 1,
-   "label": "S\u1ed1 l\u01b0\u1ee3ng OK th\u1ef1c t\u1ebf"
-  },
-  {
-   "fieldname": "actualngquantity",
-   "fieldtype": "Float",
-   "in_list_view": 1,
-   "label": "S\u1ed1 l\u01b0\u1ee3ng NG th\u1ef1c t\u1ebf"
-  },
-  {
    "default": "Kg",
    "fieldname": "uom",
    "fieldtype": "Small Text",
    "in_list_view": 1,
    "label": "\u0110\u01a1n v\u1ecb t\u00ednh"
-  },
-  {
-   "fieldname": "createdby",
-   "fieldtype": "Small Text",
-   "in_list_view": 1,
-   "label": "Ng\u01b0\u1eddi t\u1ea1o l\u1ec7nh"
   },
   {
    "default": "\u0110ang s\u1ea3n xu\u1ea5t",
@@ -178,12 +100,90 @@
    "in_list_view": 1,
    "label": "Tr\u1ea1ng th\u00e1i",
    "options": "\u0110\u00e3 duy\u1ec7t\n\u0110ang s\u1ea3n xu\u1ea5t\nD\u1eebng s\u1ea3n xu\u1ea5t\n\u0110\u00e3 ho\u00e0n th\u00e0nh\n\u0110\u00e3 h\u1ee7y"
+  },
+  {
+   "fieldname": "work_order_code",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e3 l\u1ec7nh s\u1ea3n xu\u1ea5t"
+  },
+  {
+   "fieldname": "item_code",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e3 h\u00e0ng"
+  },
+  {
+   "fieldname": "item_name",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "T\u00ean h\u00e0ng"
+  },
+  {
+   "fieldname": "actual_start_time",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Th\u1eddi gian b\u1eaft \u0111\u1ea7u s\u1ea3n xu\u1ea5t th\u1ef1c t\u1ebf"
+  },
+  {
+   "fieldname": "actual_end_time",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Th\u1eddi gian k\u1ebft th\u00fac s\u1ea3n xu\u1ea5t th\u1ef1c t\u1ebf"
+  },
+  {
+   "fieldname": "estimated_ok_quantity",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "S\u1ed1 l\u01b0\u1ee3ng OK \u01b0\u1edbc t\u00ednh"
+  },
+  {
+   "fieldname": "actual_ok_quantity",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "S\u1ed1 l\u01b0\u1ee3ng OK th\u1ef1c t\u1ebf"
+  },
+  {
+   "fieldname": "actual_output_quantity",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "S\u1ed1 l\u01b0\u1ee3ng \u0111\u1ea7u ra th\u1ef1c t\u1ebf"
+  },
+  {
+   "fieldname": "estimated_ng_quantity",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "S\u1ed1 l\u01b0\u1ee3ng NG \u01b0\u1edbc t\u00ednh"
+  },
+  {
+   "fieldname": "estimated_output_quantity",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "S\u1ed1 l\u01b0\u1ee3ng \u0111\u1ea7u ra \u01b0\u1edbc t\u00ednh"
+  },
+  {
+   "fieldname": "production_quantity",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "S\u1ed1 l\u01b0\u1ee3ng s\u1ea3n xu\u1ea5t"
+  },
+  {
+   "fieldname": "actual_ng_quantity",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "S\u1ed1 l\u01b0\u1ee3ng NG th\u1ef1c t\u1ebf"
+  },
+  {
+   "fieldname": "created_by",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Ng\u01b0\u1eddi t\u1ea1o l\u1ec7nh"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-11-07 11:06:47.209575",
+ "modified": "2025-12-18 11:25:08.013173",
  "modified_by": "Administrator",
  "module": "APS",
  "name": "Work Order Approved",

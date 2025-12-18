@@ -5,53 +5,56 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "qrcode",
-  "itemcode",
-  "itemname",
+  "qr_code",
+  "item_code",
+  "item_name",
   "column_break_lnwc",
-  "processname",
-  "productiondate"
+  "process_name",
+  "production_date"
  ],
  "fields": [
   {
-   "fieldname": "qrcode",
+   "fieldname": "column_break_lnwc",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "\t300000000000000004081280",
+   "fieldname": "qr_code",
    "fieldtype": "Small Text",
    "in_list_view": 1,
    "label": "M\u00e3 QR"
   },
   {
-   "fieldname": "itemcode",
+   "default": "CDONG17CFT",
+   "fieldname": "item_code",
    "fieldtype": "Small Text",
    "in_list_view": 1,
    "label": "M\u00e3 s\u1ea3n ph\u1ea9m"
   },
   {
-   "fieldname": "itemname",
+   "default": "\u0110\u1ed3ng Copper rod 17 mm CFT",
+   "fieldname": "item_name",
    "fieldtype": "Small Text",
    "in_list_view": 1,
    "label": "T\u00ean s\u1ea3n ph\u1ea9m"
   },
   {
-   "fieldname": "processname",
+   "fieldname": "process_name",
    "fieldtype": "Small Text",
    "in_list_view": 1,
    "label": "C\u00f4ng \u0111o\u1ea1n"
   },
   {
-   "fieldname": "productiondate",
+   "fieldname": "production_date",
    "fieldtype": "Date",
    "in_list_view": 1,
    "label": "Ng\u00e0y s\u1ea3n xu\u1ea5t"
-  },
-  {
-   "fieldname": "column_break_lnwc",
-   "fieldtype": "Column Break"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-11-10 08:57:36.005199",
+ "modified": "2025-12-18 14:11:20.440363",
  "modified_by": "Administrator",
  "module": "APS",
  "name": "Traceability",

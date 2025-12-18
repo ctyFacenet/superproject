@@ -5,30 +5,24 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "materialgroup",
-  "warehousename",
+  "warehouse_name",
   "group",
-  "materialtype",
+  "material_group",
+  "material_type",
   "column_break_ionb",
-  "materialcode",
-  "materialname",
+  "material_code",
+  "material_name",
   "classification",
-  "openingbalance",
-  "quantityin",
+  "opening_balance",
+  "quantity_in",
   "column_break_rcig",
-  "quantityout",
-  "closingbalance",
-  "stocktakingquantity",
-  "quantitydifference",
+  "quantity_out",
+  "closing_balance",
+  "stock_taking_quantity",
+  "quantity_difference",
   "uom"
  ],
  "fields": [
-  {
-   "fieldname": "warehousename",
-   "fieldtype": "Small Text",
-   "in_list_view": 1,
-   "label": "T\u00ean kho"
-  },
   {
    "fieldname": "column_break_ionb",
    "fieldtype": "Column Break"
@@ -44,70 +38,10 @@
    "label": "Nh\u00f3m"
   },
   {
-   "fieldname": "materialgroup",
-   "fieldtype": "Small Text",
-   "in_list_view": 1,
-   "label": "Nh\u00f3m v\u1eadt t\u01b0"
-  },
-  {
-   "fieldname": "materialtype",
-   "fieldtype": "Small Text",
-   "in_list_view": 1,
-   "label": "Lo\u1ea1i v\u1eadt t\u01b0"
-  },
-  {
-   "fieldname": "materialcode",
-   "fieldtype": "Small Text",
-   "in_list_view": 1,
-   "label": "M\u00e3 v\u1eadt t\u01b0"
-  },
-  {
-   "fieldname": "materialname",
-   "fieldtype": "Small Text",
-   "in_list_view": 1,
-   "label": "T\u00ean v\u1eadt t\u01b0"
-  },
-  {
    "fieldname": "classification",
    "fieldtype": "Small Text",
    "in_list_view": 1,
    "label": "Ph\u00e2n lo\u1ea1i"
-  },
-  {
-   "fieldname": "openingbalance",
-   "fieldtype": "Float",
-   "in_list_view": 1,
-   "label": "S\u1ed1 \u0111\u1ea7u k\u1ef3 (1)"
-  },
-  {
-   "fieldname": "quantityin",
-   "fieldtype": "Float",
-   "in_list_view": 1,
-   "label": "Nh\u1eadp (2)"
-  },
-  {
-   "fieldname": "quantityout",
-   "fieldtype": "Float",
-   "in_list_view": 1,
-   "label": "Xu\u1ea5t (3)"
-  },
-  {
-   "fieldname": "closingbalance",
-   "fieldtype": "Float",
-   "in_list_view": 1,
-   "label": "S\u1ed1 cu\u1ed1i k\u1ef3 (4) = (1) + (2) - (3)"
-  },
-  {
-   "fieldname": "stocktakingquantity",
-   "fieldtype": "Float",
-   "in_list_view": 1,
-   "label": "S\u1ed1 ki\u1ec3m k\u00ea (5)"
-  },
-  {
-   "fieldname": "quantitydifference",
-   "fieldtype": "Float",
-   "in_list_view": 1,
-   "label": "S\u1ed1 ch\u00eanh l\u1ec7ch (6) = (5) - (4)"
   },
   {
    "default": "Kg",
@@ -115,12 +49,78 @@
    "fieldtype": "Small Text",
    "in_list_view": 1,
    "label": "\u0110\u01a1n v\u1ecb t\u00ednh"
+  },
+  {
+   "fieldname": "material_group",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Nh\u00f3m v\u1eadt t\u01b0"
+  },
+  {
+   "fieldname": "warehouse_name",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "T\u00ean kho"
+  },
+  {
+   "fieldname": "material_type",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Lo\u1ea1i v\u1eadt t\u01b0"
+  },
+  {
+   "fieldname": "material_code",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e3 v\u1eadt t\u01b0"
+  },
+  {
+   "fieldname": "material_name",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "T\u00ean v\u1eadt t\u01b0"
+  },
+  {
+   "fieldname": "opening_balance",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "S\u1ed1 \u0111\u1ea7u k\u1ef3 (1)"
+  },
+  {
+   "fieldname": "quantity_in",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Nh\u1eadp (2)"
+  },
+  {
+   "fieldname": "quantity_out",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Xu\u1ea5t (3)"
+  },
+  {
+   "fieldname": "closing_balance",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "S\u1ed1 cu\u1ed1i k\u1ef3 (4) = (1) + (2) - (3)"
+  },
+  {
+   "fieldname": "stock_taking_quantity",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "S\u1ed1 ki\u1ec3m k\u00ea (5)"
+  },
+  {
+   "fieldname": "quantity_difference",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "S\u1ed1 ch\u00eanh l\u1ec7ch (6) = (5) - (4)"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-11-07 13:46:33.069206",
+ "modified": "2025-12-18 13:56:10.327558",
  "modified_by": "Administrator",
  "module": "APS",
  "name": "In Process Inventory",

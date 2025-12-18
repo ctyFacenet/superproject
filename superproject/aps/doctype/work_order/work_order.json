@@ -5,19 +5,19 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "workordercode",
+  "work_order_code",
   "status",
-  "itemcode",
-  "itemname",
+  "item_code",
+  "item_name",
   "column_break_nfrd",
-  "workordercreationdate",
-  "plannedstartdate",
+  "work_order_creation_date",
+  "planned_start_date",
   "plannedenddate",
-  "productionquantity",
+  "production_quantity",
   "column_break_rlxm",
-  "completedquantity",
+  "completed_quantity",
   "uom",
-  "createdby"
+  "created_by"
  ],
  "fields": [
   {
@@ -29,12 +29,6 @@
    "options": "B\u1ea3n nh\u00e1p\n\u0110\u00e3 duy\u1ec7t\n\u0110ang s\u1ea3n xu\u1ea5t\nD\u1eebng s\u1ea3n xu\u1ea5t\n\u0110\u00e3 ho\u00e0n th\u00e0nh\n\u0110\u00e3 h\u1ee7y"
   },
   {
-   "fieldname": "workordercode",
-   "fieldtype": "Small Text",
-   "in_list_view": 1,
-   "label": "M\u00e3 l\u1ec7nh s\u1ea3n xu\u1ea5t"
-  },
-  {
    "fieldname": "column_break_nfrd",
    "fieldtype": "Column Break"
   },
@@ -43,46 +37,10 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "itemcode",
-   "fieldtype": "Small Text",
-   "in_list_view": 1,
-   "label": "M\u00e3 h\u00e0ng"
-  },
-  {
-   "fieldname": "itemname",
-   "fieldtype": "Small Text",
-   "in_list_view": 1,
-   "label": "T\u00ean h\u00e0ng"
-  },
-  {
-   "fieldname": "workordercreationdate",
-   "fieldtype": "Date",
-   "in_list_view": 1,
-   "label": "Ng\u00e0y t\u1ea1o l\u1ec7nh"
-  },
-  {
-   "fieldname": "plannedstartdate",
-   "fieldtype": "Date",
-   "in_list_view": 1,
-   "label": "Ng\u00e0y b\u1eaft \u0111\u1ea7u d\u1ef1 ki\u1ebfn"
-  },
-  {
    "fieldname": "plannedenddate",
    "fieldtype": "Date",
    "in_list_view": 1,
    "label": "Ng\u00e0y k\u1ebft th\u00fac d\u1ef1 ki\u1ebfn"
-  },
-  {
-   "fieldname": "productionquantity",
-   "fieldtype": "Float",
-   "in_list_view": 1,
-   "label": "S\u1ed1 l\u01b0\u1ee3ng s\u1ea3n xu\u1ea5t"
-  },
-  {
-   "fieldname": "completedquantity",
-   "fieldtype": "Small Text",
-   "in_list_view": 1,
-   "label": "S\u1ed1 l\u01b0\u1ee3ng ho\u00e0n th\u00e0nh"
   },
   {
    "default": "Kg",
@@ -92,7 +50,49 @@
    "label": "\u0110\u01a1n v\u1ecb t\u00ednh"
   },
   {
-   "fieldname": "createdby",
+   "fieldname": "work_order_code",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e3 l\u1ec7nh s\u1ea3n xu\u1ea5t"
+  },
+  {
+   "fieldname": "item_code",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "M\u00e3 h\u00e0ng"
+  },
+  {
+   "fieldname": "item_name",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "T\u00ean h\u00e0ng"
+  },
+  {
+   "fieldname": "work_order_creation_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Ng\u00e0y t\u1ea1o l\u1ec7nh"
+  },
+  {
+   "fieldname": "planned_start_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Ng\u00e0y b\u1eaft \u0111\u1ea7u d\u1ef1 ki\u1ebfn"
+  },
+  {
+   "fieldname": "production_quantity",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "S\u1ed1 l\u01b0\u1ee3ng s\u1ea3n xu\u1ea5t"
+  },
+  {
+   "fieldname": "completed_quantity",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "S\u1ed1 l\u01b0\u1ee3ng ho\u00e0n th\u00e0nh"
+  },
+  {
+   "fieldname": "created_by",
    "fieldtype": "Small Text",
    "in_list_view": 1,
    "label": "Ng\u01b0\u1eddi t\u1ea1o l\u1ec7nh"
@@ -101,7 +101,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-11-07 10:03:27.598371",
+ "modified": "2025-12-18 11:21:45.978911",
  "modified_by": "Administrator",
  "module": "APS",
  "name": "Work Order",

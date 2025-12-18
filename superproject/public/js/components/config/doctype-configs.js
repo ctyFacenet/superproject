@@ -78,7 +78,7 @@ export const doctypeConfigs = {
 
   [DocType.SALE_ORDER_DETAIL]: {
     title: "CHI TIẾT ĐƠN HÀNG",
-    groupByField: "detailordercode",
+    groupByField: "detail_order_code",
     actions: [
       {
         label: "Duyệt",
@@ -123,7 +123,7 @@ export const doctypeConfigs = {
 
   [DocType.PRODUCT_ORDER]: {
     title: "ĐƠN SẢN XUẤT NỘI BỘ",
-    groupByField: "itemcode",
+    groupByField: "item_code",
     actions: [
       {
         label: "Tạo đơn sản xuất nội bộ",
@@ -269,8 +269,8 @@ export const doctypeConfigs = {
   },
 
   [DocType.IN_PROCESS_INVENTORY]: {
-    title: "TỒN KHO ĐANG SẢN XUẤT",
-    groupByField: ["materialgroup", "warehousename", "group"],
+    title: "Xuất - Nhập - Tồn kho công đoạn",
+    groupByField: ["warehouse_name", "group", "material_group"],
     hideSelect: true,
     actions: [
       {
@@ -299,8 +299,8 @@ export const doctypeConfigs = {
   },
 
   [DocType.SEMI_FINISHED_PRODUCTS]: {
-    title: "BÁN THÀNH PHẨM",
-    groupByField: "lotnumber",
+    title: "DANH SÁCH TEM BÁN THÀNH PHẨM",
+    groupByField: "lot_number",
     actions: [
       {
         label: "Duyệt huỷ tem",
@@ -382,7 +382,7 @@ export const doctypeConfigs = {
   },
   [DocType.PERIOD_END_CLOSING]: {
     title: "DANH SÁCH CHỐT SỔ CUỐI KỲ",
-    groupByField: "materialgroup",
+    groupByField: "material_group",
     hideSelect: true,
     actions: [
       {
@@ -397,7 +397,7 @@ export const doctypeConfigs = {
   },
   [DocType.DETAILED_ORDER_OVERVIEW_REPORT]: {
     title: "BÁO CÁO TỔNG QUAN ĐƠN HÀNG CHI TIẾT",
-    groupByField: "detailordercode",
+    groupByField: "detail_order_code",
     hideSelect: true,
     actions: [
       {
@@ -414,7 +414,7 @@ export const doctypeConfigs = {
   // Module SCADA & TPM
   [DocType.MAINTENANCE_PLANNING]: {
     title: "Kế hoạch bảo dưỡng máy móc",
-    groupByField: "machinegroup",
+    groupByField: "machine_group",
     enableCollapse: true,
     actions: [
       {
@@ -475,7 +475,7 @@ export const doctypeConfigs = {
   },
   [DocType.MAINTENANCE_LOG]: {
     title: "Nhật trình bảo dưỡng máy móc",
-    groupByField: "machinegroup",
+    groupByField: "machine_group",
     enableCollapse: true,
     actions: [
       {
@@ -499,7 +499,7 @@ export const doctypeConfigs = {
   [DocType.SCADA_STATISTICAL_REPORT]: {
     title: "BÁO CÁO CHI TIẾT TRẠNG THÁI MÁY - NHÓM LINE",
     hideSelect: true,
-    groupByField: ["processcode", "machine", "linegroup"],
+    groupByField: ["process_code", "machine", "lineg_roup"],
     hideSearchFullText: true,
   },
 
@@ -811,7 +811,7 @@ export const doctypeConfigs = {
   [DocType.PQC_REQUEST]: {
     title: "DANH SÁCH YÊU CẦU PQC",
     hideSelect: true,
-    groupByField: "productionordercode",
+    groupByField: "production_order_code",
     actions: [baseCopyAction],
     rowActions: [
       {
@@ -839,7 +839,7 @@ export const doctypeConfigs = {
   },
   [DocType.MARKET_DEFECT_REPORT]: {
     title: "DANH SÁCH LỖI",
-    groupByField: "defectreporttype",
+    groupByField: "defect_report_type",
     actions: [
       {
         label: "Tạo báo cáo lỗi thị trường",
@@ -863,7 +863,7 @@ export const doctypeConfigs = {
     title: "BÁO CÁO TỈ LỆ PHẾ",
     hideSelect: true,
     hideSearchFullText: true,
-    groupByField: "process_code",
+    groupByField: ["process_code", "defect_group", "defect_code"],
     actions: [
       {
         label: "Export Excel",
@@ -879,7 +879,7 @@ export const doctypeConfigs = {
     title: "BÁO CÁO KẾT QUẢ QC",
     hideSelect: true,
     hideSearchFullText: true,
-    groupByField: ["qc_type", "process_code", "production_order_code"],
+    groupByField: ["qc_type", "process_code"],
     actions: [
       {
         label: "Export Excel",
