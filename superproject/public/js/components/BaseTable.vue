@@ -160,8 +160,17 @@
                   </template>
 
                   <template v-else>
-                    {{ item.row[col.key] || "" }}
+                    <a-tooltip v-if="item.row[col.key]" :title="String(item.row[col.key])" placement="top">
+                      <span class="tw-block tw-truncate tw-max-w-full">
+                        {{ item.row[col.key] }}
+                      </span>
+                    </a-tooltip>
+
+                    <span v-else class="tw-block">
+                      {{ item.row[col.key] || "" }}
+                    </span>
                   </template>
+
                 </td>
               </tr>
             </template>
@@ -738,6 +747,7 @@ tbody tr:hover {
 }
 
 @media (max-width: 768px) {
+
   .actions-sticky,
   .th-sticky,
   .td-sticky {
