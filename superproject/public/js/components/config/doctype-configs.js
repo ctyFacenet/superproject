@@ -24,6 +24,7 @@ import { DocType } from "../../utils/consts.js";
 
 const baseCopyAction = {
   label: "",
+  title: "Chọn cột hiển thị",
   icon: SwitcherOutlined,
   color: "#01aba8",
   hoverColor: "#9CA3AF",
@@ -498,7 +499,7 @@ export const doctypeConfigs = {
   [DocType.SCADA_STATISTICAL_REPORT]: {
     title: "BÁO CÁO CHI TIẾT TRẠNG THÁI MÁY - NHÓM LINE",
     hideSelect: true,
-    groupByField: "processcode",
+    groupByField: ["processcode", "machine", "linegroup"],
     hideSearchFullText: true,
   },
 

@@ -34,7 +34,8 @@
 
               <th v-if="!props.hideSelect" class="left-sticky-2 tw-z-40 tw-bg-blue-200 tw-w-[45px]
            tw-text-center tw-border">
-                <input type="checkbox" v-model="selectAll" :indeterminate.prop="isIndeterminate" @change="toggleSelectAll" />
+                <input type="checkbox" v-model="selectAll" :indeterminate.prop="isIndeterminate"
+                  @change="toggleSelectAll" />
               </th>
 
               <th v-for="col in filteredColumns" :key="col.key" class="tw-relative tw-border tw-border-gray-200
@@ -55,7 +56,7 @@
                     </span>
                   </a-tooltip>
 
-                  <IconRenderer v-if="col.key !== 'actions'" :icon="FilterOutlined" :size="14"
+                  <IconRenderer v-if="col.key !== 'actions'" :icon="FilterFilled" :size="14"
                     customClass="tw-cursor-pointer" />
                 </div>
 
@@ -136,8 +137,7 @@
                 </td>
 
                 <td v-if="!props.hideSelect" class="left-sticky-2 tw-text-center tw-border checkbox-cell">
-                  <input type="checkbox" :checked="selectedRows.has(item.row)"
-                    @change="toggleRow(null, item.row, $event)" />
+                  <a-checkbox :checked="selectedRows.has(item.row)" @change="(e) => toggleRow(null, item.row, e)" />
                 </td>
 
                 <td v-for="col in filteredColumns" :key="col.key" class="tw-border tw-text-center"
@@ -201,22 +201,6 @@
             style="width: 110px; height: 30px" size="small" />
         </div>
       </div>
-
-      <div class="tw-text-center tw-border-t tw-border-gray-200 tw-bg-white
-               tw-text-[13px] sm:tw-text-[14px] tw-font-[500]
-               tw-tracking-wide tw-text-gray-600">
-        © Copyright
-        <a href="https://facenet.vn" target="_blank" rel="noopener noreferrer"
-          class="tw-text-[#0066cc] tw-font-semibold hover:tw-underline">
-          FaceNet
-        </a>.
-        All Rights Reserved,&nbsp;Designed by
-        <a href="https://facenet.vn" target="_blank" rel="noopener noreferrer"
-          class="tw-text-[#0066cc] tw-font-semibold hover:tw-underline">
-          FaceNet
-        </a>
-      </div>
-
     </a-spin>
   </div>
 </template>
@@ -231,7 +215,7 @@ import {
   PlusOutlined,
   MinusOutlined,
   SearchOutlined,
-  FilterOutlined,
+  FilterFilled
 } from "@ant-design/icons-vue";
 
 import useResize from "../components/DataTable/composables/useResize";
@@ -241,6 +225,8 @@ const props = defineProps({
   doctype: { type: String, required: true },
   nameKey: { type: String, default: "name" },
   hideSelect: { type: Boolean, default: false },
+  filters: { type: Object, default: () => ({}) },
+
 });
 
 const emit = defineEmits(["rowClick", "selection-change"]);
@@ -479,10 +465,15 @@ watch(selectedRows, () =>
   emit("selection-change", Array.from(selectedRows.value))
 );
 
-const toggleRow = (_, row, e) =>
-  e.target.checked
-    ? selectedRows.value.add(row)
-    : selectedRows.value.delete(row);
+const toggleRow = (_, row, e) => {
+  const checked = e?.target?.checked ?? e?.checked;
+
+  if (checked) {
+    selectedRows.value.add(row);
+  } else {
+    selectedRows.value.delete(row);
+  }
+};
 
 const handleRowClick = (e, row) => {
   if (e.target.closest(".actions-cell") || e.target.closest(".checkbox-cell"))
@@ -728,6 +719,12 @@ th.left-sticky-2 {
   border-radius: 2px !important;
 }
 
+:deep(.ant-checkbox .ant-checkbox-inner) {
+  width: 17px !important;
+  height: 17px !important;
+  border-radius: 1px !important;
+}
+
 tbody tr:nth-child(odd) {
   background-color: #f9fafb;
 }
@@ -741,13 +738,12 @@ tbody tr:hover {
 }
 
 @media (max-width: 768px) {
-
   .actions-sticky,
   .th-sticky,
   .td-sticky {
     position: static !important;
     right: auto !important;
-    box-shadow: none !important;
+    /* box-shadow: none !important; */
     background: inherit !important;
     z-index: auto !important;
   }

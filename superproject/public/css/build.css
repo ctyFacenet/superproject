@@ -566,6 +566,10 @@ video {
   position: sticky !important;
 }
 
+.tw-bottom-0 {
+  bottom: 0px !important;
+}
+
 .tw-right-0 {
   right: 0px !important;
 }
@@ -590,6 +594,10 @@ video {
   z-index: 40 !important;
 }
 
+.tw-z-50 {
+  z-index: 50 !important;
+}
+
 .tw-z-\[5\] {
   z-index: 5 !important;
 }
@@ -610,11 +618,6 @@ video {
 .tw-mx-auto {
   margin-left: auto !important;
   margin-right: auto !important;
-}
-
-.tw-my-1 {
-  margin-top: 0.25rem !important;
-  margin-bottom: 0.25rem !important;
 }
 
 .tw-my-4 {
@@ -738,8 +741,8 @@ video {
   max-height: 70vh !important;
 }
 
-.tw-min-h-\[50vh\] {
-  min-height: 50vh !important;
+.tw-min-h-0 {
+  min-height: 0px !important;
 }
 
 .tw-min-h-screen {
@@ -980,10 +983,6 @@ video {
   --tw-space-y-reverse: 0 !important;
   margin-top: calc(1.5rem * calc(1 - var(--tw-space-y-reverse))) !important;
   margin-bottom: calc(1.5rem * var(--tw-space-y-reverse)) !important;
-}
-
-.tw-overflow-auto {
-  overflow: auto !important;
 }
 
 .tw-overflow-hidden {
@@ -1516,11 +1515,6 @@ video {
 }
 
 @media (min-width: 640px) {
-  .sm\:tw-my-0 {
-    margin-top: 0px !important;
-    margin-bottom: 0px !important;
-  }
-
   .sm\:tw-block {
     display: block !important;
   }
