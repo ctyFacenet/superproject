@@ -12,7 +12,7 @@
   "column_break_nfrd",
   "work_order_creation_date",
   "planned_start_date",
-  "plannedenddate",
+  "planned_end_date",
   "production_quantity",
   "column_break_rlxm",
   "completed_quantity",
@@ -35,12 +35,6 @@
   {
    "fieldname": "column_break_rlxm",
    "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "plannedenddate",
-   "fieldtype": "Date",
-   "in_list_view": 1,
-   "label": "Ng\u00e0y k\u1ebft th\u00fac d\u1ef1 ki\u1ebfn"
   },
   {
    "default": "Kg",
@@ -96,12 +90,18 @@
    "fieldtype": "Small Text",
    "in_list_view": 1,
    "label": "Ng\u01b0\u1eddi t\u1ea1o l\u1ec7nh"
+  },
+  {
+   "fieldname": "planned_end_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Ng\u00e0y k\u1ebft th\u00fac d\u1ef1 ki\u1ebfn"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-12-18 11:21:45.978911",
+ "modified": "2025-12-18 14:58:04.087069",
  "modified_by": "Administrator",
  "module": "APS",
  "name": "Work Order",
