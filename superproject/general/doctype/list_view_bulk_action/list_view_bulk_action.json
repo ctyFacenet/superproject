@@ -1,0 +1,74 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-12-18 16:55:00.135764",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "label",
+  "action_key",
+  "icon",
+  "column_break_fhuu",
+  "color",
+  "confirm_message",
+  "required_status"
+ ],
+ "fields": [
+  {
+   "fieldname": "label",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Label",
+   "reqd": 1
+  },
+  {
+   "description": "Key x\u1eed l\u00fd logic",
+   "fieldname": "action_key",
+   "fieldtype": "Data",
+   "label": "Action Key",
+   "reqd": 1
+  },
+  {
+   "fieldname": "icon",
+   "fieldtype": "Select",
+   "label": "Icon",
+   "options": "file\ncalendar\nunlock\nlock\napprove\ndelete\nexcel\nview\nedit\ncancel\nhistory\nplus\nprint\nimport\ncolumns\nchart\nmonitor\nform\ncopy\ndownload",
+   "placeholder": "Ch\u1ecdn Icon"
+  },
+  {
+   "description": "HEX ho\u1eb7c CSS color",
+   "fieldname": "color",
+   "fieldtype": "Color",
+   "label": "Color"
+  },
+  {
+   "fieldname": "confirm_message",
+   "fieldtype": "Data",
+   "label": "Confirm Message"
+  },
+  {
+   "fieldname": "column_break_fhuu",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "required_status",
+   "fieldtype": "Data",
+   "label": "Required Status"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2025-12-19 11:48:42.051677",
+ "modified_by": "Administrator",
+ "module": "General",
+ "name": "List View Bulk Action",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

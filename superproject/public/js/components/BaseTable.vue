@@ -150,7 +150,7 @@
 
                   <template v-else-if="col.key === 'actions'">
                     <div class="actions-cell tw-flex tw-justify-center tw-gap-3">
-                      <template v-for="(action, i) in getDoctypeConfig(props.doctype).rowActions" :key="i">
+                      <template v-for="(action, i) in rowActions" :key="i">
                         <a-tooltip :title="action.label">
                           <IconRenderer :icon="action.icon" :color="action.color" customClass="tw-cursor-pointer"
                             @click.stop="action.onClick(item.row)" />
@@ -158,7 +158,6 @@
                       </template>
                     </div>
                   </template>
-
                   <template v-else>
                     <a-tooltip v-if="item.row[col.key]" :title="String(item.row[col.key])" placement="top">
                       <span class="tw-block tw-truncate tw-max-w-full">
@@ -235,8 +234,12 @@ const props = defineProps({
   nameKey: { type: String, default: "name" },
   hideSelect: { type: Boolean, default: false },
   filters: { type: Object, default: () => ({}) },
-
+  row_actions: {
+    type: Array,
+    default: null,
+  },
 });
+
 
 const emit = defineEmits(["rowClick", "selection-change"]);
 
@@ -259,6 +262,16 @@ const dateFilters = ref({});
 const selectAll = ref(false);
 
 const config = computed(() => getDoctypeConfig(props.doctype));
+
+const rowActions = computed(() => {
+  const actions =
+    Array.isArray(props.row_actions) && props.row_actions.length
+      ? props.row_actions
+      : config.value?.rowActions || [];
+
+  return actions;
+});
+
 const groupByField = computed(() => config.value?.groupByField);
 
 onMounted(() => {
@@ -361,11 +374,21 @@ async function fetchData() {
 onMounted(fetchData);
 watch(() => props.doctype, fetchData);
 
+const hasRowActions = computed(() => {
+  return (
+    (Array.isArray(props.row_actions) && props.row_actions.length > 0) ||
+    (Array.isArray(config.value?.rowActions) &&
+      config.value.rowActions.length > 0)
+  );
+});
+
 const filteredColumns = computed(() => {
   let cols = columns.value.filter((c) => visibleColumns.value[c.key] !== false);
-  if (!config.value?.rowActions?.length) {
+
+  if (!hasRowActions.value) {
     cols = cols.filter((c) => c.key !== "actions");
   }
+
   return cols;
 });
 
