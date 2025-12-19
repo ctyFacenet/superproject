@@ -1,6 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
+ "autoname": "format:LVAC-{YYYY}-{#####}",
  "creation": "2025-12-18 16:34:20.720212",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -41,10 +42,11 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-12-19 14:25:40.960399",
+ "modified": "2025-12-19 15:34:14.201785",
  "modified_by": "Administrator",
  "module": "General",
  "name": "List View Action Config",
+ "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
   {
