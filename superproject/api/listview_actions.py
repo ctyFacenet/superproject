@@ -4,11 +4,11 @@ import frappe
 @frappe.whitelist()
 def get_listview_action_config(doctype):
     """
-    API để Vue frontend lấy cấu hình action theo Doctype
+    Trả về cấu hình List View Actions theo target_doctype
     """
     cfg = frappe.get_all(
         "List View Action Config",
-        filters={"doctype_name": doctype},
+        filters={"target_doctype": doctype},
         limit=1,
         pluck="name",
     )
