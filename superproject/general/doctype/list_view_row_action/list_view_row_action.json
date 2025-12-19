@@ -29,7 +29,7 @@
    "fieldname": "icon",
    "fieldtype": "Select",
    "label": "Icon",
-   "options": "file\ncalendar\nunlock\nlock\napprove\ndelete\nexcel\nview\nedit\ncancel\nhistory\nplus\nprint\nimport\ncolumns\nchart\nmonitor\nform\ncopy\ndownload",
+   "options": "add\nremove\nclose\ncheck\nstop\nplus_circle\nminus_circle\nsuccess\nerror\nwarning\ninfo\nquestion\nfile\nfile_text\nfile_add\nfile_done\nexcel\npdf\nzip\nimage\nfile_search\nfile_protect\nfolder\nfolder_open\nfolder_add\nfolder_view\nview\nhide\nedit\ndelete\ncopy\nsave\nundo\nredo\napprove\nreject\nsync\nreload\nrollback\nforward\nretweet\ntime\ncalendar\nschedule\nlock\nunlock\nsafety\nkey\nuser\nuser_add\nuser_delete\nteam\nsolution\ndownload\nupload\nimport\nexport\nprint\nsearch\nfilter\nfilter_fill\nzoom_in\nzoom_out\nsetting\ntool\ncontrol\nsliders\nmenu\nmore\nappstore\nbars\ncolumns\nchart\nline_chart\npie_chart\narea_chart\nradar_chart\nstock\nmonitor\ndashboard\nform\nprofile\nread\ndatabase\ntable\napartment\nbell\nbell_fill\nnotify\nmessage\ncomment\nsend\nlocation\nglobal\nalert\nwarn\nup\ndown\nleft\nright\npower\nhistory\ntag\ntags\nlink\nunlink\ncloud_upload\ncloud_download\nmobile\ntablet\nscan\nqrcode\nbarcode",
    "placeholder": "Ch\u1ecdn Icon"
   },
   {
@@ -42,7 +42,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-12-19 11:49:09.181756",
+ "modified": "2025-12-19 15:07:35.301312",
  "modified_by": "Administrator",
  "module": "General",
  "name": "List View Row Action",
