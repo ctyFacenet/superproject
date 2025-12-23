@@ -116,8 +116,8 @@
 
         <div v-if="!state.hide_records" class="tw-flex-1 tw-min-h-0 tw-bg-white tw-overflow-x-auto tw-overflow-y-auto">
           <slot name="records">
-            <BaseTable :key="props.doctype" :doctype="props.doctype" :hide-select="resolvedConfig.hideSelect"
-              :filters="activeFilters" :row_actions="rowActions" @selection-change="selectedRows = $event" />
+            <BaseTable :key="props.doctype" :doctype="props.doctype" :hide-select="!!resolvedConfig.hideSelect"
+              :filters="activeFilters" :row_actions="rowActions" @selection-change="selectedRows = $event" :config="resolvedConfig"/>
           </slot>
         </div>
       </div>
@@ -197,14 +197,27 @@ const selectedRows = ref([]);
 const fallbackConfig = computed(() => getDoctypeConfig(props.doctype) || {});
 
 const resolvedConfig = computed(() => {
-  if (props.action_config) {
-    return {
-      hideTree: !!props.action_config.hide_tree,
-      hideSelect: !!props.action_config.hide_select,
-      hideSearchFullText: !!props.action_config.hide_search_full_text,
-    };
-  }
-  return fallbackConfig.value;
+  const base = fallbackConfig.value || {};
+  const db = props.action_config || {};
+
+  return {
+    ...base,
+
+    title: db.title ?? base.title ?? "",
+
+    hideTree: db.hide_tree ?? base.hideTree ?? false,
+    hideSelect: db.hide_select ?? base.hideSelect ?? false,
+    hideSearchFullText:
+      db.hide_search_full_text ?? base.hideSearchFullText ?? false,
+
+    enableCollapse:
+      db.enable_collapse ?? base.enableCollapse ?? false,
+
+    groupByField:
+      db.group_by_field !== undefined
+        ? db.group_by_field
+        : base.groupByField,
+  };
 });
 
 
@@ -281,13 +294,21 @@ const currentActions = computed(() => {
   return fallbackConfig.value?.actions || [];
 });
 
-const rowActions = computed(() =>
-  dbRowActions.value.map((a) => mapAction(a, "row"))
-);
+const rowActions = computed(() => {
+  if (dbRowActions.value.length) {
+    return dbRowActions.value.map((a) => mapAction(a, "row"));
+  }
+  return fallbackConfig.value?.rowActions || [];
+});
 
 
 const currentTitle = computed(() => {
-  return fallbackConfig.value?.title || "";
+  return (
+    props.title ||
+    resolvedConfig.value?.title ||
+    fallbackConfig.value?.title ||
+    ""
+  );
 });
 
 

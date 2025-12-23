@@ -9,7 +9,14 @@
   "general_info",
   "target_doctype",
   "bulk_actions",
-  "row_actions"
+  "row_actions",
+  "column_break_uavq",
+  "title",
+  "hide_search_full_text",
+  "enable_collapse",
+  "hide_select",
+  "hide_tree",
+  "group_by_field"
  ],
  "fields": [
   {
@@ -35,14 +42,59 @@
    "in_list_view": 1,
    "label": "Doctype",
    "options": "DocType",
-   "placeholder": "T\u00ecm ki\u1ebfm Doctype",
+   "placeholder": "T\u00ecm ki\u1ebfm Doctype...",
    "reqd": 1
+  },
+  {
+   "fieldname": "column_break_uavq",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "hide_tree",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "\u1ea8n Tree"
+  },
+  {
+   "default": "0",
+   "fieldname": "hide_select",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "\u1ea8n Select"
+  },
+  {
+   "default": "0",
+   "fieldname": "hide_search_full_text",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "\u1ea8n T\u00ecm ki\u1ebfm t\u1ed5ng"
+  },
+  {
+   "default": "0",
+   "fieldname": "enable_collapse",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Collapse group"
+  },
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Override title",
+   "placeholder": "\u0110\u1ed5i t\u00ean Title Header..."
+  },
+  {
+   "fieldname": "group_by_field",
+   "fieldtype": "Table",
+   "label": "Group by Field",
+   "options": "List View Group Field"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-12-19 15:34:14.201785",
+ "modified": "2025-12-23 09:35:10.199847",
  "modified_by": "Administrator",
  "module": "General",
  "name": "List View Action Config",

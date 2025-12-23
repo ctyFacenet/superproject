@@ -893,16 +893,39 @@ export const doctypeConfigs = {
   },
 };
 
-export const getDoctypeConfig = (doctype) => {
+function normalizeGroupByField(dbValue, fallback) {
+  if (Array.isArray(dbValue) && dbValue.length) {
+    return dbValue.filter(v => typeof v === "string" && v.trim()).map(v => v.trim());
+  }
+
+  if (Array.isArray(fallback)) return fallback;
+  if (typeof fallback === "string" && fallback) return [fallback];
+
+  return [];
+}
+
+export const getDoctypeConfig = (doctype, dbConfig = {}) => {
+  const base = doctypeConfigs[doctype] || {};
+
+  const groupByField = normalizeGroupByField(
+    dbConfig.group_by_field,
+    base.groupByField
+  );
+
   return {
-    enableCollapse: false,
-    hideSearchFullText: false,
     hideTree: false,
     hideSelect: false,
-    ...(doctypeConfigs[doctype] || {
-      title: doctype?.toUpperCase() || "DANH SÁCH",
-      actions: [baseCopyAction],
-      rowActions: baseRowActions(),
-    }),
+    hideSearchFullText: false,
+    enableCollapse: false,
+
+    ...base,
+
+    hideTree: !!dbConfig.hide_tree,
+    hideSelect: !!dbConfig.hide_select,
+    hideSearchFullText: !!dbConfig.hide_search_full_text,
+    enableCollapse: !!dbConfig.enable_collapse,
+    groupByField,
+    rowActions: dbConfig.row_actions || base.rowActions,
   };
 };
+

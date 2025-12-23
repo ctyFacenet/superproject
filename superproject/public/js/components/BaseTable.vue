@@ -216,7 +216,6 @@
 <script setup>
 import { ref, computed, watch, shallowRef, onMounted, onUnmounted } from "vue";
 import dayjs from "dayjs";
-import { getDoctypeConfig } from "./config/doctype-configs";
 import { colorMap } from "../utils/status-colors";
 import IconRenderer from "../components/IconRenderer.vue";
 import {
@@ -237,6 +236,10 @@ const props = defineProps({
   row_actions: {
     type: Array,
     default: null,
+  },
+  config: {
+    type: Object,
+    required: true,
   },
 });
 
@@ -261,7 +264,7 @@ const dateFilters = ref({});
 
 const selectAll = ref(false);
 
-const config = computed(() => getDoctypeConfig(props.doctype));
+const config = computed(() => props.config || {});
 
 const rowActions = computed(() => {
   const actions =
@@ -272,7 +275,20 @@ const rowActions = computed(() => {
   return actions;
 });
 
-const groupByField = computed(() => config.value?.groupByField);
+const groupByField = computed(() => {
+  const raw = config.value?.groupByField;
+
+  if (!raw) return [];
+
+  if (typeof raw === "string") return [raw];
+
+  if (Array.isArray(raw)) {
+    return raw.filter(v => typeof v === "string");
+  }
+
+  return [];
+});
+
 
 onMounted(() => {
   const saved = localStorage.getItem(storageKey.value);
@@ -357,15 +373,28 @@ async function fetchData() {
       statusColors.value = map;
     }
 
-    const fieldNames = [
+    const metaFieldNames = new Set(meta.fields.map(f => f.fieldname));
+
+    const groupFields = (Array.isArray(groupByField.value)
+      ? groupByField.value
+      : typeof groupByField.value === "string"
+        ? [groupByField.value]
+        : []
+    ).filter(f => metaFieldNames.has(f));
+
+    const fieldNames = Array.from(new Set([
       "name",
-      ...visibleFields.filter((f) => f.key !== "actions").map((f) => f.key),
-    ];
+      ...visibleFields
+        .filter(f => f.key !== "actions")
+        .map(f => f.key),
+      ...groupFields,
+    ]));
 
     allRows.value = await frappe.db.get_list(props.doctype, {
       fields: fieldNames,
       limit: 1000,
     });
+
   } finally {
     loading.value = false;
   }
@@ -437,7 +466,7 @@ const toggleCollapse = (k) =>
 const isCollapsed = (path) => path.some((p) => collapsedGroups.value.has(p));
 
 const groupedFlatRows = computed(() => {
-  if (!groupByField.value) {
+  if (!groupByField.value.length) {
     return paginatedRows.value.map((row, index) => ({
       type: "row",
       row,
@@ -470,7 +499,16 @@ const groupedFlatRows = computed(() => {
     const map = new Map();
 
     rows.forEach((r) => {
-      const key = r[field] || "Không xác định";
+      if (!(field in r)) {
+        return;
+      }
+
+      const raw = r[field];
+      const key =
+        raw === null || raw === undefined || raw === ""
+          ? "Không xác định"
+          : String(raw);
+
       if (!map.has(key)) map.set(key, []);
       map.get(key).push(r);
     });
