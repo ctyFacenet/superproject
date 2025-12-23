@@ -907,25 +907,48 @@ function normalizeGroupByField(dbValue, fallback) {
 export const getDoctypeConfig = (doctype, dbConfig = {}) => {
   const base = doctypeConfigs[doctype] || {};
 
-  const groupByField = normalizeGroupByField(
-    dbConfig.group_by_field,
-    base.groupByField
-  );
-
-  return {
+  const out = {
     hideTree: false,
     hideSelect: false,
     hideSearchFullText: false,
     enableCollapse: false,
-
     ...base,
-
-    hideTree: !!dbConfig.hide_tree,
-    hideSelect: !!dbConfig.hide_select,
-    hideSearchFullText: !!dbConfig.hide_search_full_text,
-    enableCollapse: !!dbConfig.enable_collapse,
-    groupByField,
-    rowActions: dbConfig.row_actions || base.rowActions,
   };
+
+  out.groupByField = normalizeGroupByField(
+    dbConfig.group_by_field,
+    out.groupByField
+  );
+
+  if (dbConfig.hide_tree !== undefined && dbConfig.hide_tree !== null) {
+    out.hideTree = !!dbConfig.hide_tree;
+  }
+
+  if (dbConfig.hide_select !== undefined && dbConfig.hide_select !== null) {
+    out.hideSelect = !!dbConfig.hide_select;
+  }
+
+  if (
+    dbConfig.hide_search_full_text !== undefined &&
+    dbConfig.hide_search_full_text !== null
+  ) {
+    out.hideSearchFullText = !!dbConfig.hide_search_full_text;
+  }
+
+  if (dbConfig.enable_collapse !== undefined && dbConfig.enable_collapse !== null) {
+    out.enableCollapse = !!dbConfig.enable_collapse;
+  }
+
+  if (Array.isArray(dbConfig.row_actions)) {
+    out.rowActions = dbConfig.row_actions;
+  } else if (!Array.isArray(out.rowActions)) {
+    out.rowActions = [];
+  }
+
+  if (Array.isArray(dbConfig.bulk_actions)) {
+    out.actions = dbConfig.bulk_actions;
+  }
+
+  return out;
 };
 

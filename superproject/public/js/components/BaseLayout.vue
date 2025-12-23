@@ -124,7 +124,7 @@
     </div>
 
     <footer
-      class="tw-sticky tw-bottom-0 tw-z-50 tw-border-t tw-border-gray-200 tw-bg-white tw-text-center tw-text-[13px] sm:tw-text-[14px] tw-font-[500] tw-tracking-wide tw-text-gray-600 tw-py-2">
+      class="tw-sticky tw-bottom-0 tw-z-50 tw-border-gray-200 tw-bg-white tw-text-center tw-text-[13px] sm:tw-text-[14px] tw-font-[500] tw-tracking-wide tw-text-gray-600 tw-py-2">
       © Copyright
       <a href="https://facenet.vn" target="_blank" rel="noopener noreferrer"
         class="tw-text-[#0066cc] tw-font-semibold hover:tw-underline">
@@ -284,8 +284,6 @@ function handleAction(action, ctx = {}) {
       });
   }
 }
-
-
 
 const currentActions = computed(() => {
   if (dbBulkActions.value.length) {

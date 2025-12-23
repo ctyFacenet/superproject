@@ -23,32 +23,30 @@
 
       <div class="tw-flex-1 tw-overflow-x-auto tw-overflow-y-auto tw-max-h-[70vh] tw-relative">
         <table class="tw-min-w-max tw-border-collapse tw-w-full">
-
           <thead class="tw-sticky tw-top-0 tw-z-20">
-
             <tr class="tw-bg-blue-200 tw-border-b tw-border-gray-300 tw-text-gray-700 tw-text-[13px]">
-              <th class="left-sticky tw-z-40 tw-bg-blue-200 tw-w-[50px]
-                       tw-text-center tw-border">
+              <th class="left-sticky tw-z-40 tw-bg-blue-200 tw-w-[50px] tw-text-center tw-border">
                 STT
               </th>
 
-              <th v-if="!props.hideSelect" class="left-sticky-2 tw-z-40 tw-bg-blue-200 tw-w-[45px]
-           tw-text-center tw-border">
-                <input type="checkbox" v-model="selectAll" :indeterminate.prop="isIndeterminate"
+              <th v-if="!props.hideSelect"
+                class="left-sticky-2 tw-z-40 tw-bg-blue-200 tw-w-[45px] tw-text-center tw-border">
+                <input type="checkbox" :checked="isAllSelected" :indeterminate.prop="isIndeterminate"
                   @change="toggleSelectAll" />
               </th>
 
-              <th v-for="col in filteredColumns" :key="col.key" class="tw-relative tw-border tw-border-gray-200
-                       tw-font-semibold tw-text-center tw-px-3 tw-py-2 tw-group" :class="[
-                        col.key === 'actions' ? 'actions-sticky th-sticky' : '',
-                        {
-                          'tw-bg-pink-100 tw-text-pink-800':
-                            /(can|kdai|ktrung|ktieu|mahz|malh|mavt)/i.test(col.key),
-                        },
-                      ]" :style="{
-                        width: colWidths[col.key] + 'px',
-                        minWidth: col.key === 'actions' ? '130px' : '150px',
-                      }">
+              <th v-for="col in filteredColumns" :key="col.key"
+                class="tw-relative tw-border tw-border-gray-200 tw-font-semibold tw-text-center tw-px-3 tw-py-2 tw-group"
+                :class="[
+                  col.key === 'actions' ? 'actions-sticky th-sticky' : '',
+                  {
+                    'tw-bg-pink-100 tw-text-pink-800':
+                      /(can|kdai|ktrung|ktieu|mahz|malh|mavt)/i.test(col.key),
+                  },
+                ]" :style="{
+                  width: colWidths[col.key] + 'px',
+                  minWidth: col.key === 'actions' ? '130px' : '150px',
+                }">
                 <div class="tw-flex tw-items-center tw-justify-center tw-gap-1">
                   <a-tooltip :title="col.title">
                     <span class="tw-truncate tw-font-semibold tw-text-[14px]">
@@ -60,17 +58,15 @@
                     customClass="tw-cursor-pointer" />
                 </div>
 
-                <div class="resizer tw-absolute tw-top-0 tw-right-0 tw-w-[6px] tw-h-full
-                         tw-cursor-col-resize tw-bg-transparent
-                         hover:tw-bg-blue-300 tw-opacity-0 group-hover:tw-opacity-100"
+                <div
+                  class="resizer tw-absolute tw-top-0 tw-right-0 tw-w-[6px] tw-h-full tw-cursor-col-resize tw-bg-transparent hover:tw-bg-blue-300 tw-opacity-0 group-hover:tw-opacity-100"
                   @mousedown="startResize($event, col.key)" />
               </th>
             </tr>
 
             <tr class="tw-bg-white tw-border-b tw-border-gray-200">
               <th class="left-sticky tw-top-[33px] tw-z-30 tw-border"></th>
-              <th v-if="!props.hideSelect" class="left-sticky-2 tw-top-[33px] tw-z-30 tw-border">
-              </th>
+              <th v-if="!props.hideSelect" class="left-sticky-2 tw-top-[33px] tw-z-30 tw-border"></th>
 
               <th v-for="col in filteredColumns" :key="col.key" class="tw-border"
                 :class="col.key === 'actions' ? 'actions-sticky th-sticky' : ''"
@@ -100,7 +96,6 @@
 
           <tbody>
             <template v-for="(item, idx) in groupedFlatRows" :key="idx">
-
               <tr v-if="item.type === 'group'" class="tw-font-semibold tw-text-red-600 tw-text-[13px]">
                 <td class="left-sticky tw-border"></td>
                 <td v-if="!props.hideSelect" class="left-sticky-2 tw-border"></td>
@@ -108,13 +103,11 @@
                 <td v-for="col in filteredColumns" :key="col.key" class="tw-border tw-py-1">
                   <template v-if="col.key === item.field">
                     <div class="tw-flex tw-items-center tw-gap-2 tw-ml-1">
-                      <button v-if="config.enableCollapse" class="tw-w-[18px] tw-h-[18px] tw-flex
-                               tw-items-center tw-justify-center
-                               tw-border tw-border-gray-200
-                               tw-rounded-sm tw-bg-white" @click.stop="toggleCollapse(item.pathKey)">
-                        <component :is="collapsedGroups.has(item.pathKey)
-                          ? PlusOutlined
-                          : MinusOutlined" class="tw-text-[12px]" />
+                      <button v-if="config.enableCollapse"
+                        class="tw-w-[18px] tw-h-[18px] tw-flex tw-items-center tw-justify-center tw-border tw-border-gray-200 tw-rounded-sm tw-bg-white"
+                        @click.stop="toggleCollapse(item.pathKey)">
+                        <component :is="collapsedGroups.has(item.pathKey) ? PlusOutlined : MinusOutlined"
+                          class="tw-text-[12px]" />
                       </button>
 
                       <span class="tw-font-bold tw-cursor-pointer"
@@ -128,7 +121,7 @@
 
               <tr v-else v-show="!isCollapsed(item.groupPath)" :class="[
                 'tw-text-[13px] tw-cursor-pointer',
-                selectedRows.has(item.row)
+                selectedKeys.has(getRowKey(item.row))
                   ? 'tw-bg-blue-50'
                   : 'hover:tw-bg-gray-50',
               ]" @click="handleRowClick($event, item.row)">
@@ -137,7 +130,8 @@
                 </td>
 
                 <td v-if="!props.hideSelect" class="left-sticky-2 tw-text-center tw-border checkbox-cell">
-                  <a-checkbox :checked="selectedRows.has(item.row)" @change="(e) => toggleRow(null, item.row, e)" />
+                  <a-checkbox :checked="selectedKeys.has(getRowKey(item.row))"
+                    @change="(e) => toggleRow(item.row, e)" />
                 </td>
 
                 <td v-for="col in filteredColumns" :key="col.key" class="tw-border tw-text-center"
@@ -158,6 +152,7 @@
                       </template>
                     </div>
                   </template>
+
                   <template v-else>
                     <a-tooltip v-if="item.row[col.key]" :title="String(item.row[col.key])" placement="top">
                       <span class="tw-block tw-truncate tw-max-w-full">
@@ -169,7 +164,6 @@
                       {{ item.row[col.key] || "" }}
                     </span>
                   </template>
-
                 </td>
               </tr>
             </template>
@@ -190,9 +184,8 @@
         <a-select v-model:value="pageSize" :options="pageSizeOptions" class="tw-hidden sm:tw-block tw-w-[110px]"
           @change="onPageSizeChange" />
 
-        <div class="tw-flex tw-flex-col sm:tw-flex-row tw-items-center
-                    tw-justify-center tw-gap-2 sm:tw-gap-3
-                    tw-w-full sm:tw-w-auto">
+        <div
+          class="tw-flex tw-flex-col sm:tw-flex-row tw-items-center tw-justify-center tw-gap-2 sm:tw-gap-3 tw-w-full sm:tw-w-auto">
           <span class="tw-hidden sm:tw-inline tw-text-gray-600 tw-font-medium">
             Trang số {{ currentPage }} của {{ totalPages }}
             ({{ filteredRows.length }} bản ghi)
@@ -200,7 +193,6 @@
 
           <a-pagination v-model:current="currentPage" :total="filteredRows.length" :pageSize="pageSize"
             :showSizeChanger="false" size="small" @change="currentPage = $event" />
-
         </div>
 
         <div class="tw-hidden sm:tw-flex tw-items-center tw-gap-2">
@@ -212,6 +204,7 @@
     </a-spin>
   </div>
 </template>
+
 
 <script setup>
 import { ref, computed, watch, shallowRef, onMounted, onUnmounted } from "vue";
@@ -243,7 +236,6 @@ const props = defineProps({
   },
 });
 
-
 const emit = defineEmits(["rowClick", "selection-change"]);
 
 const { colWidths, startResize } = useResize();
@@ -262,8 +254,6 @@ const statusColors = ref({});
 const textFilters = ref({});
 const dateFilters = ref({});
 
-const selectAll = ref(false);
-
 const config = computed(() => props.config || {});
 
 const rowActions = computed(() => {
@@ -271,24 +261,29 @@ const rowActions = computed(() => {
     Array.isArray(props.row_actions) && props.row_actions.length
       ? props.row_actions
       : config.value?.rowActions || [];
-
   return actions;
 });
 
 const groupByField = computed(() => {
   const raw = config.value?.groupByField;
-
   if (!raw) return [];
-
   if (typeof raw === "string") return [raw];
-
-  if (Array.isArray(raw)) {
-    return raw.filter(v => typeof v === "string");
-  }
-
+  if (Array.isArray(raw)) return raw.filter(v => typeof v === "string");
   return [];
 });
 
+const getRowKey = (row) => row?.[props.nameKey] || row?.name;
+
+const selectedKeys = ref(new Set());
+
+const selectedRowObjects = computed(() => {
+  const keys = selectedKeys.value;
+  return allRows.value.filter(r => keys.has(getRowKey(r)));
+});
+
+watch(selectedRowObjects, (rows) => {
+  emit("selection-change", rows);
+});
 
 onMounted(() => {
   const saved = localStorage.getItem(storageKey.value);
@@ -335,6 +330,7 @@ async function fetchData() {
   try {
     const meta = await frappe.get_meta(props.doctype);
 
+    metaFields.value = {};
     meta.fields.forEach((f) => (metaFields.value[f.fieldname] = f));
 
     const visibleFields = meta.fields
@@ -413,11 +409,7 @@ const hasRowActions = computed(() => {
 
 const filteredColumns = computed(() => {
   let cols = columns.value.filter((c) => visibleColumns.value[c.key] !== false);
-
-  if (!hasRowActions.value) {
-    cols = cols.filter((c) => c.key !== "actions");
-  }
-
+  if (!hasRowActions.value) cols = cols.filter((c) => c.key !== "actions");
   return cols;
 });
 
@@ -458,10 +450,12 @@ const {
 
 const collapsedGroups = ref(new Set());
 
-const toggleCollapse = (k) =>
-  collapsedGroups.value.has(k)
-    ? collapsedGroups.value.delete(k)
-    : collapsedGroups.value.add(k);
+const toggleCollapse = (k) => {
+  const next = new Set(collapsedGroups.value);
+  if (next.has(k)) next.delete(k);
+  else next.add(k);
+  collapsedGroups.value = next;
+};
 
 const isCollapsed = (path) => path.some((p) => collapsedGroups.value.has(p));
 
@@ -499,9 +493,7 @@ const groupedFlatRows = computed(() => {
     const map = new Map();
 
     rows.forEach((r) => {
-      if (!(field in r)) {
-        return;
-      }
+      if (!(field in r)) return;
 
       const raw = r[field];
       const key =
@@ -530,26 +522,26 @@ const groupedFlatRows = computed(() => {
   return result;
 });
 
-const selectedRows = ref(new Set());
-watch(selectedRows, () =>
-  emit("selection-change", Array.from(selectedRows.value))
-);
+const toggleRow = (row, e) => {
+  const key = getRowKey(row);
+  if (!key) return;
 
-const toggleRow = (_, row, e) => {
   const checked = e?.target?.checked ?? e?.checked;
 
-  if (checked) {
-    selectedRows.value.add(row);
-  } else {
-    selectedRows.value.delete(row);
-  }
+  const next = new Set(selectedKeys.value);
+  if (checked) next.add(key);
+  else next.delete(key);
+
+  selectedKeys.value = next;
 };
 
 const handleRowClick = (e, row) => {
   if (e.target.closest(".actions-cell") || e.target.closest(".checkbox-cell"))
     return;
+
   emit("rowClick", row);
-  const name = row[props.nameKey] || row.name;
+
+  const name = getRowKey(row);
   if (name) frappe.set_route("Form", props.doctype, name);
 };
 
@@ -562,39 +554,40 @@ const getStatusOptions = (fieldname) =>
 const filterOption = (i, o) =>
   o.label.toLowerCase().includes(i.toLowerCase());
 
-function toggleSelectAll() {
-  if (selectAll.value) {
-    paginatedRows.value.forEach((row) => {
-      selectedRows.value.add(row);
-    });
-  } else {
-    paginatedRows.value.forEach((row) => {
-      selectedRows.value.delete(row);
-    });
-  }
-}
+const selectedCountOnPage = computed(() => {
+  const keys = selectedKeys.value;
+  return paginatedRows.value.filter(r => keys.has(getRowKey(r))).length;
+});
+
+const isAllSelected = computed(() => {
+  const total = paginatedRows.value.length;
+  return total > 0 && selectedCountOnPage.value === total;
+});
+
 const isIndeterminate = computed(() => {
   const total = paginatedRows.value.length;
-  if (total === 0) return false;
-
-  const selectedCount = paginatedRows.value.filter(r =>
-    selectedRows.value.has(r)
-  ).length;
-
-  return selectedCount > 0 && selectedCount < total;
+  return total > 0 && selectedCountOnPage.value > 0 && selectedCountOnPage.value < total;
 });
 
-watch([paginatedRows, selectedRows], () => {
-  const total = paginatedRows.value.length;
-  const selectedCount = paginatedRows.value.filter(r =>
-    selectedRows.value.has(r)
-  ).length;
+function toggleSelectAll(e) {
+  const checked = e?.target?.checked;
 
-  selectAll.value = total > 0 && selectedCount === total;
-});
+  const next = new Set(selectedKeys.value);
+  if (checked) {
+    paginatedRows.value.forEach((row) => next.add(getRowKey(row)));
+  } else {
+    paginatedRows.value.forEach((row) => next.delete(getRowKey(row)));
+  }
 
+  selectedKeys.value = next;
+}
 
+function refresh() {
+  return fetchData();
+}
+defineExpose({ refresh });
 </script>
+
 
 <style scoped>
 table {
