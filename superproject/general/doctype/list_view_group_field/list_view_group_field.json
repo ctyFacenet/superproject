@@ -6,22 +6,20 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "field_name",
+  "idx",
   "field_label",
-  "enabled",
-  "idx"
+  "field_name",
+  "enabled"
  ],
  "fields": [
   {
-   "description": "l\u01b0u fieldname",
    "fieldname": "field_name",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Field",
+   "label": "Field Name",
    "reqd": 1
   },
   {
-   "description": "label hi\u1ec3n th\u1ecb",
    "fieldname": "field_label",
    "fieldtype": "Data",
    "label": "Label"
@@ -34,18 +32,17 @@
    "label": "Ho\u1ea1t \u0111\u1ed9ng"
   },
   {
-   "description": "th\u1ee9 t\u1ef1 group",
    "fieldname": "idx",
    "fieldtype": "Int",
    "in_list_view": 1,
-   "label": "Th\u1ee9 t\u1ef1"
+   "label": "STT"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-12-22 18:03:06.169327",
+ "modified": "2025-12-23 10:00:38.062236",
  "modified_by": "Administrator",
  "module": "General",
  "name": "List View Group Field",

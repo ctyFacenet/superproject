@@ -499,7 +499,7 @@ export const doctypeConfigs = {
   [DocType.SCADA_STATISTICAL_REPORT]: {
     title: "BÁO CÁO CHI TIẾT TRẠNG THÁI MÁY - NHÓM LINE",
     hideSelect: true,
-    groupByField: ["process_code", "machine", "lineg_roup"],
+    groupByField: ["process_code", "machine", "line_group"],
     hideSearchFullText: true,
   },
 
