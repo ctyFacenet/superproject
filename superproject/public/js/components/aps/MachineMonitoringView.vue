@@ -84,16 +84,8 @@ const buildColumnsFromListView = (listview) => {
   }
 
   listview.columns.forEach(col => {
-    if (col.type === "Subject") {
-      columns.push({
-        name: "subject",
-        label: col.df?.label || "ID",
-        width: 160,
-        template: task => task.subject || task.name || ""
-      });
-      return;
-    }
-
+    if (col.type === "Subject") return;
+    
     if (col.type === "Field" && col.df) {
       columns.push({
         name: col.df.fieldname,
@@ -189,9 +181,9 @@ const initGantt = (columns) => {
     <div style="padding:6px 15px; line-height:1.6">
       <b>Lệnh sản xuất:</b><br/>
       ${task.work_order || task.text || ""}<br/><br/>
-      <b>Bắt đầu:</b><br/>
+      <b>Ngày bắt đầu:</b>
       ${gantt.templates.tooltip_date_format(start)}<br/>
-      <b>Kết thúc:</b><br/>
+      <b>Ngày kết thúc:</b>
       ${gantt.templates.tooltip_date_format(end)}
     </div>
   `;
@@ -289,7 +281,6 @@ onBeforeUnmount(() => {
 
 .updated {
   font-size: 13px;
-  color: #6b7280;
   white-space: nowrap;
 }
 
