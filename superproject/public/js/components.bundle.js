@@ -8,7 +8,7 @@ import DisplayAccountManagement from "../../mdm/doctype/account_management/Displ
 import MachinesStatusView from "../../public/js/components/TestMachinesCard/MachinesStatusView.vue";
 import MachineFormView from "../../public/js/components/TestMachinesCard/MachineFormView.vue";
 import RealtimeProductionProgress from "../../public/js/components/aps/RealtimeProductionProgress.vue";
-
+import MachineMonitoringView from "../../public/js/components/aps/MachineMonitoringView.vue";
 frappe.provide("superproject.ui");
 superproject.ui.mountVue = mountVue;
 superproject.ui.unmountVue = unmountVue;
@@ -71,3 +71,4 @@ createVueWrapper("DisplayAccountManagement", DisplayAccountManagement);
 createVueWrapper("MachinesStatusView", MachinesStatusView);
 createVueWrapper("MachineFormView", MachineFormView);
 createVueWrapper("RealtimeProductionProgress", RealtimeProductionProgress);
+createVueWrapper("MachineMonitoringView", MachineMonitoringView);
