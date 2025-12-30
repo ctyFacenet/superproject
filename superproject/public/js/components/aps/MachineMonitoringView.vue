@@ -40,8 +40,8 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from "vue";
-import "dhtmlx-gantt/codebase/dhtmlxgantt.css";
 import gantt from "dhtmlx-gantt";
+import "dhtmlx-gantt/codebase/dhtmlxgantt.css";
 
 const props = defineProps({
   listview: Object
@@ -60,9 +60,11 @@ const getColumnWidth = (df) => {
     case "Date": return 100;
     case "Datetime": return 140;
     case "Link": return 120;
-    case "Data": return 150;
-    case "Small Text": return 150;
-    default: return "*";
+    case "Data":
+    case "Small Text":
+      return 150;
+    default:
+      return "*";
   }
 };
 
@@ -105,26 +107,34 @@ const buildColumnsFromListView = (listview) => {
   return columns;
 };
 
-
 const applyScale = (scale) => {
+  gantt.config.subscales = [];
+  gantt.config.scale_height = 50;
+  gantt.config.min_column_width = 60;
+
   switch (scale) {
     case "Hourly":
       gantt.config.scale_unit = "day";
-      gantt.config.date_scale = "%d %M";
+      gantt.config.date_scale = "%d %M %Y";
+      gantt.config.scale_height = 60;
+      gantt.config.min_column_width = 300;
       gantt.config.subscales = [
-        { unit: "hour", step: 1, date: "%H" }
+        { unit: "hour", step: 1, date: "%H:%i" }
       ];
       break;
 
     case "Daily":
       gantt.config.scale_unit = "day";
       gantt.config.date_scale = "%d %M";
-      gantt.config.subscales = [];
+      gantt.config.scale_height = 50;
+      gantt.config.min_column_width = 70;
       break;
 
     case "Weekly":
       gantt.config.scale_unit = "week";
       gantt.config.date_scale = "Tuần %W";
+      gantt.config.scale_height = 60;
+      gantt.config.min_column_width = 90;
       gantt.config.subscales = [
         { unit: "day", step: 1, date: "%d" }
       ];
@@ -133,33 +143,44 @@ const applyScale = (scale) => {
     case "Monthly":
       gantt.config.scale_unit = "month";
       gantt.config.date_scale = "%M %Y";
+      gantt.config.scale_height = 60;
+      gantt.config.min_column_width = 120;
       gantt.config.subscales = [
-        { unit: "week", step: 1 }
+        { unit: "week", step: 1, date: "W%W" }
       ];
       break;
 
     case "Quarterly":
-      gantt.config.scale_unit = "month";
+      gantt.config.scale_unit = "quarter";
       gantt.config.date_scale = "Q%q %Y";
-      gantt.config.subscales = [];
+      gantt.config.scale_height = 50;
+      gantt.config.min_column_width = 150;
       break;
 
     case "Yearly":
       gantt.config.scale_unit = "year";
       gantt.config.date_scale = "%Y";
-      gantt.config.subscales = [];
+      gantt.config.scale_height = 50;
+      gantt.config.min_column_width = 200;
       break;
 
     default:
-      console.warn("Unknown scale:", scale);
       return;
   }
+
   gantt.render();
 };
 
-
 const initGantt = (columns) => {
   gantt.plugins({ tooltip: true });
+
+  gantt.config.readonly = true;
+  gantt.config.autosize = "y";
+  gantt.config.row_height = 42;
+  gantt.config.bar_height = 20;
+  gantt.config.grid_width = 320;
+  gantt.config.columns = columns;
+  gantt.config.xml_date = "%Y-%m-%d %H:%i";
 
   gantt.templates.tooltip_date_format =
     gantt.date.date_to_str("%H:%i %d/%m/%Y");
@@ -168,20 +189,12 @@ const initGantt = (columns) => {
     <div style="padding:6px 15px; line-height:1.6">
       <b>Lệnh sản xuất:</b><br/>
       ${task.work_order || task.text || ""}<br/><br/>
-      <b>Ngày bắt đầu:</b><br/>
+      <b>Bắt đầu:</b><br/>
       ${gantt.templates.tooltip_date_format(start)}<br/>
-      <b>Ngày kết thúc:</b><br/>
+      <b>Kết thúc:</b><br/>
       ${gantt.templates.tooltip_date_format(end)}
     </div>
   `;
-
-  gantt.config.xml_date = "%Y-%m-%d %H:%i";
-  gantt.config.readonly = true;
-  gantt.config.autosize = "y";
-  gantt.config.row_height = 42;
-  gantt.config.bar_height = 20;
-  gantt.config.grid_width = 320;
-  gantt.config.columns = columns;
 
   gantt.templates.task_class = (_, __, task) => {
     if (task.type === "plan") return "gantt-plan";
@@ -215,13 +228,14 @@ const loadDataFromListView = () => {
 };
 
 const changeScale = (scale) => {
+  if (currentScale.value === scale) return;
+
   currentScale.value = scale;
-  applyScale(scale);
+  gantt.batchUpdate(() => applyScale(scale));
 };
 
 onMounted(() => {
   lastUpdated.value = new Date().toLocaleString("vi-VN");
-
   const columns = buildColumnsFromListView(props.listview);
   initGantt(columns);
   loadDataFromListView();
@@ -316,11 +330,8 @@ onBeforeUnmount(() => {
   background: #1aa3e8;
 }
 
-
 .time-scale {
   padding: 6px 16px;
-  border: 1px solid #eee;
-  margin: 15px;
   display: flex;
   justify-content: flex-end;
 }
@@ -336,17 +347,15 @@ onBeforeUnmount(() => {
 }
 
 .gantt-wrapper {
-  margin: 0 15px 15px 15px;
+  margin: 0 15px 15px;
   background: #fff;
   overflow: hidden;
 }
-
 
 .gantt-container {
   width: 100%;
   height: calc(100vh - 260px);
 }
-
 
 .gantt-plan .gantt_task_content {
   background: #ff8a34;
@@ -361,10 +370,8 @@ onBeforeUnmount(() => {
 }
 
 :deep(.gantt_task_bg) {
-  background-color: #ffffff;
-  background-image: radial-gradient(circle,
-      rgba(0, 0, 0, 0.12) 1px,
-      transparent 1px);
+  background-color: #fff;
+  background-image: radial-gradient(circle, rgba(0, 0, 0, 0.12) 1px, transparent 1px);
   background-size: 18px 18px;
   background-position: center;
 }
@@ -377,5 +384,4 @@ onBeforeUnmount(() => {
 :deep(.gantt_task_cell) {
   border-right: 1px dashed rgba(0, 0, 0, 0.035);
 }
-
 </style>
