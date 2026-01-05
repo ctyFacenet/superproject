@@ -1204,6 +1204,10 @@ video {
   padding-right: 0px !important;
 }
 
+.tw-pt-2 {
+  padding-top: 0.5rem !important;
+}
+
 .tw-text-center {
   text-align: center !important;
 }
