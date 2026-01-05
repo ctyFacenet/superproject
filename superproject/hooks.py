@@ -40,7 +40,7 @@ app_include_css = [
 app_include_js = [
     "setup.bundle.js",
     "superproject.bundle.js",
-    "/assets/superproject/js/confirmBox/custom_confirm_modal.js",
+    "/assets/superproject/js/components/confirmBox/custom_confirm_modal.js",
 ]
 
 # include js, css files in header of web template
