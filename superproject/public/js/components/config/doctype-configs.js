@@ -22,7 +22,7 @@ import {
 } from "@ant-design/icons-vue";
 import { DocType } from "../../utils/consts.js";
 
-const baseCopyAction = {
+export const baseCopyAction = {
   label: "",
   title: "Chọn cột hiển thị",
   icon: SwitcherOutlined,

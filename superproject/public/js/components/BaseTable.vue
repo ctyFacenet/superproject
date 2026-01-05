@@ -6,15 +6,17 @@
         <template #content>
           <div class="tw-p-2 tw-w-[220px] tw-max-h-[300px] tw-overflow-y-auto">
             <a-checkbox-group v-model:value="checkedColumns" class="tw-flex tw-flex-col tw-gap-2">
-              <a-checkbox v-for="col in columns" :key="col.key" :value="col.key"
-                @change="toggleColumn(col.key, $event)">
+              <a-checkbox v-for="col in columns" :key="col.key" :value="col.key">
                 {{ col.title }}
               </a-checkbox>
             </a-checkbox-group>
 
-            <div class="tw-mt-2 tw-text-right">
-              <a-button type="link" size="small" @click="resetColumns">
-                Reset all
+            <div class="tw-mt-2 tw-border-t tw-pt-2 tw-flex tw-justify-between">
+              <a-button type="link" size="small" @click="() => checkedColumns = columns.map(c => c.key)">
+                Hiện tất cả
+              </a-button>
+              <a-button type="link" size="small" danger @click="resetColumns">
+                Reset
               </a-button>
             </div>
           </div>
@@ -313,16 +315,20 @@ watch(
   { deep: true }
 );
 
-const checkedColumns = computed(() =>
-  Object.keys(visibleColumns.value).filter((k) => visibleColumns.value[k])
-);
-
-const toggleColumn = (key, e) => {
-  visibleColumns.value[key] = e.target.checked;
-};
+const checkedColumns = computed({
+  get: () => Object.keys(visibleColumns.value).filter((k) => visibleColumns.value[k] === true),
+  set: (val) => {
+    const newState = {};
+    columns.value.forEach(col => {
+      newState[col.key] = val.includes(col.key);
+    });
+    visibleColumns.value = newState;
+  }
+});
 
 const resetColumns = () => {
-  Object.keys(visibleColumns.value).forEach((k) => (visibleColumns.value[k] = true));
+  localStorage.removeItem(storageKey.value);
+  checkedColumns.value = columns.value.map(c => c.key);
 };
 
 async function fetchData() {
@@ -343,6 +349,15 @@ async function fetchData() {
 
     visibleFields.push({ title: "Thao tác", key: "actions" });
     columns.value = visibleFields;
+
+    const saved = localStorage.getItem(storageKey.value);
+    const savedObj = saved ? JSON.parse(saved) : {};
+
+    const newVisibleState = {};
+    visibleFields.forEach(f => {
+      newVisibleState[f.key] = savedObj[f.key] !== false;
+    });
+    visibleColumns.value = newVisibleState;
 
     visibleFields.forEach((f) => {
       colWidths.value[f.key] ||= 160;

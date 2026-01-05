@@ -117,7 +117,8 @@
         <div v-if="!state.hide_records" class="tw-flex-1 tw-min-h-0 tw-bg-white tw-overflow-x-auto tw-overflow-y-auto">
           <slot name="records">
             <BaseTable :key="props.doctype" :doctype="props.doctype" :hide-select="!!resolvedConfig.hideSelect"
-              :filters="activeFilters" :row_actions="rowActions" @selection-change="selectedRows = $event" :config="resolvedConfig"/>
+              :filters="activeFilters" :row_actions="rowActions" @selection-change="selectedRows = $event"
+              :config="resolvedConfig" />
           </slot>
         </div>
       </div>
@@ -146,6 +147,7 @@ import { SearchOutlined, ReloadOutlined } from "@ant-design/icons-vue";
 import { getDoctypeConfig } from "./config/doctype-configs";
 import BaseChart from "../components/BaseChart.vue";
 import IconRenderer from "../components/IconRenderer.vue";
+import { baseCopyAction } from "./config/doctype-configs";
 import QcResultReport from "./qms/QcResultReport.vue";
 import {
   barChartData,
@@ -286,10 +288,20 @@ function handleAction(action, ctx = {}) {
 }
 
 const currentActions = computed(() => {
+  let actions = [];
+
   if (dbBulkActions.value.length) {
-    return dbBulkActions.value.map((a) => mapAction(a, "bulk"));
+    actions = dbBulkActions.value.map((a) => mapAction(a, "bulk"));
+  } else {
+    actions = [...(fallbackConfig.value?.actions || [])];
   }
-  return fallbackConfig.value?.actions || [];
+
+  const exists = actions.some(a => a.title === "Chọn cột hiển thị");
+  if (!exists) {
+    actions.push(baseCopyAction);
+  }
+
+  return actions;
 });
 
 const rowActions = computed(() => {

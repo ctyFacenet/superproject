@@ -24,7 +24,7 @@ window.load_groupable_fields = async function (frm) {
       method: "superproject.api.listview_grouping.get_groupable_fields",
       args: { doctype: frm.doc.target_doctype },
       freeze: true,
-      freeze_message: __("Loading groupable fields…"),
+      freeze_message: __("Loading groupable fields"),
     });
 
     const fields = r.message || [];
